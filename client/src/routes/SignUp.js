@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router';
 
+// 회원가입 페이지
 function SignUp() {
+  const url = `http://localhost:5000`;
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [name, setName] = useState('');
   const [nickName, setNickName] = useState('');
-  const url = `http://localhost:5000`;
-  const history = useHistory();
+  const [pwWarning, setPwWarning] = useState(<></>);
 
   // 이메일 핸들러
   const onEmailHandler = (event) => {
@@ -36,13 +38,14 @@ function SignUp() {
     setNickName(event.currentTarget.value);
   };
 
-  const [warning, setWarning] = useState(<></>);
-
+  // (비밀번호 재확인 입력 시) 비밀번호 일치 확인
   useEffect(() => {
-    if (password != passwordCheck) {
-      setWarning(<p>비밀번호가 일치하지 않습니다.</p>);
-    } else if (password === passwordCheck) {
-      setWarning(<p>비밀번호가 동일합니다.</p>);
+    if (password != "" || passwordCheck != "") {
+      if (password != passwordCheck) {
+        setPwWarning(<p>비밀번호가 일치하지 않습니다.</p>);
+      } else {
+        setPwWarning(<></>);
+      }
     }
   }, [passwordCheck]);
 
@@ -102,16 +105,16 @@ function SignUp() {
         <input type="password" value={password} onChange={onPasswordHandler} />
         <label>비밀번호 재확인</label>
         <input type="password" value={passwordCheck} onChange={onPasswordCheckHandler} />
+        <div>{pwWarning}</div>
         <label>이름</label>
         <input type="text" value={name} onChange={onNameHandler} />
         <label>별명</label>
         <input type="text" value={nickName} onChange={onNickNameHandler} />
         <br />
-        {warning}
         <button
           onClick={() => {
             history.push({
-              pathname: '/sign-in',
+              pathname: '/',
             });
           }}
         >

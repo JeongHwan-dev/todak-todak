@@ -5,11 +5,12 @@ import './css/SignIn.css';
 
 axios.defaults.withCredentials = true;
 
+// 로그인 페이지
 function SignIn() {
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
   const url = `http://localhost:5000`;
   const history = useHistory();
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
 
   // (로그인) 이메일 핸들러
   const onUserEmailHandler = (event) => {
