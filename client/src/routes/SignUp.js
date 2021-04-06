@@ -59,10 +59,9 @@ function SignUp() {
           withCredentials: true,
         })
         .then((response) => {
-          console.log(response);
           if (response.data.status === 300) {
             sessionStorage.setItem('accessToken', response.data.token);
-            window.location.replace('/sign-in');
+            window.location.replace('/');
           } else if (response.data.status === 301) {
             alert('필수 입력 사항이 모두 입력되지 않았습니다.');
           } else if (response.data.status === 302) {
