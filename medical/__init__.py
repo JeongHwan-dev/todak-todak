@@ -9,7 +9,6 @@ import pymysql
 from flask_cors import CORS
 from pymongo import MongoClient
 
-
 db = SQLAlchemy()
 migrate = Migrate()
 client = MongoClient("mongodb://localhost:27017/medical")
@@ -23,18 +22,16 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  
     db.init_app(app)
     migrate.init_app(app, db)
-    
+
     from . import models
 
-    
-    
     #cors
     CORS(app, supports_credentials=True)
-    
+
     # 블루프린트
 # --------------------------------------------------------------------------- #    
     from .views import auth, community
-    
+
     app.register_blueprint(auth.bp)
     app.register_blueprint(community.bp)    
     bcrypt = Bcrypt(app)
@@ -45,9 +42,8 @@ def create_app():
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(hours=20)
 
     jwt = JWTManager(app)
-    
-    return app
 
+    return app
 
 
 # 구조 : 전체폴더(RESISTER) - medical - __init__.py
