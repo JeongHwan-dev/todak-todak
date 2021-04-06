@@ -27,7 +27,7 @@ function SignIn() {
 
   // 강제로 Home page로 이동 (임시 함수)
   const onMoveHome = (event) => {
-    window.location.replace('/home');
+    window.location.replace('/community');
   };
 
   // 로그인 버튼 핸들러

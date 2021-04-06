@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Post from 'components/Post';
 
 const Community = () => {
-  const [post, setPost] = useState(''); // 게시글
+  const [text, setText] = useState(''); // 게시글
   const [posts, setPosts] = useState([
     {
       // postId: 1,
@@ -29,16 +29,16 @@ const Community = () => {
     const {
       target: { value },
     } = event;
-    setPost(value);
-    console.log(post);
+    setText(value);
+    console.log(text);
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    // axios 통신 (포스트 -> DB)
-    posts.push(post);
-    console.log(posts);
-  };
+  // const onSubmit = async (event) => {
+  //   event.preventDefault();
+  //   // axios 통신 (포스트 -> DB)
+  //   posts.push(post);
+  //   console.log(posts);
+  // };
 
   const PostArray = (posts) => {
     {
@@ -46,18 +46,19 @@ const Community = () => {
     }
   };
 
-  const CreatePost = ({ onChange }) => {
+  // 포스트 생성 컴포넌트
+  const CreatePost = ({ text, onChange }) => {
     return (
       <div>
         <form>
           <input
             type="text"
-            value={post}
+            value={text}
             onChange={onChange}
             placeholder="내용을 입력하세요."
             maxLength={120}
           />
-          <button onClick={onSubmit}>글 올리기</button>
+          <button>글 올리기</button>
         </form>
       </div>
     );
@@ -66,7 +67,18 @@ const Community = () => {
   return (
     <div>
       <h2>커뮤니티</h2>
-      <CreatePost onChange={onPostHandler} />
+      <div>
+        <form>
+          <input
+            type="text"
+            value={text}
+            onChange={onPostHandler}
+            placeholder="내용을 입력하세요."
+            maxLength={120}
+          />
+          <button>글 올리기</button>
+        </form>
+      </div>
       <div>{/* <PostArray posts={posts} /> */}</div>
     </div>
   );
