@@ -55,3 +55,4 @@ def create_app():
 # export FLASK_APP=medical
 # export FLASK_ENV=development
 # flask run
+# mongod --dbpath data/db/
