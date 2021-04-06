@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import './css/SignIn.css';
+import 'routes/css/SignIn.css';
 
 axios.defaults.withCredentials = true;
 
+// 로그인 페이지
 function SignIn() {
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
   const url = `http://localhost:5000`;
   const history = useHistory();
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
 
-  // (로그인) 이메일 핸들러
-  const onUserEmailHandler = (event) => {
-    setUserEmail(event.currentTarget.value);
-  };
+  // (로그인 폼) 입력 핸들러
+  const onChangeHandler = (event) => {
+    const {
+      target: { name, value },
+    } = event;
 
-  // (로그인) 패스워드 핸들러
-  const onUserPasswordHandler = (event) => {
-    setUserPassword(event.currentTarget.value);
+    if (name === 'userEmail') {
+      setUserEmail(value);
+    } else if (name === 'userPassword') {
+      setUserPassword(value);
+    }
   };
 
   // 로그인 버튼 핸들러
@@ -58,12 +62,21 @@ function SignIn() {
     >
       <form style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>토닥토닥</h2>
-        <input type="text" value={userEmail} onChange={onUserEmailHandler} placeholder="이메일" />
         <input
+          name="userEmail"
+          type="email"
+          value={userEmail}
+          onChange={onChangeHandler}
+          placeholder="이메일"
+          required
+        />
+        <input
+          name="userPassword"
           type="password"
           value={userPassword}
-          onChange={onUserPasswordHandler}
+          onChange={onChangeHandler}
           placeholder="비밀번호"
+          required
         />
         <br />
         <button onClick={onSignInHandler}>로그인</button>

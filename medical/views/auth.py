@@ -1,22 +1,25 @@
 from flask import Blueprint
 from flask import Flask, request, jsonify
 import bcrypt
-import config
 from flask_cors import CORS
 from .. import models
 from datetime import datetime, timedelta
 
 
-bp = Blueprint('main', __name__, url_prefix='/')
+bp = Blueprint('auth', __name__, url_prefix='/')
 
 
-# --------------------------------- [edit] ---------------------------------- #
-@bp.route('/')
-def home():
-    return 'hg'
+
+# bp 테스트
+# @bp.route('/') 
+# def home():
+#     print(list(models.mycol.find()))
+#     return 'auth page ok'
+
+
 @bp.route('/sign-up', methods=['POST']) 
 def register():
-    print("check")
+    print("check") #확인용... 나중에 삭제할것
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 402
     
@@ -27,7 +30,7 @@ def register():
         name = body[11]
         nickName=body[15]
         
-        print(email,password, name, nickName)
+        print(email,password, name, nickName) #확인용....나중에 삭제할것
         
         emailcheck=models.User.query.filter_by(email=email).first()
         nicknamecheck=models.User.query.filter_by(nickname=nickName).first()
@@ -79,7 +82,5 @@ def login():
 
         return jsonify( {'access_token':access_token, 'refresh_token':refresh_token,'status':400})
 
-@bp.route("/test", methods=["GET"])
-def test():
-    return "test"
+
 
