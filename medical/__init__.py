@@ -56,3 +56,19 @@ def create_app():
 # export FLASK_ENV=development
 # flask run
 # mongod --dbpath data/db/
+
+
+# 구조 : 전체폴더(RESISTER) - medical - __init__.py
+# 현재 위치를 RESISTER로.
+# export FLASK_APP=medical
+# export FLASK_ENV=development
+# flask run
+
+# mongo설치방법
+# curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+# sudo echo "deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+# sudo apt-get update
+# sudo apt-get install -y mongodb-org
+# project폴더에 data/db생성
+# mongod --dbpath data/db/
+# mongo

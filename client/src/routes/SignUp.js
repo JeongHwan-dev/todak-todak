@@ -81,6 +81,7 @@ function SignUp() {
 
   return (
     <div
+      className="sign-container"
       style={{
         display: 'flex',
         justifyContent: 'center',
