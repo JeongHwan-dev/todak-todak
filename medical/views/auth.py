@@ -58,29 +58,30 @@ def register():
             return jsonify({"msg": "회원가입 성공", 'status':300})
         return jsonify({'msg':'complete'})
 
-# @bp.route('/', methods=['POST'])  
-# def login():
-#     if not request.is_json:
-#         return jsonify({"msg": "Missing JSON in request"}), 402
-#     else:
-#         print('check')
-#         body=request.get_json(force=True)['body'].split('"')
-#         userEmail = body[3]
-#         userPassword = body[7]
-#         print(userEmail, userPassword)
-#         if not userEmail:
-#             return jsonify({"msg": "아이디 치세요", 'status':401})
+@bp.route('/', methods=['POST'])  
+def login():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 402
+    else:
+        print('check')
+        body=request.get_json(force=True)['body'].split('"')
+        userEmail = body[3]
+        userPassword = body[7]
+        print(userEmail, userPassword)
+        if not userEmail:
+            return jsonify({"msg": "아이디 치세요", 'status':401})
 
-#         elif not userPassword:
-#             return jsonify({"msg": "비번 치세요", 'status':401})
+        elif not userPassword:
+            return jsonify({"msg": "비번 치세요", 'status':401})
 
-        
-#         checkpw=models.User.query.filter_by(email=userEmail).first()
-#         if bcrypt.checkpw(userPassword.encode('utf-8'), checkpw.pw.encode('utf-8')):
-#             print('ok')
-#         # Identity can be any data that is json serializable
-#             access_token = create_access_token(identity=userEmail)
-#             refresh_token = create_refresh_token(identity=userEmail)
-#             print('ok')
-#             return jsonify({"msg": "비번 치세요", 'status':401})
-#             # return jsonify({'access_token':access_token, 'refresh_token':refresh_token,'status':400})
+        checkpw=models.User.query.filter_by(email=userEmail).first()
+        print('checkpw:', checkpw)
+        if bcrypt.checkpw(userPassword.encode('utf-8'), checkpw.pw.encode('utf-8')):
+            print('ok')
+        # Identity can be any data that is json serializable
+            access_token = create_access_token(identity=userEmail)
+            refresh_token = create_refresh_token(identity=userEmail)
+            print('ok')
+            return jsonify({'access_token':access_token, 'refresh_token':refresh_token,'status':400})
+        else:
+            return jsonify({"msg":"비밀번호 불일치", "status":401})

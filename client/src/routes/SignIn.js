@@ -32,6 +32,7 @@ function SignIn() {
 
   // 로그인 버튼 핸들러
   async function onSignInHandler(event) {
+    event.preventDefault();
     await axios
       .post(url + '/', {
         method: 'POST',
@@ -42,17 +43,19 @@ function SignIn() {
         withCredentials: true,
       })
       .then((response) => {
+        console.log(response);
         if (response.data.status === 400) {
           alert('로그인 성공');
-          sessionStorage.setItem('accessToken', response.data.token);
-          window.location.replace('/home');
+          sessionStorage.setItem('accessToken', response.data.access_token);
+          sessionStorage.setItem('refreshToken', response.data.refresh_token);
+          window.location.replace('/community');
         } else if (response.data.status === 401) {
           alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
         } else {
           alert('error');
         }
       })
-      .catch((error) => {});
+      .catch((error) => {alert("error for some reason")});
   }
 
   return (
@@ -86,7 +89,7 @@ function SignIn() {
         />
         <br />
         {/* 추후  onSignInHandler 교체 */}
-        <button onClick={onMoveHome}>로그인</button>
+        <button onClick={onSignInHandler}>로그인</button>
         <button
           onClick={() => {
             history.push({

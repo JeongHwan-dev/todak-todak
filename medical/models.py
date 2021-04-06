@@ -5,8 +5,8 @@ from sqlalchemy.orm import relationship, backref
 
 
 class User(db.Model): #usertable
-    tablename = 'user'
-    table_args = {'mysql_collate': 'utf8_general_ci'}
+    __tablename__ = 'user'
+    __table_args__ = {'mysql_collate': 'utf8_general_ci'}
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nickname= db.Column(db.String(64), primary_key=True, unique=True)
