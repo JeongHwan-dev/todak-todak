@@ -4,9 +4,8 @@ from sqlalchemy.orm import relationship, backref
 # from flask.ext.mongoalchemy  import  MongoAlchemy 
 
 
-
 class User(db.Model): #usertable
-    tablename = 'usertable'
+    tablename = 'user'
     table_args = {'mysql_collate': 'utf8_general_ci'}
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -18,14 +17,13 @@ class User(db.Model): #usertable
     usertype=db.Column(db.String(32))
 
 
-class Post_history(db.Model): #post history table
-    tablename = 'post_history_table'
-    table_args = {'mysql_collate': 'utf8_general_ci'}
+# class Post_history(db.Model): #post history table
+#     tablename = 'post_history_table'
+#     table_args = {'mysql_collate': 'utf8_general_ci'}
 
-    _id2 = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.Integer, ForeignKey('usertable.id'))
-    date = db.Column(db.DATE,nullable=False)
-
+#     _id2 = db.Column(db.Integer, primary_key=True)
+#     userid = db.Column(db.Integer, ForeignKey('usertable.id'))
+#     date = db.Column(db.DATE,nullable=False)
 
 
 # mydb = client['medical'] #db name
