@@ -48,6 +48,7 @@ function SignIn() {
           alert('로그인 성공');
           sessionStorage.setItem('accessToken', response.data.access_token);
           sessionStorage.setItem('refreshToken', response.data.refresh_token);
+          sessionStorage.setItem('userToken', response.data.user_token);
           window.location.replace('/community');
         } else if (response.data.status === 401) {
           alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
@@ -55,7 +56,9 @@ function SignIn() {
           alert('error');
         }
       })
-      .catch((error) => {alert("error for some reason")});
+      .catch((error) => {
+        alert('error for some reason');
+      });
   }
 
   return (

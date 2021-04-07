@@ -79,9 +79,9 @@ def login():
         if bcrypt.checkpw(userPassword.encode('utf-8'), checkpw.pw.encode('utf-8')):
             print('ok')
         # Identity can be any data that is json serializable
-            access_token = create_access_token(identity=userEmail)
-            refresh_token = create_refresh_token(identity=userEmail)
+            access_token = create_access_token(identity=checkpw.id)
+            refresh_token = create_refresh_token(identity=checkpw.id)
             print('ok')
-            return jsonify({'access_token':access_token, 'refresh_token':refresh_token,'status':400})
+            return jsonify({'access_token':access_token, 'refresh_token':refresh_token, 'user_token': '1', 'status':400})
         else:
             return jsonify({"msg":"비밀번호 불일치", "status":401})

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Community from '../components/Community';
+import Community from 'components/Community';
 import Navigation from 'components/Navigation';
 
 const Home = () => {
