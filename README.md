@@ -116,4 +116,93 @@
   - 3주차 Mobile App Ver1.0 작업 예정 (React Native로 Android/iOS 배포[iOS는 검수에 시간이 소요되어 프로젝트 기간 내 배포 불가능할 것으로 판단됨])
 
 ## 7. FAQ
-  - 자주 받는 질문 정리
+  ### 환경설정 및 에러 대응
+  ***Ubuntu 18.04 LTS를 기준으로 작성되었습니다***
+
+  - #### Flask 서버 구동 시 설정 사항
+> *Bash Script에 포함되어 있습니다.*
+  ```
+  ~ % export FLASK_APP=medical
+  ~ % export FLASK_ENV=development
+  ~ % flask run
+  ```
+<br/>
+
+- #### MongoDB 설치 및 설정사항
+> *MongoDB 설치 및 실행 설정*
+```
+~ % curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+~ % sudo echo "deb http://repo.mongodb.org/apt/ubuntu bionic/~ % mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+~ % sudo apt-get update
+~ % sudo apt-get install -y mongodb-org
+~ % mkdir data
+~ % cd data
+~ data % mkdir db
+~ data % cd ..
+~ % mongod --dbpath=data/db/
+```
+<br/>
+
+- #### MySQL 관련 이슈
+> *MySQL 실행법*
+```
+~ % mysql -u root -r
+# 위 코드 실행 시 root@localhost permission denied 에러가 발생한다면 아래 스크립트를 실행해주세요
+```
+```
+~ % sudo mysql -u root
+
+mysql> USE mysql;
+mysql> SELECT User, Host, plugin FROM mysql.user;
+mysql> UPDATE user SET PLUGIN='mysql_native_password' WHERE user='root';
+mysql> FLUSH PRIVILEGES;
+mysql> SELECT user, host, plugin FROM user;
+```
+<br/>
+
+> *git pull 이후 실행 시*
+```
+~ % service mysql restart
+# 새로 git pull 후에 위 스크립트를 실행해주세요
+```
+<br/>
+
+> *ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql/mysql.sock’ 에러 발생 시*
+```
+~ % service mysql restart
+# 위 코드로 에러가 해결 되지 않을 시 아래 스크립트를 실행해주세요
+```
+```
+~ % service mysql stop
+~ % chmod 755 -R /var/lib/mysql
+~ % chown mysql:mysql -R /var/lib/mysql
+~ % service mysql start
+```
+<br/>
+
+> SQLalchemy 실행 설정
+```
+# SQLalchemy 실행 전 MySQL에서 database를 생성한 뒤 실행해주세요
+
+# 최초 1회 실행
+~ % flask db init
+
+# 모델링 이후 1회
+~ % flask db migrate
+
+# 이후 실행 시 모델이 생성됩니다
+~ % flask db upgrade
+```
+<br/>
+
+> *SQLalchemy 리모델링*
+```
+# 이미 만든 모델을 다시 만들어야 할 경우 아래 스크립트를 실행해주세요
+
+mysql> DROP DATABASE medical;
+mysql> CREATE DATABASE medical;
+
+~ % flask upgrade
+
+# 리모델링이 안된다면 migration 디렉토리를 삭제 후 SQLalchemy를 최초 실행해주세요
+```
