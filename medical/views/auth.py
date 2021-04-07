@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify, session
 import bcrypt
 from flask_cors import CORS
 from .. import models
+import json
 from datetime import datetime, timedelta
 from flask_jwt_extended import (JWTManager, jwt_required, create_access_token, get_jwt_identity, unset_jwt_cookies, create_refresh_token)
 
@@ -16,13 +17,11 @@ def register():
         
     else:
         print('check')
-        body=request.get_json(force=True)['body'].split('"')
-
-
-        email = body[3]
-        password = body[7]
-        name = body[11]
-        nickname=body[15]
+        signup_data = request.get_json(force=True)['data']
+        email = signup_data["email"]
+        password = signup_data["password"]
+        name = signup_data["name"]
+        nickname=signup_data["nickname"]
 
         print(email,password, name, nickname) #확인용....나중에 삭제할것
         
@@ -56,9 +55,9 @@ def login():
         return jsonify({"msg": "Missing JSON in request"}), 402
     else:
         print('check')
-        body=request.get_json(force=True)['body'].split('"')
-        userEmail = body[3]
-        userPassword = body[7]
+        login_data=request.get_json(force=True)['data']
+        userEmail = login_data["userEmail"]
+        userPassword = login_data["userPassword"]
         print(userEmail, userPassword)
         if not userEmail:
             return jsonify({"msg": "아이디 치세요", 'status':401})

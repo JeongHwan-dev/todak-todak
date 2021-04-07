@@ -33,16 +33,16 @@ function SignIn() {
   // 로그인 버튼 핸들러
   async function onSignInHandler(event) {
     event.preventDefault();
-    await axios
+    try {
+    const response = await axios
       .post(url + '/', {
-        method: 'POST',
-        body: JSON.stringify({
+        headers: {'Content-Type': 'application/json'},
+        data: {
           userEmail: userEmail,
           userPassword: userPassword,
-        }),
+        },
         withCredentials: true,
       })
-      .then((response) => {
         console.log(response);
         if (response.data.status === 400) {
           alert('로그인 성공');
@@ -54,8 +54,10 @@ function SignIn() {
         } else {
           alert('error');
         }
-      })
-      .catch((error) => {alert("error for some reason")});
+      }
+      catch(error){
+        alert("error for some reason");
+      }
   }
 
   return (

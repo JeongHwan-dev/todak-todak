@@ -47,18 +47,18 @@ function SignUp() {
   async function onSignUpHandler(event) {
     event.preventDefault();
     if (password === passwordCheck) {
-      await axios
+      try {
+        const response = await axios
         .post(url + '/sign-up', {
-          method: 'POST',
-          body: JSON.stringify({
+          headers: {'Content-Type': 'application/json'},
+          data: {
             email: email,
             password: password,
             name: name,
             nickname: nickname,
-          }),
+          },
           withCredentials: true,
         })
-        .then((response) => {
           if (response.data.status === 300) {
             sessionStorage.setItem('accessToken', response.data.token);
             window.location.replace('/');
@@ -71,10 +71,11 @@ function SignUp() {
           } else {
             alert('error');
           }
-        })
-        .catch((error) => {
+        }
+
+        catch(error) {
           alert('error');
-        });
+        };
     }
   }
 
