@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 // 회원가입 페이지
 function SignUp() {
@@ -59,10 +59,9 @@ function SignUp() {
           withCredentials: true,
         })
         .then((response) => {
-          console.log(response);
           if (response.data.status === 300) {
             sessionStorage.setItem('accessToken', response.data.token);
-            window.location.replace('/sign-in');
+            window.location.replace('/');
           } else if (response.data.status === 301) {
             alert('필수 입력 사항이 모두 입력되지 않았습니다.');
           } else if (response.data.status === 302) {
@@ -81,6 +80,7 @@ function SignUp() {
 
   return (
     <div
+      className="sign-container"
       style={{
         display: 'flex',
         justifyContent: 'center',

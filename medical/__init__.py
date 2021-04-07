@@ -9,7 +9,6 @@ import pymysql
 from flask_cors import CORS
 from pymongo import MongoClient
 
-
 db = SQLAlchemy()
 migrate = Migrate()
 client = MongoClient("mongodb://localhost:27017/medical")
@@ -23,18 +22,16 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  
     db.init_app(app)
     migrate.init_app(app, db)
-    
+
     from . import models
 
-    
-    
     #cors
     CORS(app, supports_credentials=True)
-    
+
     # 블루프린트
 # --------------------------------------------------------------------------- #    
     from .views import auth, community
-    
+
     app.register_blueprint(auth.bp)
     app.register_blueprint(community.bp)    
     bcrypt = Bcrypt(app)
@@ -45,9 +42,8 @@ def create_app():
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(hours=20)
 
     jwt = JWTManager(app)
-    
-    return app
 
+    return app
 
 
 # 구조 : 전체폴더(RESISTER) - medical - __init__.py
@@ -56,3 +52,19 @@ def create_app():
 # export FLASK_ENV=development
 # flask run
 # mongod --dbpath data/db/
+
+
+# 구조 : 전체폴더(RESISTER) - medical - __init__.py
+# 현재 위치를 RESISTER로.
+# export FLASK_APP=medical
+# export FLASK_ENV=development
+# flask run
+
+# mongo설치방법
+# curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+# sudo echo "deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+# sudo apt-get update
+# sudo apt-get install -y mongodb-org
+# project폴더에 data/db생성
+# mongod --dbpath data/db/
+# mongo
