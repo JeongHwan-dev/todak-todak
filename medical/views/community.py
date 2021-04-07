@@ -23,12 +23,13 @@ mycol = mydb['community_post'] #collection name
 @bp.route('/article/post', methods=['POST']) 
 def create_article():
     print('ok')
-    body=request.get_json(force=True)['body'].split('"')
+    body=request.get_json()['body'].split('"')
+    
     userid=body[3]
     content=body[7]
     date=(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
-    community = models.mycol.insert_one({ 
+    community = mycol.insert_one({ 
 
                                     "userid":userid,
                                     "content":content,
@@ -43,7 +44,7 @@ def create_article():
 def read_article():
     if request.method=='POST':
         lst=[]
-        for m in models.mycol.find():
+        for m in mycol.find():
             lst.append({"content" : m['content'], "userid" : m["userid"], "date":m["date"]})
         print(lst)
         return jsonify(lst)
@@ -73,10 +74,10 @@ def read_article():
 #     return jsonify({"msg": "수정완료 성공", 'status': 200})
 
 
-# #삭제
-# @bp.route('/article/delete', methods=['DELETE'])
-# def delete_articles():
-
-#     models.mycol.delete_one({'_id' : article_id})
+#삭제
+@bp.route('/article/delete', methods=['POST'])
+def delete_articles():
+    body=request.get_json(force=True)['body'].split('"')
+    models.mycol.delete_one({'date' : article_id})
     
-#     return  jsonify({"msg": "삭제성공", 'status': 200})
+    return  jsonify({"msg": "삭제성공", 'status': 200})

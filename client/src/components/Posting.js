@@ -27,6 +27,24 @@ const Posting = ({ postingObj, content }) => {
     }
   };
 
+  // [UPDATE] 게시글 업데이트 핸들러
+  const onUpdatePosting = async ({ postingId, editContent }) => {
+    await axios
+      .post(url + 'article/update', {
+        method: 'POST',
+        body: JSON.stringify({
+          postingId: postingId,
+          editContent: editContent,
+        }),
+      })
+      .then((response) => {
+        console.log(response.data.status);
+      })
+      .catch((error) => {
+        alert('[UPDATE] response 없음');
+      });
+  };
+
   return (
     <div className="posting-container">
       <h4>{content}</h4>
