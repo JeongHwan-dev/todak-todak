@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 import bcrypt
 from flask_cors import CORS
 from .. import models
@@ -7,14 +7,6 @@ from datetime import datetime, timedelta
 from flask_jwt_extended import (JWTManager, jwt_required, create_access_token, get_jwt_identity, unset_jwt_cookies, create_refresh_token)
 
 bp = Blueprint('auth', __name__, url_prefix='/')
-
-
-
-# # bp 테스트
-# @bp.route('/') 
-# def home():
-#     return 'auth page ok'
-
 
 @bp.route('/sign-up', methods=['POST']) 
 def register():
@@ -82,6 +74,29 @@ def login():
             access_token = create_access_token(identity=userEmail)
             refresh_token = create_refresh_token(identity=userEmail)
             print('ok')
+            # session.clear()
+            # session['user_id']=checkpw.id
             return jsonify({'access_token':access_token, 'refresh_token':refresh_token,'status':400})
         else:
             return jsonify({"msg":"비밀번호 불일치", "status":401})
+
+
+@bp.route('/friend', methods=['GET'])  
+def friend():
+    users = models.User.query.all()
+    userlist = []
+    for user in users:
+        userlist.append(user.name)
+    return jsonify({"users":userlist})
+
+
+@bp.route('/chat', methods=['POST'])  
+def chat():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 402
+    else:
+        print('check')
+        username = request.json.get('userName')
+        print('userName:', userName)
+        userinfo=models.User.query.filter_by(name=username).first()
+        return jsonify({"userinfo":userinfo, "status":200})

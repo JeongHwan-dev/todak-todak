@@ -9,6 +9,8 @@ import pymysql
 from flask_cors import CORS
 from pymongo import MongoClient
 
+from .socket import socketio
+
 db = SQLAlchemy()
 migrate = Migrate()
 client = MongoClient("mongodb://localhost:27017/medical")
@@ -27,6 +29,8 @@ def create_app():
 
     #cors
     CORS(app, supports_credentials=True)
+
+    socketio.init_app(app)
 
     # 블루프린트
 # --------------------------------------------------------------------------- #    

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Community from '../components/Community';
+import Community from 'components/Community';
+import Friend from 'components/Chat/Friend';
 import Navigation from 'components/Navigation';
 
 const Home = () => {
@@ -15,6 +16,9 @@ const Home = () => {
       </div>
       <div className="community-container">
         <Community />
+      </div>
+      <div>
+        <Friend />
       </div>
     </div>
   );
