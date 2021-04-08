@@ -1,4 +1,4 @@
-from medical import db
+from medical import db, client
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref
 # from flask.ext.mongoalchemy  import  MongoAlchemy 
@@ -25,7 +25,3 @@ class User(db.Model): #usertable
 #     userid = db.Column(db.Integer, ForeignKey('usertable.id'))
 #     date = db.Column(db.DATE,nullable=False)
 
-
-# mydb = client['medical'] #db name
-# mycol = mydb['community_post'] #collection name
-# community = mycol.insert_one({"userid":"", "date":"", "content":"", "comments":"", "like":""})

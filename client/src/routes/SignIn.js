@@ -25,12 +25,7 @@ function SignIn() {
     }
   };
 
-  // 강제로 Home page로 이동 (임시 함수)
-  const onMoveHome = (event) => {
-    window.location.replace('/community');
-  };
-
-  // 로그인 버튼 핸들러
+  // 로그인 핸들러
   async function onSignInHandler(event) {
     event.preventDefault();
     await axios
@@ -48,6 +43,11 @@ function SignIn() {
           alert('로그인 성공');
           sessionStorage.setItem('accessToken', response.data.access_token);
           sessionStorage.setItem('refreshToken', response.data.refresh_token);
+          sessionStorage.setItem('userid', JSON.stringify(response.data.user_object.id));
+          sessionStorage.setItem('nickname', JSON.stringify(response.data.user_object.nickname));
+          sessionStorage.setItem('email', JSON.stringify(response.data.user_object.email));
+          sessionStorage.setItem('usertype', JSON.stringify(response.data.user_object.usertype));
+
           window.location.replace('/community');
         } else if (response.data.status === 401) {
           alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
@@ -55,7 +55,9 @@ function SignIn() {
           alert('error');
         }
       })
-      .catch((error) => {alert("error for some reason")});
+      .catch((error) => {
+        alert('error for some reason');
+      });
   }
 
   return (
@@ -88,7 +90,6 @@ function SignIn() {
           required
         />
         <br />
-        {/* 추후  onSignInHandler 교체 */}
         <button onClick={onSignInHandler}>로그인</button>
         <button
           onClick={() => {
