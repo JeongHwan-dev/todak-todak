@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import io from "socket.io-client";
 
-const endpoint = "http://localhost:5000";
+const endpoint = "http://localhost:5000/chat";
 
 let socket = io.connect(endpoint);
+let socket2 = io.connect(endpoint + "socekt2");
+
 
 const Chat = ({ location }) => {
   const [name, setName] = useState('');
@@ -31,7 +33,6 @@ const Chat = ({ location }) => {
 
   socket.on("message2", msg => {
     setMessages([...messages, msg]);
-    console.log(messages);
   });
 
   const onChange = (event) => {

@@ -6,8 +6,7 @@ const Friend = () => {
   const url = `http://localhost:5000`;
   // const [user, setUser] = useState("");
   const [users, setUsers] = useState([]);
-  const [name, setName] = useState('harry');
-  const [room, setRoom] = useState('room');
+  const [name, setName] = useState('');
   async function onUserHandler(event) {
     const response = await axios.get(url + '/friend');
     console.log(response.data.users);
@@ -16,7 +15,7 @@ const Friend = () => {
   const userName = users.map(
     (user) => (
         <li>
-          <Link to={`/chat?name=${user}&room=${room}`}>{user}</Link>
+          <Link to={`/chat?name=${user}&room=${user}`}>{user}</Link>
         </li>
     )
   );

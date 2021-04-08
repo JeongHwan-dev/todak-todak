@@ -9,6 +9,7 @@ import pymysql
 from flask_cors import CORS
 from pymongo import MongoClient
 
+# from flask_socketio import disconnect
 from .socket import socketio
 
 db = SQLAlchemy()
@@ -31,6 +32,7 @@ def create_app():
     CORS(app, supports_credentials=True)
 
     socketio.init_app(app)
+    # disconnect()
     # 블루프린트
 # --------------------------------------------------------------------------- #    
     from .views import auth, community, chat
@@ -44,6 +46,7 @@ def create_app():
     app.config['JWT_SECRET_KEY'] = 'todaktodak token'
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(hours=20)
+
 
     jwt = JWTManager(app)
     
