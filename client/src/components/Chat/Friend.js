@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 
 const Friend = () => {
   const url = `http://localhost:5000`;
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const [users, setUsers] = useState([]);
-
+  const [name, setName] = useState('harry');
+  const [room, setRoom] = useState('room');
   async function onUserHandler(event) {
     const response = await axios.get(url + '/friend');
     console.log(response.data.users);
@@ -15,7 +16,7 @@ const Friend = () => {
   const userName = users.map(
     (user) => (
         <li>
-          <Link to="/chatroom">{user}</Link>
+          <Link to={`/chat?name=${user}&room=${room}`}>{user}</Link>
         </li>
     )
   );
@@ -26,29 +27,15 @@ const Friend = () => {
 
   //     return (
   //       <li>
-  //         {/* <button onClick={onChatHandler}>{user}</button> */}
+  //         <button onClick={onChatHandler}>{user}</button>
   //         <button>{user}</button>
   //       </li>
   //     )
   //   }
   // );
 
-  // async function onChatHandler(event) {
-  //   event.preventDefault();
-  //   await axios
-  //     .post(url + '/chat', {
-  //       method: 'POST',
-  //       userName: user,
-  //       withCredentials: true,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       if (response.data.status === 200) {
-  //         alert('채팅방 입장');
-  //         window.location.replace('/chatroom');
-  //       }
-  //     })
-  //     .catch((error) => {alert("error for some reason")});
+  // const onChatHandler = (event) => {
+  //   socket.emit("", user);
   // }
 
   return (

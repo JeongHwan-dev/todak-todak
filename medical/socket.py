@@ -1,12 +1,30 @@
-from flask import Flask;
-from flask_socketio import SocketIO, send, emit
+from flask_socketio import SocketIO, emit, send, join_room, leave_room
 
 socketio = SocketIO(cors_allowed_origins="*")
 
 @socketio.on('message')
-def handle_message(message):
-    print('received message: ' + message)
-    send(message, broadcast=True)
+def handle_message(data):
+    name = data['name']
+    room = data['room']
+    message = data['message']
+    print('name, room, message:', name, room, message)
+    emit("message2", message, broadcast=True)
+
+@socketio.on('join')
+def on_join(data):
+    name = data['name']
+    room = data['room']
+    join_room(room)
+    emit("message2", name + ' 님이 들어왔습니다.', room=room, broadcast=True)
+    # send(message, broadcast=True)
+
+@socketio.on('leave')
+def on_leave(data):
+    name = data['name']
+    room = data['room']
+    leave_room(room)
+    print(name + "님이 나갔습니다.")
+    send(name + ' 님이 나갔습니다.', room=room, broadcast=True)
 
 # user_no = 1
 

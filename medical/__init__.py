@@ -16,7 +16,6 @@ migrate = Migrate()
 client = MongoClient("mongodb://localhost:27017/medical")
 # --------------------------------------------------------------------------- #
 
-
 def create_app():
     app = Flask(__name__)
     # orm
@@ -25,19 +24,20 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
+
     from . import models
 
     #cors
     CORS(app, supports_credentials=True)
 
     socketio.init_app(app)
-
     # 블루프린트
 # --------------------------------------------------------------------------- #    
-    from .views import auth, community
+    from .views import auth, community, chat
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(community.bp)    
+    app.register_blueprint(chat.bp)
     bcrypt = Bcrypt(app)
 
 # Setup the Flask-JWT-Extended extension
@@ -46,7 +46,7 @@ def create_app():
     app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(hours=20)
 
     jwt = JWTManager(app)
-
+    
     return app
 
 

@@ -16,13 +16,12 @@ def register():
         
     else:
         print('check')
-        body=request.get_json(force=True)['body'].split('"')
+        signup_data = request.get_json(force=True)['data']
+        email = signup_data["email"]
+        password = signup_data["password"]
+        name = signup_data["name"]
+        nickname=signup_data["nickname"]
 
-
-        email = body[3]
-        password = body[7]
-        name = body[11]
-        nickname=body[15]
 
         print(email,password, name, nickname) #확인용....나중에 삭제할것
         
@@ -56,9 +55,10 @@ def login():
         return jsonify({"msg": "Missing JSON in request"}), 402
     else:
         print('check')
-        body=request.get_json(force=True)['body'].split('"')
-        userEmail = body[3]
-        userPassword = body[7]
+        login_data=request.get_json(force=True)['data']
+        userEmail = login_data["userEmail"]
+        userPassword = login_data["userPassword"]
+
         print(userEmail, userPassword)
         if not userEmail:
             return jsonify({"msg": "아이디 치세요", 'status':401})
@@ -79,24 +79,3 @@ def login():
             return jsonify({'access_token':access_token, 'refresh_token':refresh_token,'status':400})
         else:
             return jsonify({"msg":"비밀번호 불일치", "status":401})
-
-
-@bp.route('/friend', methods=['GET'])  
-def friend():
-    users = models.User.query.all()
-    userlist = []
-    for user in users:
-        userlist.append(user.name)
-    return jsonify({"users":userlist})
-
-
-@bp.route('/chat', methods=['POST'])  
-def chat():
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 402
-    else:
-        print('check')
-        username = request.json.get('userName')
-        print('userName:', userName)
-        userinfo=models.User.query.filter_by(name=username).first()
-        return jsonify({"userinfo":userinfo, "status":200})
