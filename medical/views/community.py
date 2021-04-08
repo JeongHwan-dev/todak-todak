@@ -78,12 +78,12 @@ def modify_articles():
     print(body)
     content = body['editContent']
     postingId=body['postingId']
-    date=datetime.now()
+    date=(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     mycol.update_one(
-                            {'date': postingId}, 
-                            {'$set':{'content' : content, 'date' : date}}
-                        )
+                    {'date': postingId}, 
+                    {'$set':{'content' : content, 'date' : date}}
+                    )
     print('update_ok')
     return jsonify({"msg": "수정완료 성공", 'status': 200})
 
