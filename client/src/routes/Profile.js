@@ -1,5 +1,6 @@
 import React from 'react';
 
+// 마이페이지
 const Profile = () => {
   return (
     <div>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import 'components/css/Posting.css';
 
 // 포스트 카드 컴포넌트
-const Posting = ({ postingObj, content }) => {
+const Posting = ({ postingObj, content, isOwner }) => {
   const url = `http://localhost:5000`;
   const [editing, setEditing] = useState(false);
   const [newPosting, setNewPosting] = useState(postingObj.content);
@@ -22,11 +23,12 @@ const Posting = ({ postingObj, content }) => {
           editContent: newPosting,
         }),
       })
-      .then((response) => {
-        console.log(response.data.status);
+      .then(() => {
+        console.log('[UPDATE] 게시글 수정');
+        window.location.replace('/community');
       })
-      .catch((error) => {
-        alert('[UPDATE] response 없음');
+      .catch(() => {
+        alert('[UPDATE] response (x)');
       });
     setEditing(false);
   };
@@ -43,11 +45,12 @@ const Posting = ({ postingObj, content }) => {
             postingId: postingObj.date,
           }),
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
+          console.log('[DELETE] 게시글 삭제');
+          window.location.replace('/community');
         })
-        .catch((error) => {
-          alert('[DELETE] response 없음');
+        .catch(() => {
+          alert('[DELETE] response (x)');
         });
     }
   };
@@ -64,17 +67,21 @@ const Posting = ({ postingObj, content }) => {
     <div>
       {editing ? (
         <>
-          <form>
-            <input
-              type="text"
-              placeholder="수정할 내용을 입력해주세요."
-              value={newPosting}
-              required
-              onChange={onChange}
-            />
-            <button onClick={onUpdatePosting}>완료</button>
-          </form>
-          <button onClick={toggleEditing}>취소</button>
+          {isOwner && (
+            <>
+              <form>
+                <input
+                  type="text"
+                  placeholder="수정할 내용을 입력해주세요."
+                  value={newPosting}
+                  required
+                  onChange={onChange}
+                />
+                <button onClick={onUpdatePosting}>완료</button>
+              </form>
+              <button onClick={toggleEditing}>취소</button>
+            </>
+          )}
         </>
       ) : (
         <>
@@ -85,8 +92,12 @@ const Posting = ({ postingObj, content }) => {
               <p>작성자: {postingObj.nickname}</p>
               <p>작성일: {postingObj.date}</p>
             </div>
-            <button onClick={onDeletePosting}>삭제</button>
-            <button onClick={toggleEditing}>수정</button>
+            {isOwner && (
+              <>
+                <button onClick={onDeletePosting}>삭제</button>
+                <button onClick={toggleEditing}>수정</button>
+              </>
+            )}
           </div>
         </>
       )}

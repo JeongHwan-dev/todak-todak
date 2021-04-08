@@ -7,11 +7,9 @@ import axios from 'axios';
 const Community = () => {
   const url = `http://localhost:5000`;
   const [posting, setPosting] = useState(''); // 게시글(내용)
-  const [postingId, setPostingId] = useState(1);
-  const [newContent, setNewContent] = useState(''); // 수정 게시글(내용)
-  const [newPosting, setNewPosting] = useState({}); // 새로운 게시글
-  // 게시글 배열
-  const [postings, setPostings] = useState([]);
+  const [newPosting, setNewPosting] = useState(''); // 새로운 게시글
+
+  const [postings, setPostings] = useState([]); // 게시글 배열
   const [currentPage, setCurrentPage] = useState(0);
 
   // 새 게시글 작성 후 글 올리기하면 호출
@@ -30,31 +28,29 @@ const Community = () => {
   // [CREATE] 게시글 생성 핸들러 ('글 올리기'버튼 클릭 시 호출)
   const onCreatePosting = async (event) => {
     event.preventDefault();
-    setNewPosting({ content: posting, date: Date.now(), userid: sessionStorage.userToken });
-    setPostingId(postingId);
-    console.log(sessionStorage.userid);
-
+    setPosting(''); // 입력란 비우기
     await axios
       .post(url + '/article/post', {
         method: 'POST',
         body: JSON.stringify({
           userid: sessionStorage.userid,
           nickname: sessionStorage.nickname,
-          usertype: '토닥이',
+          usertype: '토닥이', // 추후 변경
           content: posting,
         }),
         withCredentials: true,
       })
-      .then((response) => {
-        console.log(response.data.status);
+      .then(() => {
+        console.log('[CREATE] 새 게시글 생성');
+        setNewPosting(posting);
       })
-      .catch((error) => {
-        alert('[CREATE] response 없음');
+      .catch(() => {
+        alert('[CREATE] response (x)');
       });
   };
 
   // [READ] 게시글 DB에서 불러오기 핸들러
-  const onReadPosting = async (event) => {
+  const onReadPosting = async () => {
     await axios
       .post(url + '/article/read', {
         method: 'POST',
@@ -63,18 +59,18 @@ const Community = () => {
         }),
       })
       .then((response) => {
-        console.log(response.data);
+        console.log('[READ] 게시글 목록 Reloading');
+        response.data.reverse();
         setPostings(response.data);
       })
-      .catch((error) => {
-        alert('[READ] response 없음');
+      .catch(() => {
+        alert('[READ] response (x)');
       });
   };
 
   return (
     <div className="community-container">
       <h2>커뮤니티 포스팅</h2>
-      {/* 게식글 생성 컴포넌트 */}
       <div className="create-posting-container">
         <form>
           <input
@@ -88,18 +84,14 @@ const Community = () => {
         </form>
       </div>
       <div className="postings-container">
-        {/* 새로 등록한 게시글 */}
-        <div className="latest-posting-container">
-          {newPosting === '' ? (
-            <></>
-          ) : (
-            <Posting key="000" postingObj={newPosting} content={newPosting.content} />
-          )}{' '}
-        </div>
-        {/* DB에 저장되어 있는 게시글들 */}
         <div className="postings-array-container">
           {postings.map((posting) => (
-            <Posting key={posting.date} postingObj={posting} content={posting.content} />
+            <Posting
+              key={posting.date}
+              postingObj={posting}
+              content={posting.content}
+              isOwner={posting.userid === sessionStorage.userid}
+            />
           ))}
         </div>
       </div>
