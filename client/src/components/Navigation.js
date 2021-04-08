@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // 네비게이션 컴포넌트
 const Navigation = () => {
-  // const onLog
+  const onLogOut = () => {};
 
   return (
     <div>

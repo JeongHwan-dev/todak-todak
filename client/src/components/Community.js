@@ -32,6 +32,8 @@ const Community = () => {
     event.preventDefault();
     setNewPosting({ content: posting, date: Date.now(), userid: sessionStorage.userToken });
     setPostingId(postingId);
+    console.log(sessionStorage.userid);
+
     await axios
       .post(url + '/article/post', {
         method: 'POST',
@@ -66,24 +68,6 @@ const Community = () => {
       })
       .catch((error) => {
         alert('[READ] response 없음');
-      });
-  };
-
-  // [DELETE] 게시글 삭제 핸들러
-  const onDeletePosting = async ({ event, postingId }) => {
-    event.preventDefault();
-    await axios
-      .post(url + '/article/delete', {
-        method: 'POST',
-        body: JSON.stringify({
-          postingId: postingId,
-        }),
-      })
-      .then((response) => {
-        console.log(response.data.status);
-      })
-      .catch((error) => {
-        alert('[DELETE] response 없음');
       });
   };
 

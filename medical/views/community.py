@@ -71,21 +71,21 @@ def read_article():
 #         # print(article)
 #         return jsonify({})
 
-# #수정버튼 클릭
-# @bp.route('/article/update', methods=['PUT'])
-# def modify_articles(article_id):
+#수정버튼 클릭
+@bp.route('/article/update', methods=['POST'])
+def modify_articles():
+    body=literal_eval(request.get_json()['body'])
+    print(body)
+    content = body['editContent']
+    postingId=body['postingId']
+    date=datetime.now()
 
-#     body=literal_eval(request.get_json()['body'])
-
-#     content = body[]
-#     date=datetime.now()
-
-#     models.mycolupdate_one(
-#                             {'_id': article_id }, 
-#                             {'$set':{'content' : content, 'date' : ''}}
-#                         )
-
-#     return jsonify({"msg": "수정완료 성공", 'status': 200})
+    mycol.update_one(
+                            {'date': postingId}, 
+                            {'$set':{'content' : content, 'date' : date}}
+                        )
+    print('update_ok')
+    return jsonify({"msg": "수정완료 성공", 'status': 200})
 
 
 #삭제
