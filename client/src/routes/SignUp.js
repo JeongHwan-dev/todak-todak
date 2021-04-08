@@ -44,10 +44,10 @@ function SignUp() {
   }, [passwordCheck]);
 
   // 회원가입 버튼 핸들러
-  async function onSignUpHandler(event) {
+  const onSignUpHandler = (event) => {
     event.preventDefault();
     if (password === passwordCheck) {
-      await axios
+      axios
         .post(url + '/sign-up', {
           method: 'POST',
           body: JSON.stringify({
@@ -75,7 +75,7 @@ function SignUp() {
           alert('error');
         });
     }
-  }
+  };
 
   return (
     <div

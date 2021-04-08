@@ -84,16 +84,14 @@ const Community = () => {
         </form>
       </div>
       <div className="postings-container">
-        <div className="postings-array-container">
-          {postings.map((posting) => (
-            <Posting
-              key={posting.date}
-              postingObj={posting}
-              content={posting.content}
-              isOwner={posting.userid === sessionStorage.userid}
-            />
-          ))}
-        </div>
+        {postings.map((posting) => (
+          <Posting
+            key={posting.date}
+            postingObj={posting}
+            content={posting.content}
+            isOwner={posting.userid === sessionStorage.userid}
+          />
+        ))}
       </div>
     </div>
   );

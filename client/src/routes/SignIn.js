@@ -26,9 +26,9 @@ function SignIn() {
   };
 
   // 로그인 핸들러
-  async function onSignInHandler(event) {
+  const onSignInHandler = (event) => {
     event.preventDefault();
-    await axios
+    axios
       .post(url + '/', {
         method: 'POST',
         body: JSON.stringify({
@@ -38,7 +38,6 @@ function SignIn() {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
         if (response.data.status === 400) {
           alert('로그인 성공');
           sessionStorage.setItem('accessToken', response.data.access_token);
@@ -55,10 +54,10 @@ function SignIn() {
           alert('error');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         alert('error for some reason');
       });
-  }
+  };
 
   return (
     <div

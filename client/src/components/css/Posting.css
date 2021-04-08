@@ -3,3 +3,17 @@
   height: 100%;
   border: 1px solid black;
 }
+
+.community-btn {
+  width: 100px;
+  height: 30px;
+  border: 1px solid orange;
+  border-radius: 0.25rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  margin-left: 5px;
+  background: white;
+  color: orange;
+  font-size: 1em;
+}

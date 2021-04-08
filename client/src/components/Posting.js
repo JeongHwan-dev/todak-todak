@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
 import axios from 'axios';
 import 'components/css/Posting.css';
 
@@ -94,8 +93,12 @@ const Posting = ({ postingObj, content, isOwner }) => {
             </div>
             {isOwner && (
               <>
-                <button onClick={onDeletePosting}>삭제</button>
-                <button onClick={toggleEditing}>수정</button>
+                <button className="community-btn" onClick={onDeletePosting}>
+                  삭제
+                </button>
+                <button className="community-btn" onClick={toggleEditing}>
+                  수정
+                </button>
               </>
             )}
           </div>
