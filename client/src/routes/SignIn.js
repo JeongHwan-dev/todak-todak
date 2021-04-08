@@ -43,10 +43,10 @@ function SignIn() {
           alert('로그인 성공');
           sessionStorage.setItem('accessToken', response.data.access_token);
           sessionStorage.setItem('refreshToken', response.data.refresh_token);
-          sessionStorage.setItem('userid', response.data.user_object.id);
-          sessionStorage.setItem('nickname', response.data.user_object.nickname);
-          sessionStorage.setItem('email', response.data.user_object.email);
-          sessionStorage.setItem('usertype', response.data.user_object.usertype);
+          sessionStorage.setItem('userid', JSON.stringify(response.data.user_object.id));
+          sessionStorage.setItem('nickname', JSON.stringify(response.data.user_object.nickname));
+          sessionStorage.setItem('email', JSON.stringify(response.data.user_object.email));
+          sessionStorage.setItem('usertype', JSON.stringify(response.data.user_object.usertype));
 
           window.location.replace('/community');
         } else if (response.data.status === 401) {

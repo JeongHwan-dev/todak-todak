@@ -4,7 +4,8 @@ import bcrypt
 from flask_cors import CORS
 from .. import models
 from datetime import datetime, timedelta
-
+import json
+from ast import literal_eval
 
 bp = Blueprint('community', __name__, url_prefix='/')
 
@@ -22,35 +23,40 @@ mycol = mydb['community_post'] #collection name
 #post, create
 @bp.route('/article/post', methods=['POST']) 
 def create_article():
-    print('ok')
-    body=request.get_json()['body'].split('"')
     
-    userid=body[3]
-    content=body[7]
-    date=(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    body=literal_eval(request.get_json()['body'])
+    print(body)
+    userid=body['userid']
+    nickname=body['nickname']
+    usertype=body['usertype']
+    content=body['content']
 
+    date=(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    print(content, date,type(userid))
     community = mycol.insert_one({ 
 
                                     "userid":userid,
+                                    "nickname": nickname,
+                                    "usertype": usertype,
                                     "content":content,
                                     "date":date
                                         
                                 })
-
+    print('creat_ok')
     return jsonify({"msg": "글생성 성공", 'status': 200})
 
 
 @bp.route('/article/read', methods=['GET', 'POST'])
 def read_article():
     if request.method=='POST':
+        print('read_ok')
         lst=[]
         for m in mycol.find():
             lst.append({"content" : m['content'], "userid" : m["userid"], "date":m["date"]})
-        print(lst)
         return jsonify(lst)
 
 #     else:
-#         body=request.get_json(force=True)['body'].split('"')
+#         body=literal_eval(request.get_json()['body'])
 #         print(body)
 #         # currentPage
 #         # article = list(models.mycol.find())
@@ -61,7 +67,7 @@ def read_article():
 # @bp.route('/article/update', methods=['PUT'])
 # def modify_articles(article_id):
 
-#     body=request.get_json(force=True)['body'].split('')
+#     body=literal_eval(request.get_json()['body'])
 
 #     content = body[]
 #     date=datetime.now()
@@ -77,7 +83,7 @@ def read_article():
 #삭제
 @bp.route('/article/delete', methods=['POST'])
 def delete_articles():
-    body=request.get_json(force=True)['body'].split('"')
+    body=literal_eval(request.get_json()['body'])
     models.mycol.delete_one({'date' : article_id})
     
     return  jsonify({"msg": "삭제성공", 'status': 200})

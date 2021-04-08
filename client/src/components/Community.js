@@ -36,8 +36,9 @@ const Community = () => {
       .post(url + '/article/post', {
         method: 'POST',
         body: JSON.stringify({
-          userid: sessionStorage.id,
+          userid: sessionStorage.userid,
           nickname: sessionStorage.nickname,
+          usertype: '토닥이',
           content: posting,
         }),
         withCredentials: true,
