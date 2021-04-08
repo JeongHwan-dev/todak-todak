@@ -7,7 +7,7 @@ const Posting = ({ postingObj, content }) => {
   const url = `http://localhost:5000`;
 
   // [DELETE] 게시글 삭제 핸들러
-  const onDeletePosting = async ({ postingId }) => {
+  const onDeletePosting = async () => {
     const ok = window.confirm('삭제하시겠습니까?');
     console.log(ok);
     if (ok) {
@@ -15,7 +15,7 @@ const Posting = ({ postingObj, content }) => {
         .post(url + '/article/delete', {
           method: 'POST',
           body: JSON.stringify({
-            postingId: postingId,
+            postingId: postingObj.date,
           }),
         })
         .then((response) => {
@@ -47,8 +47,12 @@ const Posting = ({ postingObj, content }) => {
 
   return (
     <div className="posting-container">
-      <h4>{content}</h4>
-      <span>{postingObj.date}</span>
+      <div className="posting-header-container">*{postingObj.usertype}*</div>
+      <div className="posting-body-container">글 내용: {content}</div>
+      <div className="posting-footer-container">
+        <p>작성자: {postingObj.nickname}</p>
+        <p>작성 날짜: {postingObj.date}</p>
+      </div>
       <button onClick={onDeletePosting}>삭제</button>
       <button>수정</button>
     </div>

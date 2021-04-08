@@ -52,7 +52,15 @@ def read_article():
         print('read_ok')
         lst=[]
         for m in mycol.find():
-            lst.append({"content" : m['content'], "userid" : m["userid"], "date":m["date"]})
+            print(m['userid'])
+            lst.append({
+                "userid":m["userid"],
+                "nickname":m["nickname"],
+                "usertype":m["usertype"],
+                "content":m["content"],
+                "date":m["date"]
+                })
+        print('read.ok')
         return jsonify(lst)
 
 #     else:
@@ -84,6 +92,8 @@ def read_article():
 @bp.route('/article/delete', methods=['POST'])
 def delete_articles():
     body=literal_eval(request.get_json()['body'])
-    models.mycol.delete_one({'date' : article_id})
+    date=body['postingId']
+
+    mycol.delete_one({'date' : date})
     
     return  jsonify({"msg": "삭제성공", 'status': 200})
