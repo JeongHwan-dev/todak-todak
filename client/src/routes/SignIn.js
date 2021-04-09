@@ -26,7 +26,7 @@ function SignIn() {
   };
 
   // 로그인 핸들러
-  async function onSignInHandler(event) {
+  const onSignInHandler = async (event) => {
     event.preventDefault();
     await axios
       .post(url + '/', {
@@ -38,7 +38,6 @@ function SignIn() {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
         if (response.data.status === 400) {
           alert('로그인 성공');
           sessionStorage.setItem('accessToken', response.data.access_token);
@@ -55,10 +54,10 @@ function SignIn() {
           alert('error');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         alert('error for some reason');
       });
-  }
+  };
 
   return (
     <div
@@ -90,16 +89,19 @@ function SignIn() {
           required
         />
         <br />
-        <button onClick={onSignInHandler}>로그인</button>
-        <button
-          onClick={() => {
-            history.push({
-              pathname: '/sign-up',
-            });
-          }}
-        >
-          회원가입
-        </button>
+        <div className="sign-btn-container">
+          <button
+            id="signup-btn"
+            onClick={() => {
+              history.push({
+                pathname: '/sign-up',
+              });
+            }}
+          >
+            회원가입
+          </button>
+          <button onClick={onSignInHandler}>로그인</button>
+        </div>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
 import axios from 'axios';
 import 'components/css/Posting.css';
+import { storageService } from 'fBase';
 
 // 포스트 카드 컴포넌트
 const Posting = ({ postingObj, content, isOwner }) => {
@@ -52,6 +52,8 @@ const Posting = ({ postingObj, content, isOwner }) => {
         .catch(() => {
           alert('[DELETE] response (x)');
         });
+      // Firebase Storage에서 삭제
+      await storageService.refFromURL(postingObj.attachmentUrl).delete();
     }
   };
 
@@ -69,35 +71,48 @@ const Posting = ({ postingObj, content, isOwner }) => {
         <>
           {isOwner && (
             <>
-              <form>
-                <input
-                  type="text"
-                  placeholder="수정할 내용을 입력해주세요."
-                  value={newPosting}
-                  required
-                  onChange={onChange}
-                />
-                <button onClick={onUpdatePosting}>완료</button>
-              </form>
-              <button onClick={toggleEditing}>취소</button>
+              <div id="posting-container">
+                <form>
+                  <input
+                    type="text"
+                    placeholder="수정할 내용을 입력해주세요."
+                    value={newPosting}
+                    required
+                    onChange={onChange}
+                  />
+                  <div className="community-btn-container">
+                    <button onClick={toggleEditing}>취소</button>
+                    <button onClick={onUpdatePosting}>완료</button>
+                  </div>
+                </form>
+              </div>
             </>
           )}
         </>
       ) : (
         <>
-          <div className="posting-container">
+          <div id="posting-container">
             <div className="posting-header-container">유저 타입: {postingObj.usertype}</div>
-            <div className="posting-body-container">글 내용: {content}</div>
+            <div className="posting-body-container">
+              <div className="posting-content">글 내용: {content}</div>
+              {postingObj.attachmentUrl && (
+                <div className="posting-attachment">
+                  <img src={postingObj.attachmentUrl} width="500px" height="500px" />
+                </div>
+              )}
+            </div>
             <div className="posting-footer-container">
               <p>작성자: {postingObj.nickname}</p>
               <p>작성일: {postingObj.date}</p>
             </div>
-            {isOwner && (
-              <>
-                <button onClick={onDeletePosting}>삭제</button>
-                <button onClick={toggleEditing}>수정</button>
-              </>
-            )}
+            <div className="community-btn-container">
+              {isOwner && (
+                <>
+                  <button onClick={onDeletePosting}>삭제</button>
+                  <button onClick={toggleEditing}>수정</button>
+                </>
+              )}
+            </div>
           </div>
         </>
       )}

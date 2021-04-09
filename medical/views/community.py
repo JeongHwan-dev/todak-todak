@@ -30,6 +30,8 @@ def create_article():
     nickname=body['nickname']
     usertype=body['usertype']
     content=body['content']
+    attachmentUrl=body['attachmentUrl']
+
 
     date=(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     print(content, date,type(userid))
@@ -39,8 +41,8 @@ def create_article():
                                     "nickname": nickname,
                                     "usertype": usertype,
                                     "content":content,
+                                    "attachmentUrl":attachmentUrl,
                                     "date":date
-                                        
                                 })
     print('creat_ok')
     return jsonify({"msg": "글생성 성공", 'status': 200})
@@ -58,6 +60,7 @@ def read_article():
                 "nickname":m["nickname"],
                 "usertype":m["usertype"],
                 "content":m["content"],
+                "attachmentUrl": m["attachmentUrl"],
                 "date":m["date"]
                 })
         print('read.ok')
