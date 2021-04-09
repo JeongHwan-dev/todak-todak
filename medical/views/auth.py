@@ -74,8 +74,17 @@ def login():
             access_token = create_access_token(identity=userEmail)
             refresh_token = create_refresh_token(identity=userEmail)
             print('ok')
-            # session.clear()
-            # session['user_id']=checkpw.id
-            return jsonify({'access_token':access_token, 'refresh_token':refresh_token,'status':400})
+            user_object={
+                "id": checkpw.id,
+                "email": checkpw.email,
+                "nickname": checkpw.nickname,
+                "usertype": checkpw.usertype
+            }
+
+            return jsonify({
+                'access_token':access_token,
+                'refresh_token':refresh_token,
+                'user_object':user_object,
+                'status':400})
         else:
             return jsonify({"msg":"비밀번호 불일치", "status":401})

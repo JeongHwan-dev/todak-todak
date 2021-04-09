@@ -6,36 +6,27 @@ const Friend = () => {
   const url = `http://localhost:5000`;
   // const [user, setUser] = useState("");
   const [users, setUsers] = useState([]);
-  const [name, setName] = useState('');
+  const [rooms, setRooms] = useState([]);
+  
   async function onUserHandler(event) {
     const response = await axios.get(url + '/friend');
-    console.log(response.data.users);
+    console.log(sessionStorage.userid)
     setUsers(response.data.users);
+    setRooms(response.data.rooms);
   }
+
+  const onMoveRoom = (e) => {
+    for room[]
+    if (sessionStorage.userid)
+  }
+
   const userName = users.map(
     (user) => (
         <li>
-          <Link to={`/chat?name=${user}&room=${user}`}>{user}</Link>
+          <Link onClick={onMoveRoom} to={`/chat?name=${user}&room=${user}`}>{user}</Link>
         </li>
     )
   );
-
-  // const userName = users.map(
-  //   (user) => {
-  //     // setUser(user);
-
-  //     return (
-  //       <li>
-  //         <button onClick={onChatHandler}>{user}</button>
-  //         <button>{user}</button>
-  //       </li>
-  //     )
-  //   }
-  // );
-
-  // const onChatHandler = (event) => {
-  //   socket.emit("", user);
-  // }
 
   return (
     <>

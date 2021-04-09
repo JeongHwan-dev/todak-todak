@@ -11,10 +11,14 @@ bp = Blueprint('chat', __name__, url_prefix='/')
 @bp.route('/friend', methods=['GET'])  
 def friend():
     users = models.User.query.all()
+    rooms = models.Channel.filter_by()
     userlist = []
+    roomlist = []
     for user in users:
         userlist.append(user.name)
-    return jsonify({"users":userlist})
+    for room in rooms:
+        roomlist.append([room.id, room.userlist])
+    return jsonify({"users":userlist, "rooms":roomlist})
 
 
 @bp.route('/chat', methods=['POST'])  

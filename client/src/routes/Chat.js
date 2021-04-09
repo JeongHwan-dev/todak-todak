@@ -17,7 +17,6 @@ const Chat = ({ location }) => {
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
     console.log(location.search);
-
     setRoom(room);
     setName(name);
 
@@ -38,7 +37,7 @@ const Chat = ({ location }) => {
   const onChange = (event) => {
     setMessage(event.target.value);
   };
-
+  
   const onClick = () => {
     socket.emit("message", { message, name, room });
     setMessage("");
