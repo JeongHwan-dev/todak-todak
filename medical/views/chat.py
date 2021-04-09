@@ -63,10 +63,10 @@ def room():
             models.db.session.commit()
 
             roominfo2 = models.Channel.query.filter_by(
-                user_one=lst[0], user_two=lst[1]).first()
+            user_one=lst[0], user_two=lst[1]).first()
 
             return jsonify({"msg": "방 생성 성공", "roomid": roominfo2.id, 'status': 300})
         else:
             roomid = roominfo.id
 
-            return jsonify({"roomid": roomid, "status": 200})
+            return jsonify({"roomid": roomid, "status": 300})

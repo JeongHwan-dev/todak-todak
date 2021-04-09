@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Community from 'components/Community';
-import Friend from 'components/Chat/Friend';
+import Friend from 'components/Friend';
 import Navigation from 'components/Navigation';
 
 const Home = () => {

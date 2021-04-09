@@ -3,10 +3,7 @@ import queryString from 'query-string';
 import io from "socket.io-client";
 
 const endpoint = "http://localhost:5000/chat";
-
-let socket = io.connect(endpoint);
-let socket2 = io.connect(endpoint + "socekt2");
-
+const socket = io.connect(endpoint);
 
 const Chat = ({ location }) => {
   const [name, setName] = useState('');
@@ -25,9 +22,6 @@ const Chat = ({ location }) => {
         alert(error);
       }
     });
-
-    return socket.emit('leave', { name, room });
-
   }, [endpoint, location.search]);
 
   socket.on("message2", msg => {
