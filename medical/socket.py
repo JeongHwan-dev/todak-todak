@@ -15,24 +15,6 @@ def handle_message(data):
     print('name, room, message:', name, room, message)
     emit("message2", message, room=room, broadcast=True)
 
-
-@socketio.on('join', namespace='/chat')
-def on_join(data):
-    name = data['name']
-    room = data['room']
-    join_room(room)
-    emit("message2", name + ' 님이 들어왔습니다.', room=room, broadcast=True)
-    # send(message, broadcast=True)
-
-
-@socketio.on('leave', namespace='/chat')
-def on_leave(data):
-    name = data['name']
-    room = data['room']
-    leave_room(room)
-    print(name + "님이 나갔습니다.")
-    send(name + ' 님이 나갔습니다.', room=room, broadcast=True)
-
 # if __name__ == '__main__':
 #     socketio.run(app, port=5001)
 

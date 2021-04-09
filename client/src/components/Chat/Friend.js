@@ -11,6 +11,7 @@ const Friend = () => {
   // const [user, setUser] = useState("");
   const [users, setUsers] = useState([]);
 
+
   async function onUserHandler(event) {
     const response = await axios.get(url + '/friend');
     console.log(sessionStorage.userid)
