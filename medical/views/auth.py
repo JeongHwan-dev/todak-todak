@@ -53,7 +53,7 @@ def register():
         return jsonify({'msg': 'complete'})
 
 
-@bp.route('/sign-in', methods=['POST'])
+@bp.route('/', methods=['POST'])
 def login():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 402
