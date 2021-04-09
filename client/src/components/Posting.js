@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'components/css/Posting.css';
+import { storageService } from 'fBase';
 
 // 포스트 카드 컴포넌트
 const Posting = ({ postingObj, content, isOwner }) => {
@@ -51,6 +52,8 @@ const Posting = ({ postingObj, content, isOwner }) => {
         .catch(() => {
           alert('[DELETE] response (x)');
         });
+      // Firebase Storage에서 삭제
+      await storageService.refFromURL(postingObj.attachmentUrl).delete();
     }
   };
 
@@ -68,7 +71,7 @@ const Posting = ({ postingObj, content, isOwner }) => {
         <>
           {isOwner && (
             <>
-              <div className="posting-container">
+              <div id="posting-container">
                 <form>
                   <input
                     type="text"
@@ -88,9 +91,16 @@ const Posting = ({ postingObj, content, isOwner }) => {
         </>
       ) : (
         <>
-          <div className="posting-container">
+          <div id="posting-container">
             <div className="posting-header-container">유저 타입: {postingObj.usertype}</div>
-            <div className="posting-body-container">글 내용: {content}</div>
+            <div className="posting-body-container">
+              <div className="posting-content">글 내용: {content}</div>
+              {postingObj.attachmentUrl && (
+                <div className="posting-attachment">
+                  <img src={postingObj.attachmentUrl} width="500px" height="500px" />
+                </div>
+              )}
+            </div>
             <div className="posting-footer-container">
               <p>작성자: {postingObj.nickname}</p>
               <p>작성일: {postingObj.date}</p>

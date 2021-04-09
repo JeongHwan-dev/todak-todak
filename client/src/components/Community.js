@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Posting from 'components/Posting';
 import 'components/css/Community.css';
 import axios from 'axios';
+import { storageService } from 'fBase';
+import { v4 as uuidv4 } from 'uuid';
 
 // 커뮤니티 컴포넌트
 const Community = () => {
@@ -10,7 +12,7 @@ const Community = () => {
   const [newPosting, setNewPosting] = useState(''); // 새로운 게시글
   const [postings, setPostings] = useState([]); // 게시글 배열
   const [currentPage, setCurrentPage] = useState(0);
-  const [attachment, setAttachment] = useState(); // 첨부파일
+  const [attachment, setAttachment] = useState(''); // 첨부파일
 
   // 새 게시글 작성 후 글 올리기하면 호출
   useEffect(() => {
@@ -28,7 +30,14 @@ const Community = () => {
   // [CREATE] 게시글 생성 핸들러 ('글 올리기'버튼 클릭 시 호출)
   const onCreatePosting = async (event) => {
     event.preventDefault();
-    setPosting(''); // 입력란 비우기
+    let attachmentUrl = '';
+
+    if (attachment !== '') {
+      const attachmentRef = storageService.ref().child(`${sessionStorage.userid}/${uuidv4()}`);
+      const response = await attachmentRef.putString(attachment, 'data_url');
+      attachmentUrl = await response.ref.getDownloadURL();
+    }
+    console.log(attachmentUrl);
     await axios
       .post(url + '/article/post', {
         method: 'POST',
@@ -37,6 +46,7 @@ const Community = () => {
           nickname: sessionStorage.nickname,
           usertype: '토닥이', // 추후 변경
           content: posting,
+          attachmentUrl: attachmentUrl,
         }),
         withCredentials: true,
       })
@@ -47,6 +57,9 @@ const Community = () => {
       .catch(() => {
         alert('[CREATE] response (x)');
       });
+
+    setPosting(''); // 입력란 비우기
+    setAttachment('');
   };
 
   // [READ] 게시글 DB에서 불러오기 핸들러
@@ -68,11 +81,13 @@ const Community = () => {
       });
   };
 
+  // 첨부파일 업로드 핸들러
   const onFileChange = (event) => {
     const {
       target: { files },
     } = event;
     const theFile = files[0];
+    console.log(files[0]);
     const reader = new FileReader();
 
     reader.onloadend = (finishedEvent) => {
@@ -84,12 +99,13 @@ const Community = () => {
     reader.readAsDataURL(theFile);
   };
 
+  // 첨부파일 Clear 핸들러
   const onClearAttachment = () => setAttachment(null);
 
   return (
-    <div className="community-container">
-      <h2>커뮤니티 포스팅</h2>
-      <div className="create-posting-container">
+    <div id="community-container">
+      <h2>우리동네 커뮤니티</h2>
+      <div id="create-posting-container">
         <form>
           <input
             type="text"
@@ -98,10 +114,10 @@ const Community = () => {
             placeholder="내용을 입력하세요."
             maxLength={120}
           />
-          <input type="file" accept="image/*" onChange={onFileChange} />
+          <input id="attachment-input" type="file" accept="image/*" onChange={onFileChange} />
           {attachment && (
             <div>
-              <img src={attachment} width="100px" height="100px" />
+              <img src={attachment} width="200px" height="150px" />
               <button onClick={onClearAttachment}>지우기</button>
             </div>
           )}

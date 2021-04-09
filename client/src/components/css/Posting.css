@@ -1,7 +1,10 @@
-.posting-container {
-  width: 500px;
+#posting-container {
+  width: 520px;
   height: 100%;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   border: 1px solid gray;
   border-radius: 0.5rem;
   margin-top: 10px;
@@ -16,7 +19,6 @@
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 10px;
-  margin-left: 5px;
   background: white;
   color: orange;
   font-size: 1em;
