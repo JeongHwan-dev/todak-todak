@@ -8,9 +8,7 @@ const Navigation = () => {
 
   // 로그아웃 핸들러
   const onLogOut = () => {
-    // 세션 스토리지 비우고
     sessionStorage.clear();
-    // 로그인 페이지로 이동
     history.push({
       pathname: '/',
     });
@@ -18,7 +16,7 @@ const Navigation = () => {
 
   return (
     <div>
-      <Link to="/profile">마이 페이지</Link>
+      <Link to="/mypage">마이 페이지</Link>
       <button onClick={onLogOut}>로그아웃</button>
     </div>
   );

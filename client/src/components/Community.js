@@ -12,10 +12,10 @@ const Community = () => {
   const [newPosting, setNewPosting] = useState(''); // 새로운 게시글
   const [postings, setPostings] = useState([]); // 게시글 배열
   const [currentPage, setCurrentPage] = useState(0);
-  const [attachment, setAttachment] = useState(''); // 첨부파일
+  const [attachment, setAttachment] = useState('');
 
   // 새 게시글 작성 후 글 올리기하면 호출
-  useEffect(() => {
+  useEffect(async () => {
     onReadPosting(); // 게시글 불러오기 호출
   }, [newPosting]);
 
