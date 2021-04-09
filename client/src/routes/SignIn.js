@@ -28,35 +28,43 @@ function SignIn() {
   // 강제로 Home page로 이동 (임시 함수)
   const onMoveHome = (event) => {
     window.location.replace('/community');
+    //react는 single page라서 location을 직접 바꾸면 state가 다 날아갑니다...
   };
 
   // 로그인 버튼 핸들러
   async function onSignInHandler(event) {
     event.preventDefault();
-    await axios
-      .post(url + '/', {
-        method: 'POST',
-        body: JSON.stringify({
-          userEmail: userEmail,
-          userPassword: userPassword,
-        }),
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.status === 400) {
-          alert('로그인 성공');
-          sessionStorage.setItem('accessToken', response.data.access_token);
-          sessionStorage.setItem('refreshToken', response.data.refresh_token);
-          window.location.replace('/community');
-        } else if (response.data.status === 401) {
-          alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
-        } else {
-          alert('error');
-        }
-      })
-      .catch((error) => {alert("error for some reason")});
+    try {
+      const response = await axios
+        .post(url + '/', {
+          headers: { 'Content-Type': 'application/json' },
+          data: {
+            userEmail: userEmail,
+            userPassword: userPassword,
+          },
+          withCredentials: true,
+        })
+      console.log(response);
+      if (response.data.status === 400) {
+        alert('로그인 성공');
+        sessionStorage.setItem('accessToken', response.data.access_token);
+        sessionStorage.setItem('refreshToken', response.data.refresh_token);
+        sessionStorage.setItem('userid', response.data.user_object.id);
+        sessionStorage.setItem('nickname', response.data.user_object.nickname);
+        sessionStorage.setItem('email', response.data.user_object.email);
+        sessionStorage.setItem('usertype', response.data.user_object.usertype);
+        window.location.replace('/community');
+      } else if (response.data.status === 401) {
+        alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
+      } else {
+        alert('error');
+      }
+    }
+    catch (error) {
+      alert("error for some reason");
+    }
   }
+
 
   return (
     <div
