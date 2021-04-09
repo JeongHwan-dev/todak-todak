@@ -5,6 +5,7 @@ from flask import Flask
 # app.config['SECRET_KEY'] = 'dev'
 socketio = SocketIO(cors_allowed_origins="*")
 
+
 @socketio.on('message', namespace='/chat')
 def handle_message(data):
     name = data['name']
@@ -14,6 +15,7 @@ def handle_message(data):
     print('name, room, message:', name, room, message)
     emit("message2", message, room=room, broadcast=True)
 
+
 @socketio.on('join', namespace='/chat')
 def on_join(data):
     name = data['name']
@@ -21,6 +23,7 @@ def on_join(data):
     join_room(room)
     emit("message2", name + ' 님이 들어왔습니다.', room=room, broadcast=True)
     # send(message, broadcast=True)
+
 
 @socketio.on('leave', namespace='/chat')
 def on_leave(data):
@@ -32,6 +35,7 @@ def on_leave(data):
 
 # if __name__ == '__main__':
 #     socketio.run(app, port=5001)
+
 
 # user_no = 1
 
@@ -57,4 +61,3 @@ def on_leave(data):
 # @socketio.on("request", namespace='/mynamespace')
 # def request(message):
 #     emit("response", {'data':message['data'], 'username':session['username']}, broadcast=True)
-
