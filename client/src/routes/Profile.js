@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import 'routes/css/Profile.css';
 
 // 프로필 작성 컴포넌트 (미완성)
 const Profile = () => {
+  const history = useHistory();
+
   const [profilePhoto, setProfilePhoto] = useState('');
 
   // 프로필 사진 업로드 핸들러
@@ -25,6 +28,13 @@ const Profile = () => {
 
   // 프로필 사진 Clear 핸들러
   const onClearAttachment = () => setProfilePhoto(null);
+
+  // 작성 프로필 저장 핸들러
+  const onSave = () => {
+    history.push({
+      pathname: '/',
+    });
+  };
 
   return (
     <div
@@ -82,7 +92,7 @@ const Profile = () => {
           </div>
         </div>
         <div id="profile-register-footer">
-          <button>저장</button>
+          <button onClick={onSave}>저장</button>
         </div>
       </div>
     </div>
