@@ -15,15 +15,15 @@ const Friend = () => {
     setRooms(response.data.rooms);
   }
 
-  const onMoveRoom = (e) => {
-    for room[]
-    if (sessionStorage.userid)
-  }
+  // const onMoveRoom = (e) => {
+  //   for room[]
+  //   if (sessionStorage.userid)
+  // }
 
   const userName = users.map(
     (user) => (
         <li>
-          <Link onClick={onMoveRoom} to={`/chat?name=${user}&room=${user}`}>{user}</Link>
+          <Link to={`/chat?name=${user}&room=${user}`}>{user}</Link>
         </li>
     )
   );
