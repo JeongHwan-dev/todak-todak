@@ -11,14 +11,10 @@ bp = Blueprint('chat', __name__, url_prefix='/')
 @bp.route('/friend', methods=['GET'])  
 def friend():
     users = models.User.query.all()
-    rooms = models.Channel.filter_by()
     userlist = []
-    roomlist = []
     for user in users:
-        userlist.append(user.name)
-    for room in rooms:
-        roomlist.append([room.id, room.userlist])
-    return jsonify({"users":userlist, "rooms":roomlist})
+        userlist.append([user.id, user.name])
+    return jsonify({"users":userlist})
 
 
 @bp.route('/chat', methods=['POST'])  
@@ -31,3 +27,36 @@ def chat():
         print('userName:', userName)
         userinfo=models.User.query.filter_by(name=username).first()
         return jsonify({"userinfo":userinfo, "status":200})
+
+
+@bp.route('/room', methods=['POST'])  
+def room():
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 402
+    else:
+        user_data = request.get_json(force=True)['data']
+        user1 = user_data["user1"]
+        user2 = user_data["user2"]
+        print('user1:', user1)
+        print('user2:', user2)
+
+        lst=[user1, user2]  #무조건 빠른 순서대로 방을 만들어서 중복되는 방의 생성을 없앤다
+        lst.sort()
+        roominfo=models.Channel.query.filter_by(user_one=lst[0], user_two=lst[1]).first()
+
+        if roominfo is None:
+            
+            channel=models.Channel(
+                user_one=lst[0],
+                user_two=lst[1]
+            )
+            models.db.session.add(channel)
+            models.db.session.commit()
+
+            roominfo2=models.Channel.query.filter_by(user_one=lst[0], user_two=lst[1]).first()
+            print("roomid:", roominfo2.id)
+            return jsonify({"msg": "방 생성 성공", "roomid":roominfo2.id,'status':300})
+        else:
+            roomid=roominfo.id
+            print("roomid:", roomid)
+            return jsonify({"roomid":roomid, "status":300})
