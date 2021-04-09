@@ -13,7 +13,6 @@ const Friend = () => {
 
   const onEmitJoin = () => {
     console.log('emit click');
-    socket.emit("join", { 'username': 'secho', 'room': 'red' });
     window.location.replace('/chatroom');
   }
 

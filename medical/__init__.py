@@ -36,11 +36,13 @@ def create_app():
 
     # 블루프린트
 # --------------------------------------------------------------------------- #
-    from .views import auth, community
+    from .views import auth, community, chat
 
+    app.register_blueprint(chat.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(community.bp)
     bcrypt = Bcrypt(app)
+
 
 # Setup the Flask-JWT-Extended extension
     app.config['JWT_SECRET_KEY'] = 'todaktodak token'
