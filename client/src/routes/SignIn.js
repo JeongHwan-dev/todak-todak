@@ -26,9 +26,9 @@ function SignIn() {
   };
 
   // 로그인 핸들러
-  const onSignInHandler = (event) => {
+  const onSignInHandler = async (event) => {
     event.preventDefault();
-    axios
+    await axios
       .post(url + '/', {
         method: 'POST',
         body: JSON.stringify({
@@ -89,16 +89,19 @@ function SignIn() {
           required
         />
         <br />
-        <button onClick={onSignInHandler}>로그인</button>
-        <button
-          onClick={() => {
-            history.push({
-              pathname: '/sign-up',
-            });
-          }}
-        >
-          회원가입
-        </button>
+        <div className="sign-btn-container">
+          <button
+            id="signup-btn"
+            onClick={() => {
+              history.push({
+                pathname: '/sign-up',
+              });
+            }}
+          >
+            회원가입
+          </button>
+          <button onClick={onSignInHandler}>로그인</button>
+        </div>
       </form>
     </div>
   );

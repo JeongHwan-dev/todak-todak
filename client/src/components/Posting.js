@@ -68,17 +68,21 @@ const Posting = ({ postingObj, content, isOwner }) => {
         <>
           {isOwner && (
             <>
-              <form>
-                <input
-                  type="text"
-                  placeholder="수정할 내용을 입력해주세요."
-                  value={newPosting}
-                  required
-                  onChange={onChange}
-                />
-                <button onClick={onUpdatePosting}>완료</button>
-              </form>
-              <button onClick={toggleEditing}>취소</button>
+              <div className="posting-container">
+                <form>
+                  <input
+                    type="text"
+                    placeholder="수정할 내용을 입력해주세요."
+                    value={newPosting}
+                    required
+                    onChange={onChange}
+                  />
+                  <div className="community-btn-container">
+                    <button onClick={toggleEditing}>취소</button>
+                    <button onClick={onUpdatePosting}>완료</button>
+                  </div>
+                </form>
+              </div>
             </>
           )}
         </>
@@ -91,16 +95,14 @@ const Posting = ({ postingObj, content, isOwner }) => {
               <p>작성자: {postingObj.nickname}</p>
               <p>작성일: {postingObj.date}</p>
             </div>
-            {isOwner && (
-              <>
-                <button className="community-btn" onClick={onDeletePosting}>
-                  삭제
-                </button>
-                <button className="community-btn" onClick={toggleEditing}>
-                  수정
-                </button>
-              </>
-            )}
+            <div className="community-btn-container">
+              {isOwner && (
+                <>
+                  <button onClick={onDeletePosting}>삭제</button>
+                  <button onClick={toggleEditing}>수정</button>
+                </>
+              )}
+            </div>
           </div>
         </>
       )}

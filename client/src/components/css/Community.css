@@ -14,13 +14,13 @@
   width: 500px;
 }
 
-input {
+.community-container input {
   display: block;
-  width: 460px;
+  width: 500px;
   height: 50px;
   padding: 0.375rem 0.75rem;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -28,6 +28,18 @@ input {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.create-posting-container button {
+  width: 520px;
+  height: 40px;
+  border: 1px solid orange;
+  border-radius: 0.5rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background: white;
+  color: orange;
+  font-size: 1em;
 }

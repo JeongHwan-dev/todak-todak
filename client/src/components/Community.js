@@ -8,9 +8,9 @@ const Community = () => {
   const url = `http://localhost:5000`;
   const [posting, setPosting] = useState(''); // 게시글(내용)
   const [newPosting, setNewPosting] = useState(''); // 새로운 게시글
-
   const [postings, setPostings] = useState([]); // 게시글 배열
   const [currentPage, setCurrentPage] = useState(0);
+  const [attachment, setAttachment] = useState(); // 첨부파일
 
   // 새 게시글 작성 후 글 올리기하면 호출
   useEffect(() => {
@@ -68,6 +68,24 @@ const Community = () => {
       });
   };
 
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
+    };
+    reader.readAsDataURL(theFile);
+  };
+
+  const onClearAttachment = () => setAttachment(null);
+
   return (
     <div className="community-container">
       <h2>커뮤니티 포스팅</h2>
@@ -80,6 +98,13 @@ const Community = () => {
             placeholder="내용을 입력하세요."
             maxLength={120}
           />
+          <input type="file" accept="image/*" onChange={onFileChange} />
+          {attachment && (
+            <div>
+              <img src={attachment} width="100px" height="100px" />
+              <button onClick={onClearAttachment}>지우기</button>
+            </div>
+          )}
           <button onClick={onCreatePosting}>글 올리기</button>
         </form>
       </div>
