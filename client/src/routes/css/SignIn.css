@@ -1,4 +1,4 @@
-input {
+.sign-container input {
   display: block;
   width: 460px;
   height: 50px;
@@ -16,7 +16,7 @@ input {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-button {
+.sign-container button {
   width: 100%;
   height: 45px;
   border: 1px solid #74b72e;
@@ -28,7 +28,7 @@ button {
   font-size: 1em;
 }
 
-button:hover {
+.sign-container button:hover {
   width: 100%;
   height: 45px;
   border: 1px solid #74b72e;
