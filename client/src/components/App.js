@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AppRouter from './Router';
-import { useHistory } from 'react-router';
 
 axios.defaults.baseURL = `http://localhost:5000`;
 axios.defaults.withCredentials = true;

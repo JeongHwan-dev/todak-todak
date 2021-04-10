@@ -5,8 +5,8 @@ import SignUp from 'routes/SignUp';
 import Home from 'routes/Home';
 import Profile from 'routes/Profile';
 import MyPage from 'routes/MyPage';
-import Community from './Community';
 import Navigation from './Navigation';
+import Chat from 'routes/Chat';
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
@@ -30,8 +30,11 @@ const AppRouter = ({ isLoggedIn }) => {
             <Route exact path="/sign-up">
               <SignUp />
             </Route>
-            <Route exact path="profile">
+            <Route exact path="/profile">
               <Profile />
+            </Route>
+            <Route exact path="/chat">
+              <Chat />
             </Route>
           </>
         )}

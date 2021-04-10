@@ -1,5 +1,6 @@
 import React from 'react';
 import Community from 'components/Community';
+import Friend from 'components/Friend';
 
 // 홈 페이지
 const Home = () => {
@@ -11,6 +12,9 @@ const Home = () => {
       </div>
       <div className="community-container">
         <Community />
+      </div>
+      <div>
+        <Friend />
       </div>
     </div>
   );
