@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import 'routes/css/SignUp.css';
 
 // 회원가입 페이지
 function SignUp() {
@@ -44,7 +45,7 @@ function SignUp() {
   }, [passwordCheck]);
 
   // 회원가입 버튼 핸들러
-  async function onSignUpHandler(event) {
+  const onSignUpHandler = async (event) => {
     event.preventDefault();
     if (password === passwordCheck) {
       try {
@@ -60,8 +61,7 @@ function SignUp() {
           withCredentials: true,
         })
           if (response.data.status === 300) {
-            sessionStorage.setItem('accessToken', response.data.token);
-            window.location.replace('/');
+            window.location.replace('/profile');
           } else if (response.data.status === 301) {
             alert('필수 입력 사항이 모두 입력되지 않았습니다.');
           } else if (response.data.status === 302) {
@@ -77,7 +77,7 @@ function SignUp() {
           alert('error');
         };
     }
-  }
+  };
 
 
   return (
@@ -94,39 +94,54 @@ function SignUp() {
       <form style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>회원가입</h2>
         <label>이메일</label>
-        <input name="email" type="email" value={email} onChange={onChangeHandler} required />
+        <input
+          name="email"
+          type="email"
+          value={email}
+          onChange={onChangeHandler}
+          placeholder="이메일 입력"
+          required
+        />
         <label>비밀번호</label>
         <input
           name="password"
           type="password"
           value={password}
           onChange={onChangeHandler}
+          placeholder="비밀번호(숫자, 영문, 특수문자 조합 최소 8자)"
           required
         />
-        <label>비밀번호 재확인</label>
         <input
           name="passwordCheck"
           type="password"
           value={passwordCheck}
           onChange={onChangeHandler}
+          placeholder="비밀번호 확인"
           required
         />
         <div>{pwWarning}</div>
         <label>이름</label>
-        <input name="name" type="text" value={name} onChange={onChangeHandler} required />
+        <input
+          name="name"
+          type="text"
+          value={name}
+          onChange={onChangeHandler}
+          placeholder="이름 입력"
+          required
+        />
         <label>별명</label>
-        <input name="nickname" type="text" value={nickname} onChange={onChangeHandler} required />
+        <input
+          name="nickname"
+          type="text"
+          value={nickname}
+          onChange={onChangeHandler}
+          placeholder="토닥이"
+          required
+        />
         <br />
-        <button
-          onClick={() => {
-            history.push({
-              pathname: '/',
-            });
-          }}
-        >
-          이전
-        </button>
-        <button onClick={onSignUpHandler}>가입하기</button>
+        <div className="sign-btn-container">
+          <button onClick={onSignUpHandler}>회원 가입하기</button>
+        </div>
       </form>
     </div>
   );
