@@ -47,7 +47,7 @@ function SignIn() {
           sessionStorage.setItem('email', JSON.stringify(response.data.user_object.email));
           sessionStorage.setItem('usertype', JSON.stringify(response.data.user_object.usertype));
 
-          window.location.replace('/community');
+          window.location.replace('/');
         } else if (response.data.status === 401) {
           alert('가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.');
         } else {
