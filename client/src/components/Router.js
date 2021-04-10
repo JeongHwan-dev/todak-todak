@@ -4,25 +4,16 @@ import SignIn from 'routes/SignIn';
 import SignUp from 'routes/SignUp';
 import Home from 'routes/Home';
 import Profile from 'routes/Profile';
-<<<<<<< HEAD
-=======
+
 import MyPage from 'routes/MyPage';
 import Navigation from './Navigation';
->>>>>>> origin/Dev/Community
+
 import Chat from 'routes/Chat';
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
-<<<<<<< HEAD
-      {/* <Switch> */}
-        <Route exact path="/" component={SignIn} />
-        <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/community" component={Home} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/chat" component={Chat} />
-      {/* </Switch> */}
-=======
+
       {isLoggedIn && <Navigation />}
       <Switch>
         {isLoggedIn ? (
@@ -51,7 +42,7 @@ const AppRouter = ({ isLoggedIn }) => {
           </>
         )}
       </Switch>
->>>>>>> origin/Dev/Community
+
     </Router>
   );
 };

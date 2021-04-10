@@ -10,10 +10,6 @@ from flask_jwt_extended import (JWTManager, jwt_required, create_access_token,
 
 bp = Blueprint('auth', __name__, url_prefix='/')
 
-<<<<<<< HEAD
-
-@bp.route('/sign-up', methods=['POST'])
-=======
 # # bp 테스트
 # @bp.route('/') 
 # def home():
@@ -21,7 +17,6 @@ bp = Blueprint('auth', __name__, url_prefix='/')
 
 
 @bp.route('/sign-up', methods=['POST']) 
->>>>>>> origin/Dev/Community
 def register():
     print("check")  # 확인용... 나중에 삭제할것
     if not request.is_json:
@@ -81,35 +76,14 @@ def login():
         elif not userPassword:
             return jsonify({"msg": "비번 치세요", 'status': 401})
 
-<<<<<<< HEAD
-        checkpw = models.User.query.filter_by(email=userEmail).first()
-        print('checkpw:', checkpw)
-        if bcrypt.checkpw(userPassword.encode('utf-8'), checkpw.pw.encode('utf-8')):
-            print('ok')
-=======
+
         queried=models.User.query.filter_by(email=userEmail).first()
         print('checkpw:', queried)
         if bcrypt.checkpw(userPassword.encode('utf-8'), queried.pw.encode('utf-8')):
->>>>>>> origin/Dev/Community
         # Identity can be any data that is json serializable
             access_token = create_access_token(identity=queried.id)
             refresh_token = create_refresh_token(identity=queried.id)
             print('ok')
-<<<<<<< HEAD
-
-            user_object = {
-                "id": checkpw.id,
-                "email": checkpw.email,
-                "nickname": checkpw.nickname,
-                "usertype": checkpw.usertype
-            }
-
-            return jsonify({
-                'access_token': access_token,
-                'refresh_token': refresh_token,
-                'user_object': user_object,
-                'status': 400})
-=======
             print(queried.id, queried.nickname)
             user_object={
                 "id": queried.id,
@@ -123,7 +97,6 @@ def login():
                             'refresh_token':refresh_token, 
                             'user_object':user_object,
                             'status':400
-                        })
->>>>>>> origin/Dev/Community
+                        }) 
         else:
             return jsonify({"msg": "비밀번호 불일치", "status": 401})

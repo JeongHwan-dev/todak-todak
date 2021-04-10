@@ -1,7 +1,7 @@
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
 from flask import Flask
 
-socketio = SocketIO(cors_allowed_origins="*")
+socketio = SocketIO(cors_allowed_origins="http://localhost:3000")
 
 @socketio.on('message', namespace='/chat')
 def handle_message(data):
