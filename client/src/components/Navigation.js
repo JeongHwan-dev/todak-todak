@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import 'components/css/Navigation.css';
 
 // 네비게이션 컴포넌트
