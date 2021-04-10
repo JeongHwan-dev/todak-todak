@@ -5,16 +5,36 @@ import SignUp from 'routes/SignUp';
 import Home from 'routes/Home';
 import Profile from 'routes/Profile';
 import MyPage from 'routes/MyPage';
+import Community from './Community';
+import Navigation from './Navigation';
 
-const AppRouter = () => {
+const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
+      {isLoggedIn && <Navigation />}
       <Switch>
-        <Route exact path="/" component={SignIn} />
-        <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/community" component={Home} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/mypage" component={MyPage} />
+        {isLoggedIn ? (
+          <>
+            <Route exact path="/">
+              <Community />
+            </Route>
+            <Route exact path="/mypage">
+              <MyPage />
+            </Route>
+          </>
+        ) : (
+          <>
+            <Route exact path="/">
+              <SignIn />
+            </Route>
+            <Route exact path="/sign-up">
+              <SignUp />
+            </Route>
+            <Route exact path="profile">
+              <Profile />
+            </Route>
+          </>
+        )}
       </Switch>
     </Router>
   );
