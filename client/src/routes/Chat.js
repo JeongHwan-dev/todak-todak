@@ -13,12 +13,12 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
-    console.log(location.search);
     setRoom(room);
     setName(name);
 
     socket.emit('join', { name, room }, (error) => {
-      if(error) {
+
+      if (error) {
         alert(error);
       }
     });
@@ -31,7 +31,7 @@ const Chat = ({ location }) => {
   const onChange = (event) => {
     setMessage(event.target.value);
   };
-  
+
   const onClick = () => {
     socket.emit("message", { message, name, room });
     setMessage("");
@@ -39,17 +39,19 @@ const Chat = ({ location }) => {
 
   return (
     <div>
-        <h2>Messages</h2>
-        <div>
-            {messages.map(msg => (<p>{msg}</p>))}
-        </div>
-        <p>
-            <input type="text" onChange={onChange} value={message} />
-        </p>
-        <p>
-            <input type="button" onClick={onClick} value="Send" />
-        </p>
-    </div>
+
+      <h2>Messages</h2>
+      <div>
+        {messages.map(msg => (<p>{msg}</p>))}
+      </div>
+      <p>
+        <input type="text" onChange={onChange} value={message} />
+      </p>
+      <p>
+        <input type="button" onClick={onClick} value="Send" />
+      </p>
+
+    </div >
   );
 }
 

@@ -12,30 +12,33 @@
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .sign-container button {
-  width: 100%;
+  width: 220px;
   height: 45px;
-  border: 1px solid #74b72e;
-  border-radius: 0.25rem;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  border: 1px solid orange;
+  border-radius: 0.5rem;
+  margin: 10px;
   background: white;
-  color: #74b72e;
+  color: orange;
   font-size: 1em;
 }
 
 .sign-container button:hover {
-  width: 100%;
-  height: 45px;
-  border: 1px solid #74b72e;
-  border-radius: 0.25rem;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  background: #74b72e;
+  background: orange;
   color: white;
   font-size: 1em;
+}
+
+.sign-container button:focus {
+  outline: none;
+}
+
+.sign-btn-container {
+  float: left;
+  position: center;
+  margin: auto;
 }

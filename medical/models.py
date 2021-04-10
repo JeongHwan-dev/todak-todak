@@ -1,4 +1,4 @@
-from medical import db
+from medical import db, client
 from sqlalchemy import ForeignKey, DateTime, Column, Integer, String, DATE, Text
 from sqlalchemy.orm import relationship, backref
 # from flask.ext.mongoalchemy  import  MongoAlchemy

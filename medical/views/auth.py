@@ -10,8 +10,13 @@ from flask_jwt_extended import (JWTManager, jwt_required, create_access_token,
 
 bp = Blueprint('auth', __name__, url_prefix='/')
 
+# # bp 테스트
+# @bp.route('/') 
+# def home():
+#     return 'auth page ok'
 
-@bp.route('/sign-up', methods=['POST'])
+
+@bp.route('/sign-up', methods=['POST']) 
 def register():
     print("check")  # 확인용... 나중에 삭제할것
     if not request.is_json:
@@ -71,26 +76,27 @@ def login():
         elif not userPassword:
             return jsonify({"msg": "비번 치세요", 'status': 401})
 
-        checkpw = models.User.query.filter_by(email=userEmail).first()
-        print('checkpw:', checkpw)
-        if bcrypt.checkpw(userPassword.encode('utf-8'), checkpw.pw.encode('utf-8')):
-            print('ok')
-        # Identity can be any data that is json serializable
-            access_token = create_access_token(identity=userEmail)
-            refresh_token = create_refresh_token(identity=userEmail)
-            print('ok')
 
-            user_object = {
-                "id": checkpw.id,
-                "email": checkpw.email,
-                "nickname": checkpw.nickname,
-                "usertype": checkpw.usertype
+        queried=models.User.query.filter_by(email=userEmail).first()
+        print('checkpw:', queried)
+        if bcrypt.checkpw(userPassword.encode('utf-8'), queried.pw.encode('utf-8')):
+        # Identity can be any data that is json serializable
+            access_token = create_access_token(identity=queried.id)
+            refresh_token = create_refresh_token(identity=queried.id)
+            print('ok')
+            print(queried.id, queried.nickname)
+            user_object={
+                "id": queried.id,
+                "email": queried.email,
+                "nickname": queried.nickname,
+                "usertype": queried.usertype
             }
 
             return jsonify({
-                'access_token': access_token,
-                'refresh_token': refresh_token,
-                'user_object': user_object,
-                'status': 400})
+                            'access_token':access_token, 
+                            'refresh_token':refresh_token, 
+                            'user_object':user_object,
+                            'status':400
+                        }) 
         else:
             return jsonify({"msg": "비밀번호 불일치", "status": 401})
