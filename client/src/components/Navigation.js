@@ -10,14 +10,18 @@ const Navigation = () => {
     window.location.replace('/');
   };
 
-  const onMyPage = () => {
+  const onMoveMyPage = () => {
     window.location.replace('/mypage');
+  };
+
+  const onMoveHome = () => {
+    window.location.replace('/');
   };
 
   return (
     <div id="navigation-container">
-      {/* <Link to="/mypage">마이 페이지</Link> */}
-      <button onClick={onMyPage}>마이 페이지</button>
+      <button onClick={onMoveHome}>Main</button>
+      <button onClick={onMoveMyPage}>마이 페이지</button>
       <button onClick={onLogOut}>로그아웃</button>
     </div>
   );
