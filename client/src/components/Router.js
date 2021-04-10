@@ -21,6 +21,7 @@ const AppRouter = ({ isLoggedIn }) => {
             <Route exact path="/mypage">
               <MyPage />
             </Route>
+            <Route exact path="/chat" component={Chat} />
           </>
         ) : (
           <>
@@ -32,9 +33,6 @@ const AppRouter = ({ isLoggedIn }) => {
             </Route>
             <Route exact path="/profile">
               <Profile />
-            </Route>
-            <Route exact path="/chat">
-              <Chat />
             </Route>
           </>
         )}
