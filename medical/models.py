@@ -29,9 +29,10 @@ class Userprofile(db.Model):
     userdiseases = Column(String(100), nullable=False)
     userage = Column(Integer, nullable=False)
     doctorpdfurl = Column(String(200), nullable=True)
-
+    usertype = Column(String(32), nullable=True)
 
 # 넣을 때 항상 정렬 해서 넣기
+
 
 class Channel(db.Model):
     __tablename__ = 'channel'
@@ -55,7 +56,7 @@ class Message(db.Model):
     timestamp = Column(DateTime)
 
 
-class Posthistory(db.Model): 
+class Posthistory(db.Model):
     tablename = 'post_history'
     table_args = {'mysql_collate': 'utf8_general_ci'}
 
@@ -66,7 +67,7 @@ class Posthistory(db.Model):
     posttype = Column(String(32), nullable=False)
 
 
-class Commentinfo(db.Model): 
+class Commentinfo(db.Model):
     tablename = 'comment_info'
     table_args = {'mysql_collate': 'utf8_general_ci'}
 

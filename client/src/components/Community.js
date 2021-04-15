@@ -4,85 +4,12 @@ import "components/css/Community.css";
 import axios from "axios";
 import { storageService } from "fBase";
 import { v4 as uuidv4 } from "uuid";
-import { makeStyles } from "@material-ui/core/styles";
-// import Grid from "@material-ui/core/Grid";
 import { Grid, Paper } from "@material-ui/core";
-import { Container, Col, Row, Card } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: theme.spacing(150),
-    marginBottom: theme.spacing(1),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-  },
-  newPosting: {
-    height: theme.spacing(30),
-    marginBottom: theme.spacing(2),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-    border: "1px solid lightgray",
-    input: {
-      height: theme.spacing(30),
-    },
-  },
-  newPostingTitle: {
-    height: theme.spacing(4),
-    padding: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    float: "left",
-    textAlign: "center",
-    fontFamily: "Spoqa Han Sans Neo",
-  },
-  newPostingCreate: {
-    height: theme.spacing(15),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    fontFamily: "Spoqa Han Sans Neo",
-    borderTop: "1px solid lightgray",
-  },
-  newPostingInput: {
-    width: "100%",
-    height: "100%",
-    border: "none",
-  },
-  newPostingFile: {
-    height: theme.spacing(5),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginBotton: theme.spacing(1),
-    border: "1px solid lightgray",
-  },
-  newPostingBtn: {
-    height: theme.spacing(4),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    border: "1px solid lightgray",
-  },
-  postings: {
-    height: theme.spacing(130),
-    padding: theme.spacing(1),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-    border: "1px solid lightgray",
-  },
-  attachmentInput: {
-    width: "100%",
-    height: "100%",
-    border: "1px dotted lightgray",
-  },
-}));
-
-// 커뮤니티 컴포넌트
+// [커뮤니티] 컴포넌트
 const Community = () => {
-  const url = `${window.location.origin}:5000`;
-  const classes = useStyles();
+  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
   const [posting, setPosting] = useState(""); // 게시글(내용)
   const [newPosting, setNewPosting] = useState(""); // 새로운 게시글
   const [postings, setPostings] = useState([]); // 게시글 배열
@@ -90,11 +17,11 @@ const Community = () => {
   const [attachment, setAttachment] = useState("");
 
   // 새 게시글 작성 후 글 올리기하면 호출
-  useEffect(async () => {
+  useEffect(() => {
     onReadPosting();
   }, [newPosting]);
 
-  // 게시글 작성 핸들러
+  // [게시글] 작성 핸들러
   const onPosting = (event) => {
     const {
       target: { value },
@@ -121,7 +48,7 @@ const Community = () => {
         body: JSON.stringify({
           userid: sessionStorage.userid,
           nickname: sessionStorage.nickname,
-          usertype: "토닥이", // 추후 변경
+          // usertype: "토닥이", // 추후 변경
           content: posting,
           attachmentUrl: attachmentUrl,
         }),
@@ -135,7 +62,7 @@ const Community = () => {
         alert("[CREATE] response (x)");
       });
 
-    setPosting(""); // 입력란 비우기
+    setPosting("");
     setAttachment("");
   };
 
@@ -156,7 +83,7 @@ const Community = () => {
       });
   };
 
-  // 첨부파일 업로드 핸들러
+  // [첨부파일] 업로드 핸들러
   const onFileChange = (event) => {
     const {
       target: { files },
@@ -174,7 +101,7 @@ const Community = () => {
     reader.readAsDataURL(theFile);
   };
 
-  // 첨부파일 Clear 핸들러
+  // [첨부파일] Clear 핸들러
   const onClearAttachment = () => setAttachment(null);
 
   return (
@@ -193,11 +120,13 @@ const Community = () => {
                     xs={12}
                     style={{ borderBottom: "1px solid lightgray" }}
                   >
+                    {/* 새글쓰기 타이틀 */}
                     <p style={{ float: "left", padding: "10px", margin: "0" }}>
                       새글쓰기
                     </p>
                   </Grid>
                   <Grid item xs={12}>
+                    {/* 새글쓰기 입력란 */}
                     <textarea
                       cols="40"
                       rows="5"
@@ -215,29 +144,48 @@ const Community = () => {
                     ></textarea>
                   </Grid>
                   <Grid item xs={12}>
-                    <input
-                      className={classes.attachmentInput}
-                      type="file"
-                      accept="image/*"
-                      onChange={onFileChange}
-                    />
-                    {/* {attachment && (
-                          <div>
+                    <Row item xs={12} style={{ margin: "0" }}>
+                      {/* 파일 첨부 */}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={onFileChange}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          border: "1px dotted lightgray",
+                        }}
+                      />
+                      {/* 파일 첨부 이미지 미리보기 */}
+                      {attachment && (
+                        <>
+                          <Row
+                            item
+                            xs={12}
+                            style={{ margin: "0", width: "100%" }}
+                          >
                             <img src={attachment} width="100%" height="100%" />
+                          </Row>
+                          <Row item xs={12} style={{ margin: "0" }}>
+                            {/* 미리보기 이미지 지우기 버튼 */}
                             <button onClick={onClearAttachment}>지우기</button>
-                          </div>
-                        )} */}
+                          </Row>
+                        </>
+                      )}
+                    </Row>
                   </Grid>
                   <Grid item xs={12}>
+                    {/* 게시글 생성 버튼 */}
                     <button onClick={onCreatePosting}>글 올리기</button>
                   </Grid>
                 </Grid>
               </Grid>
             </Paper>
             <Grid item xs={12}>
+              {/* 게시글 목록 */}
               {postings.map((posting) => (
                 <Posting
-                  key={posting.date}
+                  key={posting.postingid}
                   postingObj={posting}
                   content={posting.content}
                   isOwner={posting.userid === sessionStorage.userid}

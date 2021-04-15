@@ -25,20 +25,12 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Spoqa Han Sans Neo",
     textAlign: "center",
   },
-  paperHeaderInsideTitle: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "1.5vw",
-    height: theme.spacing(4),
-    fontFamily: "Spoqa Han Sans Neo",
-    textAlign: "center",
-  },
+
   newPosting: {
     padding: theme.spacing(2),
     height: theme.spacing(28),
     textAlign: "center",
     borderRadius: "0.5rem",
-    // border: "1px solid lightgray",
   },
   surrounding: {
     padding: theme.spacing(2),
@@ -77,7 +69,16 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(100),
     textAlign: "center",
     borderRadius: "0.5rem",
-    // border: "1px solid lightgray",
+  },
+
+  linkBtnTitle: {
+    border: 0,
+    outline: 0,
+    background: "none",
+    color: "white",
+    fontSize: "1.5vw",
+    fontWeight: "bold",
+    fontFamily: "Spoqa Han Sans Neo",
   },
   linkBtn: {
     border: 0,
@@ -92,6 +93,11 @@ const useStyles = makeStyles((theme) => ({
 // 홈 페이지
 const Home = () => {
   const classes = useStyles();
+
+  // 홈으로 이동 핸들러
+  const onMoveHome = () => {
+    window.location.replace("/");
+  };
 
   // 마이페이지 이동 핸들러
   const onMoveMyPage = () => {
@@ -121,7 +127,9 @@ const Home = () => {
                 </div>
               </Grid>
               <Grid item xs={8}>
-                <div className={classes.paperHeaderInsideTitle}>토닥토닥</div>
+                <button className={classes.linkBtnTitle} onClick={onMoveHome}>
+                  토닥토닥
+                </button>
               </Grid>
               <Grid item xs={2}>
                 <div className={classes.paperHeaderInside}>

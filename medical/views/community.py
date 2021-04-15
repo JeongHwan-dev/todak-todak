@@ -22,7 +22,7 @@ mycol = mydb['community_post']  # collection name
 #     return 'community page ok'
 
 
-#post, create
+# [CREATE] 게시글 생성
 @bp.route('/article/post', methods=['POST'])
 @jwt_required()
 def create_article():
@@ -31,29 +31,32 @@ def create_article():
     print(body)
     userid = body['userid']
     nickname = body['nickname']
-    usertype = body['usertype']
+    # usertype = body['usertype']
     content = body['content']
     attachmentUrl = body['attachmentUrl']
 
-    profilephoto = models.Userprofile.query.filter_by(userid=userid).first()
+    usercheck = models.Userprofile.query.filter_by(userid=userid).first()
 
     date = (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+    postingid = str(userid)+';'+str(date)
     print(content, date, type(userid))
     community = mycol.insert_one({
-
+        "postingid": postingid,
         "userid": userid,
         "nickname": nickname,
-        "usertype": usertype,
+        "usertype": usercheck.usertype,
         "content": content,
         "attachmentUrl": attachmentUrl,
         "date": date,
-        "profilephotourl": profilephoto.profilephotourl,
+        "profilephotourl": usercheck.profilephotourl,
         'likepeople': []
     })
     print('creat_ok')
     return jsonify({"msg": "글생성 성공", 'status': 200})
 
 
+# [READ] 게시글 읽기
 @bp.route('/article/read', methods=['GET', 'POST'])
 @jwt_required()
 def read_article():
@@ -62,6 +65,7 @@ def read_article():
         lst = []
         for m in mycol.find():
             lst.append({
+                "postingid": m["postingid"],
                 "userid": m["userid"],
                 "nickname": m["nickname"],
                 "usertype": m["usertype"],
@@ -71,69 +75,69 @@ def read_article():
                 "profilephotourl": m['profilephotourl'],
                 "likepeople": m['likepeople'],
                 "likepeoplelength": len(m['likepeople'])
-
             })
             print(len(m['likepeople']))
         print('read.ok')
         return jsonify(lst)
 
 
-# 수정버튼 클릭
+# [UPDATE] 게시글 수정
 @bp.route('/article/update', methods=['POST'])
 @jwt_required()
 def modify_articles():
     body = literal_eval(request.get_json()['body'])
     print(body)
     content = body['editContent']
-    postingId = body['postingId']
+    postingid = body['postingid']
     date = (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     mycol.update_one(
-        {'date': postingId},
+        {'postingid': postingId},
         {'$set': {'content': content, 'date': date}}
     )
     print('update_ok')
     return jsonify({"msg": "수정완료 성공", 'status': 200})
 
 
-# 삭제
+# [DELETE] 게시글 삭제
 @bp.route('/article/delete', methods=['POST'])
 @jwt_required()
 def delete_articles():
     body = literal_eval(request.get_json()['body'])
-    date = body['postingId']
+    postingid = body['postingid']
 
-    mycol.delete_one({'date': date})
+    mycol.delete_one({'postingid': postingid})
+    mydb['comments_post'].delete_many({'postingid': postingid})
 
     return jsonify({"msg": "삭제성공", 'status': 200})
 
 
-# 좋아요 클릭
+# [CLICK] 게시글 좋아요
 @bp.route('/posting/like/click', methods=['POST'])
 @jwt_required()
 def click_like():
     body = literal_eval(request.get_json()['body'])
-    date = body['postingId']
+    postingid = body['postingid']
     userid = body['likeuser']
 
     mycol.update_one(
-        {'date': date},
+        {'postingid': postingid},
         {'$push': {'likepeople': userid}}
     )
 
     return jsonify({"msg": "삭제성공", 'status': 200})
 
 
-# 좋아요 취소
+# [CANCEL] 게시글 좋아요 취소
 @bp.route('/posting/like/cancel', methods=['POST'])
 @jwt_required()
 def click_like_cancel():
     body = literal_eval(request.get_json()['body'])
-    date = body['postingId']
+    postingid = body['postingid']
     userid = body['likeuser']
 
     mycol.update_one(
-        {'date': date},
+        {'postingid': postingid},
         {'$pull': {'likepeople': userid}}
     )
 

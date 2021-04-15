@@ -35,11 +35,12 @@ def create_app():
     socketio.init_app(app)
     # 블루프린트
 # --------------------------------------------------------------------------- #
-    from .views import auth, community, chat, user_profile
+    from .views import auth, community, chat, user_profile, comments
 
     app.register_blueprint(chat.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(community.bp)
+    app.register_blueprint(comments.bp)
     app.register_blueprint(user_profile.bp)
     bcrypt = Bcrypt(app)
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 
-const endpoint = `${window.location.origin}:5000`;
+const endpoint = "http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000";
+
 const Chat = ({ room }) => {
   console.log("Chat.js rendering");
   const messageRef = useRef();

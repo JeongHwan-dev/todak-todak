@@ -3,7 +3,7 @@ import axios from "axios";
 import AppRouter from "components/Router";
 import "components/css/App.css";
 
-axios.defaults.baseURL = `${window.location.origin}:5000`;
+// axios.defaults.baseURL = `http://localhost:5000`;
 axios.defaults.withCredentials = true;
 
 const accessToken = sessionStorage.getItem("accessToken");

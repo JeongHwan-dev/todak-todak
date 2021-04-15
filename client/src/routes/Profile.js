@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
+
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { storageService } from "fBase";
+
+import InputAddress from "components/InputAddress";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Button, Avatar } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -17,7 +21,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
-import { CancelScheduleSendSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,13 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
   insidePaperHeader: {
     height: theme.spacing(12),
-    // padding: theme.spacing(2),
     paddingLeft: theme.spacing(5),
     textAlign: "center",
   },
 
   insidePaper: {
-    // height: theme.spacing(11),
     padding: theme.spacing(2),
     textAlign: "center",
   },
@@ -112,17 +113,13 @@ const useStyles = makeStyles((theme) => ({
   prevImg: {
     width: "6vw",
     height: "11.5vh",
-    // padding: "25px",
     border: "1px solid lightgray",
     borderRadius: "5rem",
-    // textAlign: "center",
   },
 
   prevProfileImg: {
     width: "5.5vw",
     height: "11vh",
-    // color: "white",
-    // background: "lightgray",
     padding: "25px",
     marginRight: "4vw",
     border: "1px solid lightgray",
@@ -266,18 +263,46 @@ function getStyles(disease, userDisease, theme) {
 
 // 프로필 작성 컴포넌트
 const Profile = () => {
-  const url = `${window.location.origin}:5000`;
+  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
   const location = useLocation();
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
   const [profilePhoto, setProfilePhoto] = useState("");
+  const [doctorPdf, setDoctorPdf] = useState("");
   const [introduction, setIntroduction] = useState("");
   const [userDiseases, setUserDiseases] = useState([]);
-  const [doctorPdf, setDoctorPdf] = useState("");
-  const [userLocation, setUserLocation] = useState("서울"); // 임시 샘플
-  const [age, setAge] = useState("");
-  const diseases = ["고혈압", "우울증", "탈모", "아토피", "당뇨", "비만"];
+  const [address, setAddress] = useState("");
+  const [age, setAge] = useState(0);
+  const diseases = [
+    "치매",
+    "뇌졸증",
+    "고혈압",
+    "당뇨병",
+    "간암",
+    "폐암",
+    "위암",
+    "갑상선암",
+    "대장암",
+    "결핵",
+    "지방간",
+    "협심증",
+    "심근경색",
+    "비만",
+    "빈혈",
+    "디스크",
+    "골다공증",
+    "통풍",
+    "오십견",
+    "아토피",
+    "탈모",
+    "방광염",
+    "불임",
+    "백내장",
+    "비염",
+    "중이염",
+    "우울증",
+  ];
 
   // 프로필 사진 업로드 핸들러
   const onFileChange = (event) => {
@@ -325,7 +350,6 @@ const Profile = () => {
     } = event;
     if (name === "userIntroduction") {
       setIntroduction(value);
-      console.log(introduction);
     }
   };
 
@@ -346,6 +370,7 @@ const Profile = () => {
 
     let profilePhotoUrl = "";
     let doctorPdfUrl = "";
+    let userType = "";
 
     if (profilePhoto !== "") {
       const profilePhotoRef = storageService
@@ -356,6 +381,8 @@ const Profile = () => {
         "data_url"
       );
       profilePhotoUrl = await response.ref.getDownloadURL();
+    } else {
+      profilePhotoUrl = "./images/default_profile.png";
     }
 
     if (doctorPdf !== "") {
@@ -364,7 +391,9 @@ const Profile = () => {
         .child(`${location.state.email}/${uuidv4()}`);
       const response = await doctorPdfRef.putString(doctorPdf, "data_url");
       doctorPdfUrl = await response.ref.getDownloadURL();
+      userType = await "토닥터";
     }
+    console.log("address: " + address);
 
     await axios.post(url + "/user-profile", {
       method: "POST",
@@ -372,10 +401,11 @@ const Profile = () => {
         useremail: location.state.email,
         profilephotourl: profilePhotoUrl,
         userintroduction: introduction,
-        userlocation: userLocation,
+        userlocation: address,
         userdiseases: userDiseases,
         userage: age,
         doctorpdfurl: doctorPdfUrl,
+        usertype: userType,
       }),
     });
 
@@ -418,11 +448,13 @@ const Profile = () => {
             <div className={classes.profileForm}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
+                  {/* 프로필 작성 페이지 타이틀 */}
                   <h2 className={classes.profileTitle}>프로필 작성</h2>
                 </Grid>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={4}>
                   <div className={classes.uploadProfile}>
+                    {/* 프로필 사진 첨부 */}
                     <Avatar src={profilePhoto} width="200px" height="200px" />
                     <input
                       accept="image/*"
@@ -451,6 +483,7 @@ const Profile = () => {
                   </div>
                 </Grid>
                 <Grid item xs={6}>
+                  {/* 소개말 입력란 */}
                   <textarea
                     className={classes.paperIntro}
                     name="userIntroduction"
@@ -465,34 +498,20 @@ const Profile = () => {
                   <Grid item xs={1}></Grid>
                   <Grid item xs={10}>
                     <div className={classes.sub}>
-                      <h5 className={classes.subtitle}>연령대</h5>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">
-                          Age
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={age}
-                          onChange={onAgeChange}
-                        >
-                          <MenuItem value={"10"}>10대</MenuItem>
-                          <MenuItem value={"20"}>20대</MenuItem>
-                          <MenuItem value={"30"}>30대</MenuItem>
-                          <MenuItem value={"40"}>40대</MenuItem>
-                          <MenuItem value={"50"}>50대</MenuItem>
-                          <MenuItem value={"60"}>60대</MenuItem>
-                          <MenuItem value={"70"}>70대</MenuItem>
-                          <MenuItem value={"80"}>80대</MenuItem>
-                          <MenuItem value={"90"}>90대</MenuItem>
-                        </Select>
-                      </FormControl>
+                      {/* 나이 입력 */}
+                      <h5 className={classes.subtitle}>나이</h5>
+                      <input
+                        type="text"
+                        onChange={onAgeChange}
+                        placeholder="나이를 입력해주세요."
+                      />
                     </div>
                   </Grid>
                   <Grid item xs={1}></Grid>
                   <Grid item xs={1}></Grid>
                   <Grid item xs={10}>
                     <div className={classes.sub}>
+                      {/* 관심질환 선택란 */}
                       <h5 className={classes.subtitle}>관심질환</h5>
                       <FormControl className={classes.formControl}>
                         <InputLabel id="demo-mutiple-chip-label">
@@ -535,14 +554,16 @@ const Profile = () => {
                   <Grid item xs={1}></Grid>
                   <Grid item xs={10}>
                     <div className={classes.sub}>
+                      {/* 우리동네 입력란 */}
                       <h5 className={classes.subtitle}>우리동네</h5>
-                      <input className={classes.subInput} type="text" />
+                      <InputAddress address={address} setAddress={setAddress} />
                     </div>
                   </Grid>
                   <Grid item xs={1}></Grid>
                   <Grid item xs={1}></Grid>
                   <Grid item xs={10}>
                     <div className={classes.sub}>
+                      {/* 토닥터 인증란 */}
                       <h5 className={classes.subtitle}>토닥터 인증</h5>
                       <input
                         id="doctor-validate-input"
@@ -556,6 +577,7 @@ const Profile = () => {
                   <Grid item xs={1}></Grid>
                 </div>
                 <Grid item xs={12}>
+                  {/* 프로필 저장 버튼 */}
                   <Button
                     className={classes.ButtonRegister}
                     variant="contained"

@@ -115,7 +115,7 @@ const signInStyles = makeStyles((theme) => ({
 
 // 로그인 페이지
 function SignIn() {
-  const url = `${window.location.origin}:5000`;
+  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
   const classes = signInStyles();
   const history = useHistory();
   const [userEmail, setUserEmail] = useState("");
