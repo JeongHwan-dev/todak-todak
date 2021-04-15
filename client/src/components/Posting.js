@@ -12,7 +12,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 // 포스트 카드 컴포넌트
 const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
-  const url = `http://localhost:5000`;
+  const url = `${window.location.origin}:5000`;
   const [editing, setEditing] = useState(false);
   const [newPosting, setNewPosting] = useState(postingObj.content);
   const [likeState, setLikeState] = useState(
