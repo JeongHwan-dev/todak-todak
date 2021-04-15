@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 회원가입 페이지
 function SignUp() {
-  const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+  const url = `${window.location.origin}:5000`;
   const classes = useStyles();
   const history = useHistory();
   const [email, setEmail] = useState("");

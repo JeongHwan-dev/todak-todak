@@ -3,7 +3,7 @@ import axios from "axios";
 import AppRouter from "components/Router";
 import "components/css/App.css";
 
-axios.defaults.baseURL = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+axios.defaults.baseURL = `${window.location.origin}:5000`;
 axios.defaults.withCredentials = true;
 
 const accessToken = sessionStorage.getItem("accessToken");

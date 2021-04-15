@@ -266,7 +266,7 @@ function getStyles(disease, userDisease, theme) {
 
 // 프로필 작성 컴포넌트
 const Profile = () => {
-  const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+  const url = `${window.location.origin}:5000`;
   const location = useLocation();
   const classes = useStyles();
   const theme = useTheme();

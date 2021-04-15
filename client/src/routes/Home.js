@@ -105,18 +105,6 @@ const Home = () => {
   };
 
   return (
-    // <div>
-    //   <div className="home-title">
-    //     <h1>토닥토닥</h1>
-    //     <hr />
-    //   </div>
-    //   <div className="community-container">
-    //     <Community />
-    //   </div>
-    //   <div>
-    //     <ChatList />
-    //   </div>
-    // </div>
     <div className={classes.root}>
       <Grid container spacing={1}>
         <Grid item xs={3}>

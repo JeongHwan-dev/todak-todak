@@ -2,17 +2,72 @@ import React, { useState } from "react";
 import axios from "axios";
 import "components/css/Posting.css";
 import { storageService } from "fBase";
-// import "components/css/Posting.css";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Paper } from "@material-ui/core";
 import { Container, Col, Row, Card } from "react-bootstrap";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Favorite from "@material-ui/icons/Favorite";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 // 포스트 카드 컴포넌트
 const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
-  const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+  const url = `http://localhost:5000`;
   const [editing, setEditing] = useState(false);
   const [newPosting, setNewPosting] = useState(postingObj.content);
-  const [like, setLike] = useState(0);
+  const [likeState, setLikeState] = useState(
+    Boolean(postingObj.likepeople.find(liked))
+  );
+  const [likeCount, setLikeCount] = useState(postingObj.likepeoplelength);
+
+  // 사용자 좋아요 클릭 여부 확인
+  function liked(element) {
+    if (element === sessionStorage.userid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // 좋아요 클릭 핸들러
+  const onClickLike = async (event) => {
+    setLikeCount(likeCount + 1);
+    await axios
+      .post(url + "/posting/like/click", {
+        method: "POST",
+        body: JSON.stringify({
+          postingId: postingObj.date,
+          likeuser: sessionStorage.userid,
+        }),
+      })
+      .then(() => {
+        console.log("[Like] 좋아요 클릭 반영");
+      })
+      .catch(() => {
+        alert("[Like] 좋아요 클릭 통신 에러");
+      });
+  };
+
+  // 좋아요 취소 핸들러
+  const onCancelLike = async (event) => {
+    if (likeCount >= 0) {
+      setLikeCount(likeCount - 1);
+    }
+    await axios
+      .post(url + "/posting/like/cancel", {
+        method: "POST",
+        body: JSON.stringify({
+          postingId: postingObj.date,
+          likeuser: sessionStorage.userid,
+        }),
+      })
+      .then(() => {
+        console.log("[Like] 좋아요 취소 반영");
+      })
+      .catch(() => {
+        alert("[Like] 좋아요 취소 통신 에러");
+      });
+  };
 
   // 수정 버튼 토글
   const toggleEditing = () => setEditing((prev) => !prev);
@@ -68,6 +123,16 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
       target: { value },
     } = event;
     setNewPosting(value);
+  };
+
+  // 좋아요 핸들러
+  const onLikeHandle = (event) => {
+    setLikeState(event.target.checked);
+    if (event.target.checked === true) {
+      onClickLike();
+    } else {
+      onCancelLike();
+    }
   };
 
   return (
@@ -159,7 +224,19 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
                   <p>댓글 수</p>
                 </Col>
                 <Col item xs={2}>
-                  <p>좋아요 수</p>
+                  {/* 좋아요 */}
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        icon={<FavoriteBorder />}
+                        checkedIcon={<Favorite />}
+                        onChange={onLikeHandle}
+                        checked={likeState}
+                        name="likeState"
+                      />
+                    }
+                  />
+                  <p>{likeCount}</p>
                 </Col>
               </Row>
               <Row style={{ margin: 0, borderBottom: "1px solid lightgray " }}>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Chat from "routes/Chat";
 
-const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+const url = `${window.location.origin}:5000`;
 const ChatList = () => {
   const [users, setUsers] = useState({});
   const [room, setRoom] = useState(0);

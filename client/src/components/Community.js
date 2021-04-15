@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     textAlign: "center",
     borderRadius: "0.5rem",
-    // border: "1px solid lightgray",
   },
   newPosting: {
     height: theme.spacing(30),
@@ -62,14 +61,11 @@ const useStyles = makeStyles((theme) => ({
   },
   newPostingBtn: {
     height: theme.spacing(4),
-    // padding: theme.spacing(1),
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     border: "1px solid lightgray",
   },
   postings: {
-    // position: "absolute",
-    // width: "100%",
     height: theme.spacing(130),
     padding: theme.spacing(1),
     textAlign: "center",
@@ -85,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 커뮤니티 컴포넌트
 const Community = () => {
-  const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+  const url = `http://localhost:5000`;
   const classes = useStyles();
   const [posting, setPosting] = useState(""); // 게시글(내용)
   const [newPosting, setNewPosting] = useState(""); // 새로운 게시글
@@ -182,44 +178,6 @@ const Community = () => {
   const onClearAttachment = () => setAttachment(null);
 
   return (
-    // <div id="community-container">
-    //   <h2>우리동네 커뮤니티</h2>
-    //   <div id="create-posting-container">
-    // <form>
-    // <input
-    //   type="text"
-    //   value={posting}
-    //   onChange={onPosting}
-    //   placeholder="내용을 입력하세요."
-    //   maxLength={120}
-    // />
-    // <input
-    //   id="attachment-input"
-    //   type="file"
-    //   accept="image/*"
-    //   onChange={onFileChange}
-    // />
-    // {attachment && (
-    //   <div>
-    //     <img src={attachment} width="200px" height="150px" />
-    //     <button onClick={onClearAttachment}>지우기</button>
-    //   </div>
-    // )}
-    //   <button onClick={onCreatePosting}>글 올리기</button>
-    // </form>
-    //   </div>
-    // <div className="postings-container">
-    //   {postings.map((posting) => (
-    //     <Posting
-    //       key={posting.date}
-    //       postingObj={posting}
-    //       content={posting.content}
-    //       isOwner={posting.userid === sessionStorage.userid}
-    //       onReadPosting={onReadPosting}
-    //     />
-    //   ))}
-    // </div>
-    // </div>
     <Paper style={{ width: "100%", border: "none" }}>
       <Grid container spacing={0}>
         <Grid item xs={12}>
