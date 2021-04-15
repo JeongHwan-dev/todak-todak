@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 커뮤니티 컴포넌트
 const Community = () => {
-  const url = `http://localhost:5000`;
+  const url = `${window.location.origin}:5000`;
   const classes = useStyles();
   const [posting, setPosting] = useState(""); // 게시글(내용)
   const [newPosting, setNewPosting] = useState(""); // 새로운 게시글
