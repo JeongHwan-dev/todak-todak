@@ -8,9 +8,9 @@
   - 기술 스택 및 라이브러리<br/>
   >| 분류 | 이름 | 목적 |
   >|-|-|-|
-  >| Server | Python-Flask, WebSocket | 전체 서비스 구동을 위한 백엔드 서버, 채팅기능 구현을 위한 WebSocket |
-  >| Front | React/ React Native / Redux | Component 관리를 위한 React / React State 관리를 위한 Redux |
-  >| DB | MySQL / MongoDB | UserInformation 데이터를 위한 MySQL<br/>Community Post 데이터를 위한 MongoDB |
+  >| Server | Python-Flask, Socket.io | 전체 서비스 구동을 위한 백엔드 서버, 채팅기능 구현을 위한 Socket.io |
+  >| Front | React/css/Bootstrap/material-ui/sweet-alert | Component 관리를 위한 React  |
+  >| DB | MySQL / MongoDB | UserInformation 데이터를 위한 MySQL(sqlalchemy)<br/>Community Post 데이터를 위한 MongoDB(pymongo) |
   >| DataAnalysis | Pandas / scikit-learn / ANN / IBM SPSS / d3.js / <br/>neo4j / folium / geoPandas | 데이터 분석 및 시각화를 위한 라이브러리 |
   >| VM | Azure / Docker | 서비스 배포를 위한 Azure<br/>개발환경 일치를 위한 Docker |
   
@@ -63,7 +63,6 @@
   >| 채팅기능 | 주요 | 유저간 1:1 채팅 기능 |
   >| 지역 데이터 시각화 | 주요 | 지역의 유저 데이터와 의료 정보 데이터를 시각화하여 제공 |
   >| 유저 사회망 시각화 | 부가 | 자신과 네트워킹이 발생하고 있는 유저들과의 사회적 연결망을 시각화하여 제공 |
-  >| Polling | 부가 | 사용자 데이터 분석을 통해 발견한 인사이트를 커뮤니티 탭에 이슈(Polling)으로 게시하여 도출된 결과를 정책 의사 결정에 활용할 수 있도록 제공 |
   >| 정보 제공 | 부가 | 지역의 의료기관 / 건강증진시설 등 지역 커뮤니티에 대한 정보와 리뷰 제공 (by WebCrwaling) | 
   >| 이주의 토닥러 | 부가 | 한 주 동안 가장 높은 사회적 활동(서비스 내 활동)을 보인 유저 선발 |
   <br/>
@@ -89,11 +88,11 @@
 
 | 이름 | 담당 업무 |
 | ------ | ------ |
-| 황정우 | 리더 / 백엔드 개발 / 데이터 분석 / 실시간 데이터 시각화 구현 |
-| 강인선 | 백엔드 개발 / 데이터 분석 / 커뮤니티 기능 구현 |
-| 윤수진 | 백앤드 개발 / 채팅 기능 구현 | 
-| 김수영 | 프론트엔드 개발 / 데이터 시각화 / 채팅 기능 구현 |
-| 박정환 | 프론트엔드 개발 / 데이터 시각화 / 커뮤니티 기능 구현 |
+| 황정우(CEO) | 리더 / 백엔드 개발 / 데이터 분석 / 실시간 데이터 시각화 구현 |
+| 강인선(CTO) | 백엔드 개발 / 데이터 분석 / 커뮤니티 기능 구현/ 채팅 기능 구현 |
+| 윤수진(인턴) | 백엔드 개발 / 프론트엔드 개발/ 채팅 기능 구현 | 
+| 김수영(프론트엔드 개발자) | 프론트엔드 개발 / 데이터 시각화 / 채팅 기능 구현 |
+| 박정환(CIO) | 프론트엔드 개발 / 데이터 시각화 / 커뮤니티 기능 구현/ CSS |
 
 
 
