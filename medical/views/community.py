@@ -31,7 +31,6 @@ def create_article():
     print(body)
     userid = body['userid']
     nickname = body['nickname']
-    # usertype = body['usertype']
     content = body['content']
     attachmentUrl = body['attachmentUrl']
 
@@ -50,7 +49,8 @@ def create_article():
         "attachmentUrl": attachmentUrl,
         "date": date,
         "profilephotourl": usercheck.profilephotourl,
-        'likepeople': []
+        'likepeople': [],
+        "commentCount": 0
     })
     print('creat_ok')
     return jsonify({"msg": "글생성 성공", 'status': 200})
@@ -63,20 +63,72 @@ def read_article():
     if request.method == 'POST':
         print('read_ok')
         lst = []
+        date_now = date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         for m in mycol.find():
-            lst.append({
-                "postingid": m["postingid"],
-                "userid": m["userid"],
-                "nickname": m["nickname"],
-                "usertype": m["usertype"],
-                "content": m["content"],
-                "attachmentUrl": m["attachmentUrl"],
-                "date": m["date"],
-                "profilephotourl": m['profilephotourl'],
-                "likepeople": m['likepeople'],
-                "likepeoplelength": len(m['likepeople'])
-            })
-            print(len(m['likepeople']))
+            commentCount = mydb['comments_post'].find(
+                {'postingid': m['postingid']}).count()
+
+            if (m['date'][0:14] == date_now[0:14]) and (str(int(date_now[14:16])-int(m['date'][14:16])) == "0"):
+                lst.append({
+                    "postingid": m["postingid"],
+                    "userid": m["userid"],
+                    "nickname": m["nickname"],
+                    "usertype": m["usertype"],
+                    "content": m["content"],
+                    "attachmentUrl": m["attachmentUrl"],
+                    "date": m["date"],
+                    "profilephotourl": m['profilephotourl'],
+                    "likepeople": m['likepeople'],
+                    "likepeoplelength": len(m['likepeople']),
+                    "commentCount": commentCount,
+                    "createdate":  '방금'
+                })
+            elif m['date'][0:14] == date_now[0:14] and (str(int(date_now[14:16])-int(m['date'][14:16])) != "0"):
+                lst.append({
+                    "postingid": m["postingid"],
+                    "userid": m["userid"],
+                    "nickname": m["nickname"],
+                    "usertype": m["usertype"],
+                    "content": m["content"],
+                    "attachmentUrl": m["attachmentUrl"],
+                    "date": m["date"],
+                    "profilephotourl": m['profilephotourl'],
+                    "likepeople": m['likepeople'],
+                    "likepeoplelength": len(m['likepeople']),
+                    "commentCount": commentCount,
+                    "createdate":  str(int(date_now[14:16])-int(m['date'][14:16]))+'분 전'
+                })
+            elif m['date'][0:12] == date_now[0:12]:
+                lst.append({
+                    "postingid": m["postingid"],
+                    "userid": m["userid"],
+                    "nickname": m["nickname"],
+                    "usertype": m["usertype"],
+                    "content": m["content"],
+                    "attachmentUrl": m["attachmentUrl"],
+                    "date": m["date"],
+                    "profilephotourl": m['profilephotourl'],
+                    "likepeople": m['likepeople'],
+                    "likepeoplelength": len(m['likepeople']),
+                    "commentCount": commentCount,
+                    "createdate":  str(int(date_now[11:13])-int(m['date'][11:13]))+'시간 전'
+                })
+            else:
+                lst.append({
+                    "postingid": m["postingid"],
+                    "userid": m["userid"],
+                    "nickname": m["nickname"],
+                    "usertype": m["usertype"],
+                    "content": m["content"],
+                    "attachmentUrl": m["attachmentUrl"],
+                    "date": m["date"],
+                    "profilephotourl": m['profilephotourl'],
+                    "likepeople": m['likepeople'],
+                    "likepeoplelength": len(m['likepeople']),
+                    "commentCount": commentCount,
+                    "createdate": m['date'][5:7] + "/" + m['date'][8:10]
+                })
+
         print('read.ok')
         return jsonify(lst)
 
@@ -92,7 +144,7 @@ def modify_articles():
     date = (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     mycol.update_one(
-        {'postingid': postingId},
+        {'postingid': postingid},
         {'$set': {'content': content, 'date': date}}
     )
     print('update_ok')

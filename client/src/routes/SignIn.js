@@ -13,6 +13,10 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { Paper } from "@material-ui/core";
+import { Row, Col } from "react-bootstrap";
+
+import swal from "sweetalert";
 
 axios.defaults.withCredentials = true;
 
@@ -20,8 +24,12 @@ const signInStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       flexGrow: 1,
-      background: "#f1f3f5",
+      background: "#f8f8f8",
     },
+  },
+
+  head: {
+    height: "25vh",
   },
 
   paper: {
@@ -30,25 +38,34 @@ const signInStyles = makeStyles((theme) => ({
   },
 
   body: {
-    height: 350,
+    height: "50vh",
     padding: theme.spacing(2),
   },
 
-  footer: {
-    zIndex: "-1",
+  grass: {
+    zIndex: "1",
+    position: "relative",
     marginTop: "10vh",
+    marginBottom: 0,
     padding: theme.spacing(0),
-    background: "#f1f3f5",
+  },
+
+  footer: {
+    background: "#d3d3d3",
   },
 
   logo: {
-    marginBottom: "3vh",
+    marginTop: "4vh",
+    marginBottom: "1.5vh",
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
 
   slogan: {
-    fontSize: "1.5vw",
+    marginLeft: "1vw",
+    fontSize: "2.5vh",
+    weight: "bold",
+    color: "darkgrey",
     fontFamily: "Spoqa Han Sans Neo",
   },
 
@@ -57,7 +74,7 @@ const signInStyles = makeStyles((theme) => ({
     position: "absolute",
     zIndex: "1",
     background: "white",
-    boxShadow: "0px 2px 10px lightgray",
+    boxShadow: "0px 0px 5px lightgrey",
     borderRadius: "1.8rem",
     padding: theme.spacing(5.75),
     textAlign: "center",
@@ -75,7 +92,7 @@ const signInStyles = makeStyles((theme) => ({
     width: "25vw",
     margin: "0.5vw",
     fontFamily: "Spoqa Han Sans Neo",
-    borderRadius: "0",
+    borderRadius: 0,
   },
 
   buttonSignIn: {
@@ -115,7 +132,7 @@ const signInStyles = makeStyles((theme) => ({
 
 // 로그인 페이지
 function SignIn() {
-  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
+  const url = `${window.location.origin}:5000`;
   const classes = signInStyles();
   const history = useHistory();
   const [userEmail, setUserEmail] = useState("");
@@ -151,7 +168,12 @@ function SignIn() {
       })
       .then((response) => {
         if (response.data.status === 400) {
-          alert("로그인 성공");
+          swal({
+            title: "로그인 성공!",
+            text: "당신을 토닥 토닥",
+            icon: "success",
+            button: false,
+          });
           sessionStorage.setItem("accessToken", response.data.access_token);
           sessionStorage.setItem("refreshToken", response.data.refresh_token);
           sessionStorage.setItem(
@@ -172,7 +194,11 @@ function SignIn() {
           );
           window.location.replace("/");
         } else if (response.data.status === 401) {
-          alert("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+          swal({
+            title: "로그인 실패",
+            text: "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.",
+            icon: "error",
+          });
         } else {
           alert("error");
         }
@@ -205,37 +231,26 @@ function SignIn() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <div className={classes.paper}></div>
-        </Grid>
-        <Grid item xs={2}>
-          <div className={classes.body}></div>
-        </Grid>
-        <Grid item xs={3}>
-          <Grid item xs={12}>
-            <div className={classes.logo}>
-              <img
-                src="./images/todak_logo.png"
-                width="100%"
-                alt="Todak Logo"
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className={classes.slogan}>
+      <Grid item xs={12}>
+        <Row item xs={12} className={classes.head}></Row>
+        <Row item xs={12} style={{ height: "55vh" }}>
+          <Col item xs={2}></Col>
+          <Col item xs={3}>
+            <img
+              className={classes.logo}
+              src="./images/todak_logo.png"
+              width="100%"
+              alt="Todak Logo"
+            />
+            <p className={classes.slogan}>
               토닥토닥에서 우리 동네에 나와 같은 아픔을 가진 사람들과 따뜻한
               이야기를 나눠보세요.
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item xs={1}>
-          <div className={classes.body}></div>
-        </Grid>
-        <Grid item xs={4}>
-          <Grid item xs={12}>
-            <div className={classes.signIn}>
-              <h2 className={classes.signInTitle}>로그인하기</h2>
+            </p>
+          </Col>
+          <Col item xs={1}></Col>
+          <Col item xs={4}>
+            <Paper className={classes.signIn}>
+              <h1 className={classes.signInTitle}>로그인</h1>
               <TextField
                 className={classes.textField}
                 id="outlined-basic"
@@ -246,7 +261,6 @@ function SignIn() {
                 value={userEmail}
                 onChange={onChangeHandler}
                 borderRadius={16}
-                required
               />
               <FormControl
                 className={clsx(classes.margin, classes.textField)}
@@ -296,17 +310,16 @@ function SignIn() {
               >
                 로그인
               </Button>
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item xs={2}>
-          <div className={classes.body}></div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.footer}>
-            <img src="./images/grass.png" width="100%" alt="Todak Logo" />
-          </div>
-        </Grid>
+            </Paper>
+          </Col>
+          <Col item xs={2}></Col>
+        </Row>
+        <Row>
+          <div></div>
+        </Row>
+        <Row>
+          <img src="./images/grass.png" width="100%" alt="Todak Logo" />
+        </Row>
       </Grid>
     </div>
   );

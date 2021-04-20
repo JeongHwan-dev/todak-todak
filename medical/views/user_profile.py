@@ -16,7 +16,6 @@ bp = Blueprint('user-profile', __name__, url_prefix='/')
 def profile_create():
 
     body = literal_eval(request.get_json()['body'])
-    print(body)
     useremail = body['useremail']
     profilephotourl = body['profilephotourl']
     userintroduction = body['userintroduction']
@@ -29,10 +28,6 @@ def profile_create():
 
     for i in userdiseases:
         diseases += i+';'
-
-    print(len(userdiseases))
-    print(useremail, profilephotourl, userintroduction,
-          userlocation, userdiseases, userage, doctorpdfurl, usertype)
     useridcheck = models.User.query.filter_by(email=useremail).first()
 
     userprofile = models.Userprofile(

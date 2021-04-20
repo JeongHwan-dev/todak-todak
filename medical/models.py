@@ -55,6 +55,15 @@ class Message(db.Model):
     channel_id = Column(Integer, ForeignKey('channel.id'))
     timestamp = Column(DateTime)
 
+class IsJoin(db.Model):
+    __tablename__ = 'is_join'
+    __table_args__ = {'mysql_collate': 'utf8_general_ci'}
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    room_id = Column(Integer, ForeignKey('channel.id'))
+    user_one = Column(Integer)
+    user_two = Column(Integer)
+
 
 class Posthistory(db.Model):
     tablename = 'post_history'

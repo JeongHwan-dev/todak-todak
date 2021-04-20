@@ -25,25 +25,25 @@ def create_comment():
     postingid = body['postingid']
     userid = body['userid']
     nickname = body['nickname']
-    usertype = body['usertype']
     content = body['content']
 
-    profilephoto = models.Userprofile.query.filter_by(userid=userid).first()
+    
+    usercheck = models.Userprofile.query.filter_by(userid=userid).first()
 
     date = (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     commentid = str(userid)+';'+str(date)
-    print(profilephoto.profilephotourl, date)
+    print(usercheck.profilephotourl, date)
 
     comment = mycol.insert_one({
         'commentid': commentid,
         'postingid': postingid,
         "userid": userid,
         "nickname": nickname,
-        "usertype": usertype,
+        "usertype": usercheck.usertype,
         "content": content,
         "date": date,
-        "profilephotourl": profilephoto.profilephotourl,
+        "profilephotourl": usercheck.profilephotourl,
         'likepeople': []
 
     })

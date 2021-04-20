@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { FormControl, Container, Row, Col, Card, Form } from "react-bootstrap";
-import "components/css/ModalAddress.css";
+import "components/css/InputAddress.css";
 
 const InputAddress = ({ address, setAddress }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -30,11 +30,12 @@ const InputAddress = ({ address, setAddress }) => {
 
   return (
     <>
-      <Row>
-        <Form>
+      <Row style={{ width: "100%" }}>
+        <Form style={{ width: "100%" }}>
           <Form.Control
             placeholder="주소를 입력해주세요."
             onFocus={openModal}
+            value={address}
           />
         </Form>
         <div className={modalOpen ? "openModal modal" : "modal"}>

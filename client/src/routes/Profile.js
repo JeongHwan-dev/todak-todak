@@ -11,9 +11,7 @@ import InputAddress from "components/InputAddress";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Button, Avatar } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -21,18 +19,108 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { Row, Col } from "react-bootstrap";
+
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       flexGrow: 1,
-      background: "#f1f3f5",
+      background: "#f8f8f8",
     },
+  },
+
+  head: {
+    height: "15vh",
   },
 
   paper: {
     padding: theme.spacing(12),
     textAlign: "center",
+  },
+
+  body: {
+    height: "50vh",
+    padding: theme.spacing(2),
+  },
+
+  grass: {
+    zIndex: "1",
+    position: "relative",
+    marginTop: "10vh",
+    marginBottom: 0,
+    padding: theme.spacing(0),
+  },
+
+  footer: {
+    background: "#d3d3d3",
+  },
+
+  logo: {
+    marginTop: "4vh",
+    marginBottom: "1.5vh",
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+
+  slogan: {
+    marginLeft: "1vw",
+    fontSize: "2.5vh",
+    weight: "bold",
+    color: "darkgrey",
+    fontFamily: "Spoqa Han Sans Neo",
+  },
+
+  profile: {
+    width: "35vw",
+    position: "absolute",
+    zIndex: "1",
+    background: "white",
+    boxShadow: "0px 0px 5px lightgrey",
+    borderRadius: "1.8rem",
+    padding: theme.spacing(5.75),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+
+  profileTitle: {
+    color: "black",
+    fontSize: "1.6vw",
+    fontFamily: "Spoqa Han Sans Neo",
+    marginBottom: "2.2vh",
+  },
+
+  textField: {
+    width: "25vw",
+    margin: "0.5vw",
+    fontFamily: "Spoqa Han Sans Neo",
+    borderRadius: 0,
+  },
+
+  buttonProfile: {
+    width: "10vw",
+    margin: "1vw",
+    fontFamily: "Spoqa Han Sans Neo",
+    fontWeight: "bold",
+    color: "#ff8a4e",
+    background: "white",
+    border: "2px solid #ff8a4e",
+    borderRadius: "0.8rem",
+    boxShadow: "none",
+    "&:hover": {
+      background: "#ff8a4e",
+      color: "white",
+      boxShadow: "none",
+    },
+  },
+
+  ageInput: {
+    width: "100%",
+    paddingTop: "1px",
   },
 
   insidePaperHeader: {
@@ -87,9 +175,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   paperIntro: {
-    padding: "1vw",
-    width: "15vw",
-    height: "10vh",
+    padding: "10px",
+    width: "100%",
+    height: "70%",
     border: "1px solid lightgray",
     borderRadius: "0.5rem",
   },
@@ -179,8 +267,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  addressInput: {
+    marginLeft: "1vw",
+  },
+
   input: {
     display: "none",
+    margin: "0 auto",
   },
 
   profileImg: {
@@ -194,9 +287,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   formControl: {
-    marginLeft: theme.spacing(4),
-    minWidth: 120,
-    maxWidth: 300,
+    width: "100%",
+    height: "80%",
   },
   chips: {
     display: "flex",
@@ -207,14 +299,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   subtitle: {
-    textAlign: "left",
-    width: "6vw",
-    fontSize: "0.9vw",
+    fontSize: "0.95vw",
     fontFamily: "Spoqa Han Sans Neo",
-    marginTop: "2vh",
+  },
+
+  subMargin: {
     marginBottom: "2vh",
-    marginLeft: "1.5vw",
-    marginRight: "3vw",
   },
 
   sub: {
@@ -222,22 +312,17 @@ const useStyles = makeStyles((theme) => ({
   },
 
   subInput: {
-    paddingTop: "0.1vh",
-    paddingBottom: "0.1vh",
-    marginTop: "2vh",
-    marginBottom: "2vh",
+    width: "100%",
     lineHeight: "1.5",
     color: "#495057",
     backgroundColor: "#fff",
     backgroundClip: "padding-box",
     border: "1px solid #ced4da",
     borderRadius: "0.5rem",
-    transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
   },
 
   userData: {
     marginLeft: "5vw",
-    // paddingLeft: "3.5vw",
   },
 }));
 
@@ -263,7 +348,7 @@ function getStyles(disease, userDisease, theme) {
 
 // 프로필 작성 컴포넌트
 const Profile = () => {
-  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
+  const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
   const location = useLocation();
   const classes = useStyles();
   const theme = useTheme();
@@ -367,7 +452,11 @@ const Profile = () => {
   // 작성 프로필 저장 핸들러
   const onSubmitProfile = async (event) => {
     event.preventDefault();
-
+    swal({
+      title: "프로필 등록 성공!",
+      text: "당신의 개인정보는 안전하게 보관됩니다.",
+      icon: "success",
+    });
     let profilePhotoUrl = "";
     let doctorPdfUrl = "";
     let userType = "";
@@ -416,189 +505,177 @@ const Profile = () => {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <div className={classes.paper}></div>
-        </Grid>
-        <Grid item xs={2}>
-          <div className={classes.paperBody}></div>
-        </Grid>
-        <Grid item xs={3}>
-          <Grid item xs={12}>
-            <div className={classes.paperLogo}>
-              <img
-                src="./images/todak_logo.png"
-                width="100%"
-                alt="Todak Logo"
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className={classes.paperSlogan}>
+      <Grid item xs={12}>
+        <Row item xs={12} className={classes.head}></Row>
+        <Row item xs={12} style={{ height: "55vh" }}>
+          <Col item xs={2}></Col>
+          <Col item xs={3}>
+            <img
+              className={classes.logo}
+              src="./images/todak_logo.png"
+              width="100%"
+              alt="Todak Logo"
+            />
+            <p className={classes.slogan}>
               토닥토닥에서 우리 동네에 나와 같은 아픔을 가진 사람들과 따뜻한
               이야기를 나눠보세요.
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item xs={1}>
-          <div className={classes.paperBody}></div>
-        </Grid>
-        <Grid item xs={4}>
-          <Grid item xs={12}>
-            <div className={classes.profileForm}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  {/* 프로필 작성 페이지 타이틀 */}
-                  <h2 className={classes.profileTitle}>프로필 작성</h2>
-                </Grid>
-                <Grid item xs={1}></Grid>
-                <Grid item xs={4}>
-                  <div className={classes.uploadProfile}>
-                    {/* 프로필 사진 첨부 */}
-                    <Avatar src={profilePhoto} width="200px" height="200px" />
-                    <input
-                      accept="image/*"
-                      className={classes.input}
-                      id="icon-button-file"
-                      type="file"
-                      onChange={onFileChange}
-                    />
-                    {profilePhoto && (
-                      <div>
-                        <button onClick={onClearProfilePhoto}>지우기</button>
-                      </div>
-                    )}
-                    {profilePhoto ? (
-                      <></>
-                    ) : (
-                      <label htmlFor="icon-button-file">
-                        <IconButton
-                          aria-label="upload picture"
-                          component="span"
-                        >
-                          <PhotoCamera />
-                        </IconButton>
-                      </label>
-                    )}
-                  </div>
-                </Grid>
-                <Grid item xs={6}>
-                  {/* 소개말 입력란 */}
-                  <textarea
-                    className={classes.paperIntro}
-                    name="userIntroduction"
-                    cols="40"
-                    rows="5"
+            </p>
+          </Col>
+          <Col item xs={1}></Col>
+          <Col item xs={4}>
+            <Paper className={classes.profile}>
+              <h1 className={classes.profileTitle}>프로필 작성</h1>
+              <br />
+              <Row>
+                <Col item xs={1}></Col>
+                <Col item xs={3}>
+                  <Avatar
+                    src={profilePhoto}
+                    style={{
+                      height: "auto",
+                      width: "100%",
+                      display: "block",
+                      margin: "0 auto",
+                    }}
+                  />
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    id="icon-button-file"
+                    type="file"
+                    onChange={onFileChange}
+                  />
+                  {profilePhoto && (
+                    <IconButton
+                      aria-label="delete"
+                      onClick={onClearProfilePhoto}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                  {profilePhoto ? (
+                    <></>
+                  ) : (
+                    <label
+                      htmlFor="icon-button-file"
+                      style={{ margin: "0 auto" }}
+                    >
+                      <IconButton aria-label="upload picture" component="span">
+                        <PhotoCamera />
+                      </IconButton>
+                    </label>
+                  )}
+                </Col>
+                <Col item xs={6} style={{ margin: "0 auto" }}>
+                  <TextField
+                    id="outlined-multiline-static"
+                    multiline
+                    rows={6}
                     placeholder="소개말을 입력해주세요."
+                    variant="outlined"
                     onChange={onChangeHandler}
-                  ></textarea>
-                </Grid>
-                <Grid item xs={1}></Grid>
-                <div className={classes.userData}>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={10}>
-                    <div className={classes.sub}>
-                      {/* 나이 입력 */}
-                      <h5 className={classes.subtitle}>나이</h5>
-                      <input
-                        type="text"
-                        onChange={onAgeChange}
-                        placeholder="나이를 입력해주세요."
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={10}>
-                    <div className={classes.sub}>
-                      {/* 관심질환 선택란 */}
-                      <h5 className={classes.subtitle}>관심질환</h5>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-mutiple-chip-label">
-                          Chip
-                        </InputLabel>
-                        <Select
-                          labelId="demo-mutiple-chip-label"
-                          id="demo-mutiple-chip"
-                          multiple
-                          value={userDiseases}
-                          onChange={handleChange}
-                          input={<Input id="select-multiple-chip" />}
-                          renderValue={(selected) => (
-                            <div className={classes.chips}>
-                              {selected.map((value) => (
-                                <Chip
-                                  key={value}
-                                  label={value}
-                                  className={classes.chip}
-                                />
-                              ))}
-                            </div>
-                          )}
-                          MenuProps={MenuProps}
-                        >
-                          {diseases.map((disease) => (
-                            <MenuItem
-                              key={disease}
-                              value={disease}
-                              style={getStyles(disease, userDiseases, theme)}
-                            >
-                              {disease}
-                            </MenuItem>
+                    style={{ margin: "0 auto", width: "100%" }}
+                  ></TextField>
+                </Col>
+                <Col item xs={1}></Col>
+              </Row>
+              <br />
+              <Row className={classes.subMargin}>
+                <Col item xs={2}></Col>
+                <Col item xs={8}>
+                  <TextField
+                    className={classes.ageInput}
+                    id="standard-number"
+                    type="number"
+                    label="나이를 입력해주세요."
+                    onChange={onAgeChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Col>
+                <Col item xs={2}></Col>
+              </Row>
+              <Row className={classes.subMargin}>
+                <Col item xs={2}></Col>
+                <Col item xs={8}>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-mutiple-chip-label">
+                      관심질환을 선택하세요.
+                    </InputLabel>
+                    <Select
+                      labelId="demo-mutiple-chip-label"
+                      id="demo-mutiple-chip"
+                      multiple
+                      value={userDiseases}
+                      onChange={handleChange}
+                      input={<Input id="select-multiple-chip" />}
+                      renderValue={(selected) => (
+                        <div className={classes.chips}>
+                          {selected.map((value) => (
+                            <Chip
+                              key={value}
+                              label={value}
+                              className={classes.chip}
+                            />
                           ))}
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={10}>
-                    <div className={classes.sub}>
-                      {/* 우리동네 입력란 */}
-                      <h5 className={classes.subtitle}>우리동네</h5>
-                      <InputAddress address={address} setAddress={setAddress} />
-                    </div>
-                  </Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={10}>
-                    <div className={classes.sub}>
-                      {/* 토닥터 인증란 */}
-                      <h5 className={classes.subtitle}>토닥터 인증</h5>
-                      <input
-                        id="doctor-validate-input"
-                        className={classes.subInput}
-                        type="file"
-                        accept=".pdf"
-                        onChange={onDoctorPdfChange}
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={1}></Grid>
-                </div>
-                <Grid item xs={12}>
-                  {/* 프로필 저장 버튼 */}
-                  <Button
-                    className={classes.ButtonRegister}
-                    variant="contained"
-                    size="large"
-                    onClick={onSubmitProfile}
-                  >
-                    저장
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item xs={2}>
-          <div className={classes.paperBody}></div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.paperFooter}>
-            <img src="./images/grass.png" width="100%" alt="Todak Logo" />
-          </div>
-        </Grid>
+                        </div>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {diseases.map((disease) => (
+                        <MenuItem
+                          key={disease}
+                          value={disease}
+                          style={getStyles(disease, userDiseases, theme)}
+                        >
+                          {disease}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Col>
+                <Col item xs={2}></Col>
+              </Row>
+              <Row className={classes.subMargin}>
+                <Col item xs={2}></Col>
+                <Col item xs={8} className={classes.addressInput}>
+                  <InputAddress address={address} setAddress={setAddress} />
+                </Col>
+                <Col item xs={2}></Col>
+              </Row>
+              <Row className={classes.subMargin}>
+                <Col item xs={2}></Col>
+                <Col item xs={8}>
+                  <input
+                    id="doctor-validate-input"
+                    className={classes.subInput}
+                    type="file"
+                    accept=".pdf"
+                    onChange={onDoctorPdfChange}
+                  />
+                </Col>
+                <Col item xs={2}></Col>
+              </Row>
+              {/* 프로필 저장 버튼 */}
+              <Button
+                className={classes.ButtonRegister}
+                variant="contained"
+                size="large"
+                onClick={onSubmitProfile}
+              >
+                저장
+              </Button>
+            </Paper>
+          </Col>
+          <Col item xs={2}></Col>
+        </Row>
+        <Row>
+          <div></div>
+        </Row>
+        <Row>
+          <img src="./images/grass.png" width="100%" alt="Todak Logo" />
+        </Row>
       </Grid>
     </div>
   );

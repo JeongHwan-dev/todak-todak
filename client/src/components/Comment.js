@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Grid, Paper } from "@material-ui/core";
-import { Container, Col, Row, Card } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import ClearIcon from "@material-ui/icons/Clear";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import swal from "sweetalert";
 
 // [댓글] 컴포넌트
-const Comment = ({ commentObj, content, isOwner, onReadComment }) => {
-  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
+const Comment = ({
+  commentObj,
+  content,
+  isOwner,
+  onReadComment,
+  commentCount,
+  setCommentCount,
+}) => {
+  const url = `${window.location.origin}:5000`;
   const [likeCount, setLikeCount] = useState(commentObj.likepeoplelength);
   const [likeState, setLikeState] = useState(
     Boolean(commentObj.likepeople.find(liked))
@@ -74,7 +84,9 @@ const Comment = ({ commentObj, content, isOwner, onReadComment }) => {
 
   // [DELETE] 댓글
   const onDeleteComment = async () => {
-    const ok = window.confirm("삭제하시겠습니까?");
+    const ok = await swal("삭제하시겠습니까?", {
+      buttons: ["Cancel", "OK"],
+    });
     if (ok) {
       await axios
         .post(url + "/posting/comment/delete", {
@@ -85,6 +97,7 @@ const Comment = ({ commentObj, content, isOwner, onReadComment }) => {
         })
         .then(() => {
           console.log("[DELETE] comment");
+          setCommentCount(commentCount - 1);
           onReadComment();
         })
         .catch(() => {
@@ -95,33 +108,40 @@ const Comment = ({ commentObj, content, isOwner, onReadComment }) => {
 
   return (
     <>
-      <Paper>
+      <Paper
+        elevation={0}
+        style={{ width: "100%", marginTop: 5, marginBottom: 5 }}
+      >
         <Grid item xs={12}>
           <Row>
-            <Col>
+            <Col item xs={3} style={{ fontWeight: "bold" }}>
               {/* [댓글] 작성자 프로필 사진 */}
               <img
                 id="commentProfileImg"
                 src={commentObj.profilephotourl}
-                width="30px"
-                height="30px"
+                width="40vw"
+                height="40vh"
+                style={{ margin: 15, borderRadius: "20px" }}
               />
-            </Col>
-            <Col>
               {/* [댓글] 작성자 닉네임 */}
-              {commentObj.nickname}
+              {commentObj.nickname.replaceAll('"', "")}
+              {/* 게시글 작성자가 의사일 경우 토닥터 뱃지 표기 */}
+              {commentObj.usertype && (
+                <LocalHospitalIcon style={{ marginLeft: 5, color: "green" }} />
+              )}
             </Col>
-            <Col>
+            <Col item xs={5} style={{ margin: 0, paddingTop: 20 }}>
               {/* [댓글] 내용 */}
               {content}
             </Col>
-            <Col>
+            <Col item xs={1} style={{ margin: 0, paddingTop: 20 }}>
               {/* [댓글] 작성 날짜 */}
-              {commentObj.date}
+              {/* {commentObj.date} */}
             </Col>
-            <Col>
+            <Col item xs={2} style={{ paddingTop: 10 }}>
               {/* [댓글] 좋아요 버튼 */}
               <FormControlLabel
+                style={{ margin: 0, paddingTop: 0 }}
                 control={
                   <Checkbox
                     icon={<FavoriteBorder />}
@@ -132,18 +152,20 @@ const Comment = ({ commentObj, content, isOwner, onReadComment }) => {
                   />
                 }
               />
-            </Col>
-            <Col>
-              <p>{likeCount}</p>
+              <span>{likeCount}</span>
             </Col>
             {/* [댓글] 작성자일 경우 삭제 버튼 표기 */}
-            {isOwner && (
-              <>
-                <Col>
-                  {/* [댓글] 삭제 버튼 */}
-                  <button onClick={onDeleteComment}>X</button>
-                </Col>
-              </>
+            {isOwner ? (
+              <Col
+                item
+                xs={1}
+                style={{ margin: 0, paddingTop: 20, color: "lightgray" }}
+              >
+                {/* [댓글] 삭제 버튼 */}
+                <ClearIcon onClick={onDeleteComment} />
+              </Col>
+            ) : (
+              <Col item xs={1}></Col>
             )}
           </Row>
         </Grid>

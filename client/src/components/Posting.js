@@ -1,27 +1,62 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "components/css/Posting.css";
 import { storageService } from "fBase";
 import Comment from "components/Comment";
 import { Grid, Paper } from "@material-ui/core";
 import { Container, Col, Row, Card } from "react-bootstrap";
+import { makeStyles } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import CommentIcon from "@material-ui/icons/Comment";
+import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+
+import swal from "sweetalert";
+
+const useStyles = makeStyles((theme) => ({
+  commentInput: {
+    width: "100%",
+    padding: "10px",
+    border: "1px solid #e5e5e5",
+    borderRadius: "0.3rem",
+    "&:focus, &:active": {
+      width: "100%",
+      border: "2px solid #d6d6d6",
+      borderRadius: "0.3rem",
+      outline: "none",
+    },
+  },
+}));
 
 // [게시글] 컴포넌트
 const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
-  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
+  const url = `${window.location.origin}:5000`;
+  const classes = useStyles();
   const [editing, setEditing] = useState(false);
   const [newPosting, setNewPosting] = useState(postingObj.content);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [commentCount, setCommentCount] = useState(postingObj.commentCount);
   const [likeCount, setLikeCount] = useState(postingObj.likepeoplelength);
   const [likeState, setLikeState] = useState(
     Boolean(postingObj.likepeople.find(liked))
   );
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     onReadComment();
@@ -91,28 +126,35 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
 
   // [UPDATE] 게시글 업데이트 핸들러
   const onUpdatePosting = async (event) => {
-    event.preventDefault();
-    await axios
-      .post(url + "/article/update", {
-        method: "POST",
-        body: JSON.stringify({
-          postingid: postingObj.postingid,
-          editContent: newPosting,
-        }),
-      })
-      .then(() => {
-        console.log("[UPDATE] 게시글 수정");
-        onReadPosting();
-      })
-      .catch(() => {
-        alert("[UPDATE] response (x)");
-      });
-    setEditing(false);
+    const ok = await swal("수정하시겠습니까?", {
+      buttons: ["Cancel", "OK"],
+    });
+    if (ok) {
+      event.preventDefault();
+      await axios
+        .post(url + "/article/update", {
+          method: "POST",
+          body: JSON.stringify({
+            postingid: postingObj.postingid,
+            editContent: newPosting,
+          }),
+        })
+        .then(() => {
+          console.log("[UPDATE] 게시글 수정");
+          onReadPosting();
+        })
+        .catch(() => {
+          alert("[UPDATE] response (x)");
+        });
+      setEditing(false);
+    }
   };
 
   // [DELETE] 게시글 삭제 핸들러
   const onDeletePosting = async () => {
-    const ok = window.confirm("삭제하시겠습니까?");
+    const ok = await swal("삭제하시겠습니까?", {
+      buttons: ["Cancel", "OK"],
+    });
     if (ok) {
       await axios
         .post(url + "/article/delete", {
@@ -160,13 +202,13 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
           postingid: postingObj.postingid,
           userid: sessionStorage.userid,
           nickname: sessionStorage.nickname,
-          usertype: "토닥이",
           content: comment,
         }),
         withCredentials: true,
       })
       .then(() => {
         console.log("[CREATE] 새 댓글 생성");
+        setCommentCount(commentCount + 1);
         setNewComment(comment);
       })
       .catch(() => {
@@ -175,7 +217,7 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
     setComment("");
   };
 
-  // [READ] 댓글 삭제 핸들러
+  // [READ] 댓글 읽기 핸들러
   const onReadComment = async () => {
     await axios
       .post(url + "/posting/comment/read", {
@@ -200,7 +242,11 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
           {isOwner && (
             <>
               <Paper
-                style={{ border: "1px solid lightgray ", marginBottom: "15px" }}
+                style={{
+                  border: "1px solid lightgray ",
+                  marginBottom: "15px",
+                  borderRadius: "1rem",
+                }}
               >
                 <Grid item xs={12}>
                   <Row
@@ -220,7 +266,7 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
                         placeholder="내용을 입력하세요."
                         maxLength={120}
                         style={{
-                          padding: "16px",
+                          padding: "20px",
                           width: "100%",
                           height: "100%",
                           border: "none",
@@ -243,85 +289,149 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
       ) : (
         <>
           <Paper
-            style={{ border: "1px solid lightgray ", marginBottom: "15px" }}
+            style={{
+              border: "1px solid lightgray ",
+              marginBottom: "15px",
+              borderRadius: "1rem",
+            }}
           >
             <Grid item xs={12}>
-              <Row style={{ margin: 0, borderBottom: "1px solid lightgray " }}>
-                <Col item xs={2}>
+              <Row
+                itme
+                xs={12}
+                style={{
+                  margin: 0,
+                  padding: 5,
+                  borderBottom: "1px solid lightgray ",
+                }}
+              >
+                <Col item xs={4} style={{ fontWeight: "bold", marginTop: "0.5rem", marginBottom: "0.5rem" }}>
                   {/* 게시글 작성자 프로필 사진 */}
                   <img
                     id="profileImg"
                     src={postingObj.profilephotourl}
-                    width="60px"
-                    height="60px"
+                    width="60vw"
+                    height="60vh"
+                    style={{ marginTop: 5, marginBottom: 5, marginleft: 5, marginRight: 20 }}
                   />
+                  <Link
+                    style={{ color: "black" }}
+                    to={{
+                      pathname: "/chat",
+                      state: { targetUser: postingObj.userid },
+                    }}
+                  >
+                    {postingObj.nickname.replaceAll('"', "")}
+                  </Link>
+                  {postingObj.usertype && (
+                    <>
+                      <LocalHospitalIcon
+                        style={{ marginLeft: 5, color: "green" }}
+                      />
+                    </>
+                  )}
                 </Col>
-                <Col item xs={10}>
-                  <Row>
-                    {/* 게시글 작성자 닉네임 */}
-                    <Col>{postingObj.nickname}</Col>
-                    {/* 게시글 작성자가 의사일 경우 토닥터 뱃지 표기 */}
-                    {postingObj.usertype && (
-                      <>
-                        <Col>{postingObj.usertype}</Col>
-                      </>
-                    )}
-                  </Row>
-                  <Row>
-                    {/* 게시글 날짜 */}
-                    <p>{postingObj.date}</p>
-                  </Row>
+                <Col item xs={4}></Col>
+                <Col
+                  item
+                  xs={2}
+                  style={{
+                    paddingTop: 15,
+                    color: "lightgray",
+                    fontSize: "1rem",
+                  }}
+                >
+                  {postingObj.createdate}
+                </Col>
+                <Col item xs={2}>
+                  {isOwner && (
+                    <>
+                      <Row>
+                        <Col item xs={1}>
+                          {/* 게시글 수정 버튼 */}
+                          <IconButton
+                            style={{
+                              display: "flex",
+                              color: "gray",
+                            }}
+                            aria-label="edit"
+                            onClick={toggleEditing}
+                          >
+                            <Icon>edit</Icon>
+                          </IconButton>
+                        </Col>
+                        <Col item xs={1}></Col>
+                        <Col item xs={1}>
+                          {/* 게시글 삭제 버튼 */}
+                          <IconButton
+                            style={{
+                              display: "flex",
+                              color: "gray",
+                            }}
+                            aria-label="delete"
+                            onClick={onDeletePosting}
+                          >
+                            <Icon>delete</Icon>
+                          </IconButton>
+                        </Col>
+                      </Row>
+                    </>
+                  )}
                 </Col>
               </Row>
-              <Row style={{ margin: 0, borderBottom: "1px solid lightgray " }}>
+              <Row itme xs={12} style={{ margin: 0 }}>
                 <Container>
                   {/* 게시글 내용 */}
-                  <p>
-                    글 내용: {content}
-                    {/* 게시글 첨부파일 포함 시 이미지 출력 */}
-                    {postingObj.attachmentUrl && (
+                  <Row style={{ padding: 20 }}>{content}</Row>
+                  <br />
+                  {/* 게시글 첨부파일 포함 시 이미지 출력 */}
+                  {postingObj.attachmentUrl && (
+                    <Row style={{ padding: 15 }}>
                       <img
                         src={postingObj.attachmentUrl}
                         width="500px"
                         height="500px"
                       />
-                    )}
-                  </p>
+                    </Row>
+                  )}
                 </Container>
               </Row>
-              <Row style={{ margin: 0, borderBottom: "1px solid lightgray " }}>
-                <Col item xs={2}>
-                  <p>더보기</p>
+              <Row item xs={12} style={{ margin: 0 }}>
+                <Col item xs={8}></Col>
+                <Col item xs={2} style={{ margin: 0, paddingTop: "8px" }}>
+                  <span style={{ marginRight: 10}}><CommentIcon /></span><span>{commentCount}</span>
                 </Col>
-                <Col item xs={6}></Col>
-                <Col item xs={2}>
-                  <p>댓글 수</p>
-                </Col>
-                <Col item xs={2}>
-                  <Row>
-                    <Col>
-                      {/* 좋아요 */}
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            icon={<FavoriteBorder />}
-                            checkedIcon={<Favorite />}
-                            onChange={onLikeHandle}
-                            checked={likeState}
-                            name="likeState"
-                          />
-                        }
+                <Col item xs={2} style={{margin: 0, padding: 0}}>
+                  {/* 좋아요 */}
+                  <FormControlLabel
+                    style={{ margin: 0}}
+                    control={
+                      <Checkbox
+                        icon={<FavoriteBorder />}
+                        checkedIcon={<Favorite />}
+                        onChange={onLikeHandle}
+                        checked={likeState}
+                        name="likeState"
                       />
-                    </Col>
-                    <Col>
-                      {/* 좋아요 수 */}
-                      <p>{likeCount}</p>
-                    </Col>
-                  </Row>
+                    }
+                  />
+                  <span>                  
+                  {/* 좋아요 수 */}
+                  {likeCount}</span>
                 </Col>
               </Row>
-              <Row style={{ margin: 0, borderBottom: "1px solid lightgray " }}>
-                <Card style={{ marginLeft: 20 }}>
+              <Row
+                item
+                xs={12}
+                style={{
+                  margin: 0,
+                  borderTop: "1px solid lightgray ",
+                  // borderBottom: "1px solid lightgray ",
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                }}
+              >
+                <Container style={{ margin: 2 }}>
                   {/* 댓글 목록 */}
                   {comments.map((comment) => (
                     <Comment
@@ -330,39 +440,44 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
                       content={comment.content}
                       isOwner={comment.userid === sessionStorage.userid}
                       onReadComment={onReadComment}
+                      commentCount={commentCount}
+                      setCommentCount={setCommentCount}
                     />
                   ))}
-                </Card>
+                </Container>
               </Row>
-              <Row>
-                <Col item xs={8}>
+              <Row
+                item
+                xs={12}
+                style={{ marginTop: 5, marginBottom: "1.2rem" }}
+              >
+                <Col
+                  item
+                  xs={10}
+                  style={{ marginLeft: "2rem", marginRight: "2rem" }}
+                >
                   {/* 댓글 입력란 */}
                   <input
+                    className={classes.commentInput}
                     type="text"
                     value={comment}
                     onChange={onComment}
-                    placeholder="댓글을 입력하세요."
+                    placeholder="댓글 입력하기"
                   />
                 </Col>
-                <Col item xs={4}>
+                <Col item xs={1}>
                   {/* 댓글 등록 버튼 */}
-                  <button onClick={onCreateComment}>댓글 입력</button>
+                  <IconButton
+                    style={{
+                      color: "#ff8a4e",
+                    }}
+                    aria-label="create"
+                    onClick={onCreateComment}
+                  >
+                    <Icon>send</Icon>
+                  </IconButton>
                 </Col>
               </Row>
-              {isOwner && (
-                <>
-                  <Row>
-                    <Col item xs={4}>
-                      {/* 댓글 삭제 버튼 */}
-                      <button onClick={onDeletePosting}>삭제</button>
-                    </Col>
-                    <Col item xs={4}>
-                      {/* 댓글 수정 버튼 */}
-                      <button onClick={toggleEditing}>수정</button>
-                    </Col>
-                  </Row>
-                </>
-              )}
             </Grid>
           </Paper>
         </>

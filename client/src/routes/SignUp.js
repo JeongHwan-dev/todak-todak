@@ -5,15 +5,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
+import swal from "sweetalert";
+import { Paper } from "@material-ui/core";
+import { Row, Col } from "react-bootstrap";
 import Profile from "routes/Profile";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       flexGrow: 1,
-      background: "#f1f3f5",
+      background: "#f8f8f8",
     },
+  },
+
+  head: {
+    height: "25vh",
   },
 
   paper: {
@@ -22,18 +28,34 @@ const useStyles = makeStyles((theme) => ({
   },
 
   body: {
-    height: 350,
+    height: "50vh",
     padding: theme.spacing(2),
   },
 
+  grass: {
+    zIndex: "1",
+    position: "relative",
+    marginTop: "10vh",
+    marginBottom: 0,
+    padding: theme.spacing(0),
+  },
+
+  footer: {
+    background: "#d3d3d3",
+  },
+
   logo: {
-    marginBottom: "3vh",
+    marginTop: "4vh",
+    marginBottom: "1.5vh",
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
 
   slogan: {
-    fontSize: "1.5vw",
+    marginLeft: "1vw",
+    fontSize: "2.5vh",
+    weight: "bold",
+    color: "darkgrey",
     fontFamily: "Spoqa Han Sans Neo",
   },
 
@@ -42,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     zIndex: "1",
     background: "white",
-    boxShadow: "0px 2px 10px lightgray",
+    boxShadow: "0px 0px 5px lightgrey",
     borderRadius: "1.8rem",
     padding: theme.spacing(5.75),
     textAlign: "center",
@@ -64,9 +86,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   textField: {
-    width: "24vw",
+    width: "25vw",
     margin: "0.5vw",
     fontFamily: "Spoqa Han Sans Neo",
+    borderRadius: 0,
   },
 
   buttonRegister: {
@@ -89,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
 
 // 회원가입 페이지
 function SignUp() {
-  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
+  const url = `${window.location.origin}:5000`;
   const classes = useStyles();
   const history = useHistory();
   const [email, setEmail] = useState("");
@@ -146,6 +169,10 @@ function SignUp() {
         })
         .then((response) => {
           if (response.data.status === 300) {
+            swal({
+              title: "회원가입 성공!",
+              icon: "success",
+            });
             history.push({
               pathname: "/profile",
               state: {
@@ -153,11 +180,36 @@ function SignUp() {
               },
             });
           } else if (response.data.status === 301) {
-            alert("필수 입력 사항이 모두 입력되지 않았습니다.");
+            swal({
+              title: "회원가입 실패",
+              text: "필수 입력 사항이 모두 입력되지 않았습니다.",
+              icon: "warning",
+            });
           } else if (response.data.status === 302) {
-            alert("이미 등록된 이메일 주소입니다.");
+            swal({
+              title: "회원가입 실패",
+              text: "이미 등록된 이메일 주소입니다.",
+              icon: "warning",
+            });
           } else if (response.data.status === 303) {
-            alert("이미 등록된 별명입니다.");
+            swal({
+              title: "회원가입 실패",
+              text: "이미 등록된 별명입니다.",
+              icon: "warning",
+            });
+          } else if (response.data.status === 304) {
+            swal({
+              title: "회원가입 실패",
+              text:
+                "비밀번호 기준에 맞지 않습니다. 비밀번호는 8자이상, 숫자+영어+특수문자 조합으로 이루어집니다.",
+              icon: "warning",
+            });
+          } else if (response.data.status === 305) {
+            swal({
+              title: "회원가입 실패",
+              text: "비밀번호는 하나이상의 특수문자가 들어가야합니다.",
+              icon: "warning",
+            });
           } else {
             alert("error");
           }
@@ -170,37 +222,26 @@ function SignUp() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <div className={classes.paper}></div>
-        </Grid>
-        <Grid item xs={2}>
-          <div className={classes.body}></div>
-        </Grid>
-        <Grid item xs={3}>
-          <Grid item xs={12}>
-            <div className={classes.logo}>
-              <img
-                src="./images/todak_logo.png"
-                width="100%"
-                alt="Todak Logo"
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <div className={classes.slogan}>
+      <Grid item xs={12}>
+        <Row item xs={12} className={classes.head}></Row>
+        <Row item xs={12} style={{ height: "55vh" }}>
+          <Col item xs={2}></Col>
+          <Col item xs={3}>
+            <img
+              className={classes.logo}
+              src="./images/todak_logo.png"
+              width="100%"
+              alt="Todak Logo"
+            />
+            <p className={classes.slogan}>
               토닥토닥에서 우리 동네에 나와 같은 아픔을 가진 사람들과 따뜻한
               이야기를 나눠보세요.
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item xs={1}>
-          <div className={classes.body}></div>
-        </Grid>
-        <Grid item xs={4}>
-          <Grid item xs={12}>
-            <div className={classes.signUp}>
-              <h2 className={classes.signUpTitle}>회원가입</h2>
+            </p>
+          </Col>
+          <Col item xs={1}></Col>
+          <Col item xs={4}>
+            <Paper className={classes.signUp}>
+              <h1 className={classes.signUpTitle}>로그인</h1>
               <TextField
                 className={classes.textField}
                 id="outlined-basic"
@@ -215,7 +256,7 @@ function SignUp() {
               <TextField
                 className={classes.textField}
                 id="outlined-basic"
-                label="비밀번호를 입력해주세요"
+                label="비밀번호는 8자이상, 숫자+영어+특수문자 조합"
                 variant="outlined"
                 name="password"
                 type="password"
@@ -264,17 +305,16 @@ function SignUp() {
               >
                 회원 가입하기
               </Button>
-            </div>
-          </Grid>
-        </Grid>
-        <Grid item xs={2}>
-          <div className={classes.body}></div>
-        </Grid>
-        <Grid item xs={12}>
-          <div className={classes.footer}>
-            <img src="./images/grass.png" width="100%" alt="Todak Logo" />
-          </div>
-        </Grid>
+            </Paper>
+          </Col>
+          <Col item xs={2}></Col>
+        </Row>
+        <Row>
+          <div></div>
+        </Row>
+        <Row>
+          <img src="./images/grass.png" width="100%" alt="Todak Logo" />
+        </Row>
       </Grid>
     </div>
   );
