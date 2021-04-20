@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import axios from 'axios';
 
 const { kakao } = window;
@@ -20,8 +19,6 @@ export default function Localvisualization() {
         });
 
     }
-
-
 
     useEffect(() => {
         const container = document.getElementById('myMap');

@@ -4,39 +4,15 @@ import "components/css/Community.css";
 import axios from "axios";
 import { storageService } from "fBase";
 import { v4 as uuidv4 } from "uuid";
-import { Grid, Paper, Container } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Paper } from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import { Row, Col } from "react-bootstrap";
 
-const useStyles = makeStyles((theme) => ({
-  postingCreateBtn: {
-    backgroundColor: "white",
-    color: "#ff8a4e",
-    "&:hover": {
-      backgroundColor: "#ff8a4e",
-      color: "white",
-    },
-  },
-  postingDeleteBtn: {
-    margin: theme.spacing(1),
-    backgroundColor: "white",
-    color: "gray",
-    "&:hover": {
-      backgroundColor: "gray",
-      color: "white",
-    },
-  },
-}));
-
 // [커뮤니티] 컴포넌트
 const Community = () => {
   const url = `${window.location.origin}:5000`;
-  const classes = useStyles();
   const [posting, setPosting] = useState(""); // 게시글(내용)
   const [newPosting, setNewPosting] = useState(""); // 새로운 게시글
   const [postings, setPostings] = useState([]); // 게시글 배열
@@ -56,7 +32,7 @@ const Community = () => {
     setPosting(value);
   };
 
-  // [CREATE] 게시글 생성 핸들러 ('글 올리기'버튼 클릭 시 호출)
+  // [CREATE] 게시글 생성 핸들러
   const onCreatePosting = async (event) => {
     event.preventDefault();
     let attachmentUrl = "";

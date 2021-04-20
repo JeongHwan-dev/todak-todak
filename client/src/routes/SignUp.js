@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 import swal from "sweetalert";
 import { Paper } from "@material-ui/core";
 import { Row, Col } from "react-bootstrap";
-import Profile from "routes/Profile";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,40 +16,15 @@ const useStyles = makeStyles((theme) => ({
       background: "#f8f8f8",
     },
   },
-
   head: {
     height: "25vh",
   },
-
-  paper: {
-    padding: theme.spacing(12),
-    textAlign: "center",
-  },
-
-  body: {
-    height: "50vh",
-    padding: theme.spacing(2),
-  },
-
-  grass: {
-    zIndex: "1",
-    position: "relative",
-    marginTop: "10vh",
-    marginBottom: 0,
-    padding: theme.spacing(0),
-  },
-
-  footer: {
-    background: "#d3d3d3",
-  },
-
   logo: {
     marginTop: "4vh",
     marginBottom: "1.5vh",
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-
   slogan: {
     marginLeft: "1vw",
     fontSize: "2.5vh",
@@ -58,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     color: "darkgrey",
     fontFamily: "Spoqa Han Sans Neo",
   },
-
   signUp: {
     width: "35vw",
     position: "absolute",
@@ -70,28 +43,18 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-
-  footer: {
-    zIndex: "-1",
-    marginTop: "10vh",
-    padding: theme.spacing(0),
-    background: "#f1f3f5",
-  },
-
   signUpTitle: {
     color: "black",
     fontSize: "1.6vw",
     fontFamily: "Spoqa Han Sans Neo",
     marginBottom: "2.2vh",
   },
-
   textField: {
     width: "25vw",
     margin: "0.5vw",
     fontFamily: "Spoqa Han Sans Neo",
     borderRadius: 0,
   },
-
   buttonRegister: {
     width: "10vw",
     margin: "1vw",

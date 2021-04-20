@@ -14,7 +14,7 @@ if (sessionStorage.getItem("accessToken") !== "") {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
 
-  // 로그인 되어 있는 상태인지 확인
+  // 로그인 여부 확인
   useEffect(() => {
     setIsLoggedIn(sessionStorage.userid);
   }, []);

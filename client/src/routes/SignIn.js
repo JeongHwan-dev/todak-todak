@@ -15,7 +15,6 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { Paper } from "@material-ui/core";
 import { Row, Col } from "react-bootstrap";
-
 import swal from "sweetalert";
 
 axios.defaults.withCredentials = true;
@@ -27,40 +26,15 @@ const signInStyles = makeStyles((theme) => ({
       background: "#f8f8f8",
     },
   },
-
   head: {
     height: "25vh",
   },
-
-  paper: {
-    padding: theme.spacing(12),
-    textAlign: "center",
-  },
-
-  body: {
-    height: "50vh",
-    padding: theme.spacing(2),
-  },
-
-  grass: {
-    zIndex: "1",
-    position: "relative",
-    marginTop: "10vh",
-    marginBottom: 0,
-    padding: theme.spacing(0),
-  },
-
-  footer: {
-    background: "#d3d3d3",
-  },
-
   logo: {
     marginTop: "4vh",
     marginBottom: "1.5vh",
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-
   slogan: {
     marginLeft: "1vw",
     fontSize: "2.5vh",
@@ -68,7 +42,6 @@ const signInStyles = makeStyles((theme) => ({
     color: "darkgrey",
     fontFamily: "Spoqa Han Sans Neo",
   },
-
   signIn: {
     width: "35vw",
     position: "absolute",
@@ -80,21 +53,18 @@ const signInStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-
   signInTitle: {
     color: "black",
     fontSize: "1.6vw",
     fontFamily: "Spoqa Han Sans Neo",
     marginBottom: "2.2vh",
   },
-
   textField: {
     width: "25vw",
     margin: "0.5vw",
     fontFamily: "Spoqa Han Sans Neo",
     borderRadius: 0,
   },
-
   buttonSignIn: {
     width: "10vw",
     margin: "1vw",
@@ -111,7 +81,6 @@ const signInStyles = makeStyles((theme) => ({
       boxShadow: "none",
     },
   },
-
   buttonSignUp: {
     width: "10vw",
     margin: "1vw",
@@ -294,7 +263,6 @@ function SignIn() {
                 />
               </FormControl>
               <Button
-                // style={{ margin: "0 auto" }}
                 className={classes.buttonSignUp}
                 variant="contained"
                 size="large"

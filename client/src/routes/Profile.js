@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { storageService } from "fBase";
-
 import InputAddress from "components/InputAddress";
-
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Button, Avatar } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -33,40 +30,15 @@ const useStyles = makeStyles((theme) => ({
       background: "#f8f8f8",
     },
   },
-
   head: {
     height: "15vh",
   },
-
-  paper: {
-    padding: theme.spacing(12),
-    textAlign: "center",
-  },
-
-  body: {
-    height: "50vh",
-    padding: theme.spacing(2),
-  },
-
-  grass: {
-    zIndex: "1",
-    position: "relative",
-    marginTop: "10vh",
-    marginBottom: 0,
-    padding: theme.spacing(0),
-  },
-
-  footer: {
-    background: "#d3d3d3",
-  },
-
   logo: {
     marginTop: "4vh",
     marginBottom: "1.5vh",
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-
   slogan: {
     marginLeft: "1vw",
     fontSize: "2.5vh",
@@ -74,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     color: "darkgrey",
     fontFamily: "Spoqa Han Sans Neo",
   },
-
   profile: {
     width: "35vw",
     position: "absolute",
@@ -86,170 +57,22 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
-
   profileTitle: {
     color: "black",
     fontSize: "1.6vw",
     fontFamily: "Spoqa Han Sans Neo",
     marginBottom: "2.2vh",
   },
-
-  textField: {
-    width: "25vw",
-    margin: "0.5vw",
-    fontFamily: "Spoqa Han Sans Neo",
-    borderRadius: 0,
-  },
-
-  buttonProfile: {
-    width: "10vw",
-    margin: "1vw",
-    fontFamily: "Spoqa Han Sans Neo",
-    fontWeight: "bold",
-    color: "#ff8a4e",
-    background: "white",
-    border: "2px solid #ff8a4e",
-    borderRadius: "0.8rem",
-    boxShadow: "none",
-    "&:hover": {
-      background: "#ff8a4e",
-      color: "white",
-      boxShadow: "none",
-    },
-  },
-
   ageInput: {
     width: "100%",
     paddingTop: "1px",
   },
-
-  insidePaperHeader: {
-    height: theme.spacing(12),
-    paddingLeft: theme.spacing(5),
-    textAlign: "center",
-  },
-
-  insidePaper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-  },
-
-  paperBody: {
-    height: 350,
-    padding: theme.spacing(2),
-  },
-
-  paperLogo: {
-    marginBottom: "3vh",
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-
-  paperSlogan: {
-    fontSize: "1.5vw",
-    fontFamily: "Spoqa Han Sans Neo",
-  },
-
-  profileForm: {
-    width: "35vw",
-    position: "absolute",
-    zIndex: "1",
-    background: "white",
-    boxShadow: "0px 2px 10px lightgray",
-    borderRadius: "1.8rem",
-    padding: theme.spacing(5.75),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-
-  paperFooter: {
-    zIndex: "-1",
-    marginTop: "10vh",
-    padding: theme.spacing(0),
-    background: "#f1f3f5",
-  },
-
-  paperProfile: {
-    padding: theme.spacing(5),
-    textAlign: "center",
-  },
-
-  paperIntro: {
-    padding: "10px",
-    width: "100%",
-    height: "70%",
-    border: "1px solid lightgray",
-    borderRadius: "0.5rem",
-  },
-
-  uploadProfile: {
-    paddingLeft: theme.spacing(5),
-    marginBottom: "1vh",
-  },
-
-  uploadProfileImg: {
-    width: "12vw",
-    height: "112vh",
-    color: "white",
-    background: "lightgray",
-    padding: "25px",
-    marginRight: "4vw",
-    border: "1px solid lightgray",
-    textAlign: "center",
-  },
-
-  prevImg: {
-    width: "6vw",
-    height: "11.5vh",
-    border: "1px solid lightgray",
-    borderRadius: "5rem",
-  },
-
-  prevProfileImg: {
-    width: "5.5vw",
-    height: "11vh",
-    padding: "25px",
-    marginRight: "4vw",
-    border: "1px solid lightgray",
-    borderRadius: "5rem",
-    textAlign: "center",
-  },
-
   profileTitle: {
     color: "black",
     fontSize: "1.6vw",
     fontFamily: "Spoqa Han Sans Neo",
     marginBottom: "2.2vh",
   },
-
-  TextField: {
-    width: "25vw",
-    margin: "0.5vw",
-    fontFamily: "Spoqa Han Sans Neo",
-  },
-
-  interest: {
-    fontFamily: "Spoqa Han Sans Neo",
-    float: "left",
-    color: "dark",
-    marginLeft: "1.5vw",
-    fontWeight: "bold",
-  },
-
-  location: {
-    fontFamily: "Spoqa Han Sans Neo",
-    float: "left",
-    marginLeft: "1.5vw",
-    fontWeight: "bold",
-  },
-
-  certification: {
-    fontFamily: "Spoqa Han Sans Neo",
-    float: "left",
-    marginLeft: "1.5vw",
-    fontWeight: "bold",
-  },
-
   ButtonRegister: {
     width: "10vw",
     margin: "1vw",
@@ -266,26 +89,13 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "none",
     },
   },
-
   addressInput: {
     marginLeft: "1vw",
   },
-
   input: {
     display: "none",
     margin: "0 auto",
   },
-
-  profileImg: {
-    width: "7vw",
-    height: "14vh",
-    borderRadius: "5rem",
-  },
-
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-
   formControl: {
     width: "100%",
     height: "80%",
@@ -297,20 +107,9 @@ const useStyles = makeStyles((theme) => ({
   chip: {
     margin: 2,
   },
-
-  subtitle: {
-    fontSize: "0.95vw",
-    fontFamily: "Spoqa Han Sans Neo",
-  },
-
   subMargin: {
     marginBottom: "2vh",
   },
-
-  sub: {
-    display: "flex",
-  },
-
   subInput: {
     width: "100%",
     lineHeight: "1.5",
@@ -319,10 +118,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundClip: "padding-box",
     border: "1px solid #ced4da",
     borderRadius: "0.5rem",
-  },
-
-  userData: {
-    marginLeft: "5vw",
   },
 }));
 
@@ -348,7 +143,7 @@ function getStyles(disease, userDisease, theme) {
 
 // 프로필 작성 컴포넌트
 const Profile = () => {
-  const url = 'http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000';
+  const url = `${window.location.origin}:5000`;
   const location = useLocation();
   const classes = useStyles();
   const theme = useTheme();

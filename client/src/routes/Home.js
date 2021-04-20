@@ -5,9 +5,7 @@ import LocalVisualization from 'routes/LocalVisualization';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Container } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import LocalEvent from "routes/LocalEvent";
 import { Col } from 'react-bootstrap';
-import UserRelations from "routes/UserRelations";
 import { Button, Row, Card } from "react-bootstrap";
 import axios from "axios";
 
@@ -15,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-
   paperHeader: {
     height: theme.spacing(8),
     padding: theme.spacing(1),
@@ -26,60 +23,6 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid lightgray",
     background: "#ff8a4e",
   },
-  paperHeaderInside: {
-    height: theme.spacing(4),
-    padding: theme.spacing(1),
-    fontWeight: "bold",
-    color: "white",
-    fontFamily: "Spoqa Han Sans Neo",
-    textAlign: "center",
-  },
-
-  newPosting: {
-    padding: theme.spacing(2),
-    height: theme.spacing(28),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-  },
-  surrounding: {
-    padding: theme.spacing(2),
-    height: theme.spacing(90),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-    border: "1px solid lightgray",
-  },
-  chatting: {
-    padding: theme.spacing(2),
-    height: theme.spacing(50),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-    border: "1px solid lightgray",
-  },
-  localSituation: {
-    padding: theme.spacing(2),
-    height: theme.spacing(30),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-    border: "1px solid lightgray",
-  },
-  vote: {
-    padding: theme.spacing(1),
-    height: theme.spacing(22),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-    border: "1px solid lightgray",
-  },
-  paperSide: {
-    height: theme.spacing(20),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-  community: {
-    height: theme.spacing(100),
-    textAlign: "center",
-    borderRadius: "0.5rem",
-  },
-
   linkBtnTitle: {
     border: 0,
     outline: 0,
@@ -103,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const history = useHistory();
   const classes = useStyles();
+  const url = `${window.location.origin}:5000`;
+  const [nickname, setNickname] = useState();
+  const [local, setLocal] = useState();
+  const [localPeople, setLocalPeople] = useState();
 
   // 홈으로 이동 핸들러
   const onMoveHome = () => {
@@ -113,7 +60,7 @@ const Home = () => {
   const onMoveMyPage = () => {
     history.push("/user-relations");
   };
-
+  
   // 로그아웃 핸들러
   const onLogOut = () => {
     sessionStorage.clear();
@@ -128,51 +75,42 @@ const Home = () => {
     history.push('/user-relations')
   }
 
-  const url = `http://elice-kdt-ai-track-vm-da-09.koreacentral.cloudapp.azure.com:5000`;
-  const [nickname, setNickname] = useState('홍길동');
-  const [local, setLocal] = useState('서울특별시 강남구 역삼동');
-  const [localPeople, setLocalPeople] = useState(0);
-
-  async function getNickname() {
-    const response = await axios.post(url + "/local",{
-          method: "POST",
-          body: JSON.stringify({
-          userid: sessionStorage.userid,
-          }),
-          withCredentials: true,
-          });
-      setNickname(response.localPeople.data.nickname)
-      setLocal(response.localPeople.data.local)
-      setLocalPeople(response.localPeople.data.localPeople)
-      console.log(response.data.local);
-  }
-
   useEffect(() => {
-    getNickname()
-  },[])
-
+    const response = axios.post(url + "/local",{
+            method: "POST",
+            body: JSON.stringify({
+              userid: sessionStorage.userid,
+            }),
+            withCredentials: true,
+          }).then((response) => {
+    setNickname(response.data.nickname)
+    setLocal(response.data.local)
+    setLocalPeople(response.data.localPeople)
+    console.log(localPeople)
+  });
+  },[]);
 
 
   return (
     <>
-    <Grid item xs={12} style={{ backgroundColor: "#f8f8f8"}}>
+    <Grid item xs={12} style={{ backgroundColor: "#f8f8f8" }}>
     {/* left margin space */}
     <Col item xs={1}><Container width="100%"></Container></Col>
     {/* content area */}
     <Col item xs={10} style={{ margin: "0 auto" }}>
       {/* header area */}
       <Row className={classes.paperHeader} style={{ marginBottom: "2rem" }}>
-        <Col style={{ textAlign: "left", marginTop: "0.5rem" }}>
+        <Col style={{ textAlign: "left" }}>
           <button className={classes.linkBtn} onClick={onMoveMyPage}>
-          <a href="https://www.notion.so/15fc0219674545b88b3098b40b32b0f7" style={{ color: "inherit", textDecoration: 'none' }}>토닥토닥 알아보기</a>
+            마이 페이지
           </button>
         </Col>
         <Col style={{ margin: "0 auto" }}>
-          <button className={classes.linkBtnTitle} style={{ marginBottom: "0.2rem "}}>
+          <button className={classes.linkBtnTitle} onClick={onMoveHome}>
             <img src="./images/todak_white.png" height="50px" />
           </button>
         </Col>
-        <Col style={{ textAlign: "right",marginTop: "0.5rem"  }}>
+        <Col style={{ textAlign: "right" }}>
           <button className={classes.linkBtn} onClick={onLogOut}>
             로그아웃
           </button>
@@ -182,11 +120,16 @@ const Home = () => {
       <Row>
         {/* left side */}
         <Col item xs={2} spacing={2}>
-        
-          <Card style={{ width: "100%", border:"0 solid white"}}>
+        <Row style={{ width: "100%", height: "30vh", margin: "0 auto" }}>
+          <Card style={{ width: "100%" }}>
+              안녕하세요 {nickname}님,<br/>
+              {local}에서 {localPeople}명의 토닥러와 함께하고 있습니다.
+            <Button style={{ backgroundColor: "#ff8e4a", borderColor: "#ff8e4a" }} onClick={handleChangeUserRelations}>더보기</Button>
+          </Card>
+          </Row>
+          <br/>
+          <Card style={{ width: "100%" }}>
             <ChatList />
-            <br/>
-            <Button style={{ backgroundColor: "#ff8e4a", borderColor: "#ff8e4a" }} onClick={handleChangeUserRelations}>나의 네트워크 보기</Button>
           </Card>
           
         </Col>
@@ -203,9 +146,6 @@ const Home = () => {
             </Card>
           </Row>
           <br/>
-          <img src="./images/b1.png" width="100%" />
-          <div style={{ height: '1rem' }}></div>
-          <img src="./images/b2.png" width="100%" />
         </Col>
       </Row>
     </Col>

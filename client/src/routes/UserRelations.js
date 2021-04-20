@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ForceGraph2D from 'react-force-graph-2d';
 
-
-
-
 export default function UserRelations() {
     const url = `${window.location.origin}:5000`;
     const [GDB, setGDB] = useState();

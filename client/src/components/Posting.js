@@ -5,7 +5,7 @@ import "components/css/Posting.css";
 import { storageService } from "fBase";
 import Comment from "components/Comment";
 import { Grid, Paper } from "@material-ui/core";
-import { Container, Col, Row, Card } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -15,7 +15,6 @@ import Icon from "@material-ui/core/Icon";
 import IconButton from "@material-ui/core/IconButton";
 import CommentIcon from "@material-ui/icons/Comment";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
-
 import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,17 +46,7 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
   const [likeState, setLikeState] = useState(
     Boolean(postingObj.likepeople.find(liked))
   );
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  
   useEffect(() => {
     onReadComment();
   }, [newComment]);
@@ -426,7 +415,6 @@ const Posting = ({ postingObj, content, isOwner, onReadPosting }) => {
                 style={{
                   margin: 0,
                   borderTop: "1px solid lightgray ",
-                  // borderBottom: "1px solid lightgray ",
                   paddingTop: 10,
                   paddingBottom: 10,
                 }}
