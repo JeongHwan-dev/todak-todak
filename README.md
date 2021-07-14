@@ -1,4 +1,5 @@
 <div align="center">
+  <br />
   <img src="./images/todak_logo.png" alt="토닥토닥" height="150px" />
   <br />
   <h1>🐇 토닥토닥 (Todak-Todak)</h1>
