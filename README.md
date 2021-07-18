@@ -235,6 +235,61 @@
 
 ## 💻 실행 방법
 
+1. **원격 저장소 복제**
+
+```bash
+$ git clone https://github.com/JeongHwan-dev/twitter-clone-coding.git
+```
+
+2. **프로젝트 폴더로 이동**
+
+```bash
+$ cd todak-todak
+```
+
+2. **Flask 서버 실행**
+
+```bash
+$ export FLASK_APP=medical
+$ export FLASK_ENV=development
+$ flask run
+
+```
+
+3. **MongoDB 설치** (새 터미널 오픈)
+
+```bash
+$ curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+$ sudo echo "deb http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+```
+
+4. **MongoDB 설정 및 실행** (project 폴더에 data/db 생성)
+
+```bash
+$ mongod --dbpath data/db/
+$ mongo
+```
+
+5. **client 폴더로 이동** (새 터미널 오픈)
+
+```bash
+$ cd client
+```
+
+6. **필요한 node_modules 설치** (client 폴더 안에서)
+
+```bash
+$ npm install
+```
+
+7. **리액트 앱 실행**
+
+```bash
+$ npm start
+```
+
 <br />
 
 ## 📢 FAQ
