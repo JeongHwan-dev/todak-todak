@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -22,7 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-=======
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,macos,windows,python,react,reactnative,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=vscode,macos,windows,python,react,reactnative,jupyternotebooks
@@ -554,4 +552,3 @@ $RECYCLE.BIN/
 
 
 migrations
->>>>>>> origin/Sprint2
