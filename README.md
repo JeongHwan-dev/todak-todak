@@ -111,7 +111,7 @@
 **DevOps**
 
 - ![Git](https://img.shields.io/badge/-Git-F05032?&logo=git&logoColor=white) ![GitLab](https://img.shields.io/badge/-GitLab-FCA121?&logo=gitlab&logoColor=white)
-- ![Docker](https://img.shields.io/badge/-Docker-2496ED?&logo=docker&logoColor=white) ![Azure](https://img.shields.io/badge/-Azure-0078D4?&logo=microsoftazure&logoColor=white)
+- ![Docker](https://img.shields.io/badge/-Docker-2496ED?&logo=docker&logoColor=white) ![NGINX](https://img.shields.io/badge/-NGINX-009639?&logo=nginx&logoColor=white) ![Azure](https://img.shields.io/badge/-Azure-0078D4?&logo=microsoftazure&logoColor=white)
 
 <br />
 
