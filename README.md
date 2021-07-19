@@ -110,11 +110,8 @@
 
 **DevOps**
 
-- ![Azure](https://img.shields.io/badge/-Azure-0078D4?&logo=microsoftazure&logoColor=white) ![Docker](https://img.shields.io/badge/-Docker-2496ED?&logo=docker&logoColor=white)
-
-**ETC**
-
-- ![Git](https://img.shields.io/badge/-Git-F05032?&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/-GitHub-181717?&logo=github&logoColor=white)
+- ![Git](https://img.shields.io/badge/-Git-F05032?&logo=git&logoColor=white) ![GitLab](https://img.shields.io/badge/-GitLab-FCA121?&logo=gitlab&logoColor=white)
+- ![Docker](https://img.shields.io/badge/-Docker-2496ED?&logo=docker&logoColor=white) ![Azure](https://img.shields.io/badge/-Azure-0078D4?&logo=microsoftazure&logoColor=white)
 
 <br />
 
@@ -144,9 +141,14 @@
 
 ## 📂 프로젝트 구성도
 
-### [🔗 스토리보드](https://www.figma.com/file/CluTmxhDDigtZG9rCeXKkE/Storyboard-Draft-Ver0.1?node-id=0%3A1)
+| [🔗와이어프레임(Wireframe)](https://www.figma.com/file/CluTmxhDDigtZG9rCeXKkE/Storyboard-Draft-Ver0.1?node-id=0%3A1) |
+| :------------------------------------------------------------------------------------------------------------------: |
+|                         <img src="./images/wireframe.png" alt="Wireframe" width="1200px" />                          |
 
-### [🔗 와이어프레임](https://whimsical.com/codename-wesick-SXPvCHJqfSwQZwzPUPm6z)
+| [🔗아키텍처(Architecture)](https://whimsical.com/codename-wesick-SXPvCHJqfSwQZwzPUPm6z) |
+| :-------------------------------------------------------------------------------------: |
+|        <img src="./images/overall_flow.png" alt="Overall Flow" width="1200px" />        |
+|       <img src="./images/sequence_flow.png" alt="Sequence Flow" width="1200px" />       |
 
 <br />
 
