@@ -3,6 +3,9 @@
   <img src="./images/todak_logo.png" alt="토닥토닥" height="150px" />
   <br />
   <h1>토닥토닥 (Todak-Todak)</h1>
+  <a href="https://blackpink.fashion-scanner.site/">
+    <img src="https://img.shields.io/badge/NGINX-Deactivate-ff7f00?&logo=nginx&logoColor=white" alt="NGINX" />
+  </a>
   <br />
 </div>
 
