@@ -326,7 +326,7 @@ $ cd todak-todak
 $ cd medical
 ```
 
-2. **Flask 서버 실행**
+3. **Flask 서버 실행**
 
 ```bash
 $ export FLASK_APP=medical
@@ -335,7 +335,7 @@ $ flask run
 
 ```
 
-3. **MongoDB 설치** (새 터미널 오픈)
+4. **MongoDB 설치** (새 터미널 오픈)
 
 ```bash
 $ curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
@@ -344,26 +344,26 @@ $ sudo apt-get update
 $ sudo apt-get install -y mongodb-org
 ```
 
-4. **MongoDB 설정 및 실행** (project 폴더에 data/db 생성)
+5. **MongoDB 설정 및 실행** (project 폴더에 data/db 생성)
 
 ```bash
 $ mongod --dbpath data/db/
 $ mongo
 ```
 
-5. **client 폴더로 이동** (새 터미널 오픈)
+6. **client 폴더로 이동** (새 터미널 오픈)
 
 ```bash
 $ cd client
 ```
 
-6. **필요한 node_modules 설치**
+7. **필요한 node_modules 설치**
 
 ```bash
 $ npm install
 ```
 
-7. **리액트 앱 실행**
+8. **리액트 앱 실행**
 
 ```bash
 $ npm start
