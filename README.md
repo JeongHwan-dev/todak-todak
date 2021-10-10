@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <img src="./images/todak_logo.png" alt="토닥토닥" height="150px" />
+  <img src="./readme_assets/todak_logo.png" alt="토닥토닥" height="150px" />
   <br />
   <h1>토닥토닥 (Todak-Todak)</h1>
   <a href="https://blackpink.fashion-scanner.site/">
@@ -16,7 +16,7 @@
 3. [**기술 스택**](#3)
 4. [**주요 기능**](#4)
 5. [**프로젝트 구성도**](#5)
-6. [**주요 페이지**](#6)
+6. [**데모 영상**](#6)
 7. [**서비스 차별점 및 기대 효과**](#7)
 8. [**개발 팀 소개**](#8)
 9. [**실행 방법**](#9)
@@ -146,30 +146,42 @@
 
 | [🔗와이어프레임(Wireframe)](https://www.figma.com/file/CluTmxhDDigtZG9rCeXKkE/Storyboard-Draft-Ver0.1?node-id=0%3A1) |
 | :------------------------------------------------------------------------------------------------------------------: |
-|                         <img src="./images/wireframe.png" alt="Wireframe" width="1200px" />                          |
+|                      <img src="./readme_assets/wireframe.png" alt="Wireframe" width="1200px" />                      |
 
 | [🔗아키텍처(Architecture)](https://whimsical.com/codename-wesick-SXPvCHJqfSwQZwzPUPm6z) |
 | :-------------------------------------------------------------------------------------: |
-|        <img src="./images/overall_flow.png" alt="Overall Flow" width="1200px" />        |
-|       <img src="./images/sequence_flow.png" alt="Sequence Flow" width="1200px" />       |
+|    <img src="./readme_assets/overall_flow.png" alt="Overall Flow" width="1200px" />     |
+|   <img src="./readme_assets/sequence_flow.png" alt="Sequence Flow" width="1200px" />    |
 
 <br />
 
 <div id="6"></div>
 
-## 📄 주요 페이지
+## 🎥 데모 영상
 
-|                              로그인 페이지                               |                              회원가입 페이지                               |                               프로필 작성 페이지                               |
-| :----------------------------------------------------------------------: | :------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
-| <img src="./images/signin_page.png" alt="로그인 페이지" width="400px" /> | <img src="./images/signup_page.png" alt="회원가입 페이지" width="400px" /> | <img src="./images/profile_page.png" alt="프로필 작성 페이지" width="400px" /> |
+|                           회원가입 & 프로필 작성 페이지                           |
+| :-------------------------------------------------------------------------------: |
+| <img src="./readme_assets/signup-page.gif" alt="회원가입 & 프로필 작성 페이지" /> |
 
-|                             메인 페이지                              |                         메인 페이지(게시물 수정 시)                         |
-| :------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| <img src="./images/main_page.png" alt="메인 페이지" width="600px" /> | <img src="./images/edit_page.png" alt="게시물 수정 페이지" width="600px" /> |
+|                              로그인 & 메인 페이지                               |
+| :-----------------------------------------------------------------------------: |
+| <img src="./readme_assets/signin-main-page.gif" alt="로그인 & 메인 페이지  " /> |
 
-|                             1:1 채팅 페이지                              |                                 유저 사회망 페이지                                  |
-| :----------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| <img src="./images/chatting_page.png" alt="채팅 페이지" width="600px" /> | <img src="./images/relationship_page.png" alt="유저 사회망 페이지" width="600px" /> |
+|                           게시물 댓글 및 좋아요 기능                            |
+| :-----------------------------------------------------------------------------: |
+| <img src="./readme_assets/comment-like.gif" alt="게시물 댓글 및 좋아요 기능" /> |
+
+|                             새 게시물 작성 기능                             |
+| :-------------------------------------------------------------------------: |
+| <img src="./readme_assets/create-posting.gif" alt="새 게시물 작성 기능 " /> |
+
+|                            실시간 채팅 기능                            |
+| :--------------------------------------------------------------------: |
+| <img src="./readme_assets/live-chatting.gif" alt="실시간 채팅 기능" /> |
+
+|                           유저 사회망 기능                            |
+| :-------------------------------------------------------------------: |
+| <img src="./readme_assets/user-network.gif" alt="유저 사회망 기능" /> |
 
 <br />
 
