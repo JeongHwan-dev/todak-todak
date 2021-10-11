@@ -226,7 +226,7 @@
       </a>
     </td>
     <td align="center">
-      <img src="./images/profile_sample.jpg" alt="윤수진 프로필" width="100%" />
+      <img src="./readme_assets/profile_sample.jpg" alt="윤수진 프로필" width="100%" />
     </td>
   </tr>
   <tr>
