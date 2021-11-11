@@ -96,26 +96,47 @@
 
 ## 🛠 기술 스택
 
-**Front-end**
+### **Front-end**
 
-- ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?&logo=html5&logoColor=white&style=flat-square) ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?&logo=css3&logoColor=white&style=flat-square) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?&logo=javascript&logoColor=white&style=flat-square)
-- ![React](https://img.shields.io/badge/-React-61DAFB?&logo=react&logoColor=white&style=flat-square)
-- ![Bootstrap](https://img.shields.io/badge/-Bootstrap-7952B3?&logo=bootstrap&logoColor=white&style=flat-square) ![Material-UI](https://img.shields.io/badge/-Material_UI-0081CB?&logo=material-ui&logoColor=white&style=flat-square)
+| <img src="https://profilinator.rishav.dev/skills-assets/html5-original-wordmark.svg" alt="HTML5" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/css3-original-wordmark.svg" alt="CSS3" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/javascript-original.svg" alt="JavaScript" width="50px" height="50px" /> |
+| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
+|                                                             HTML5                                                              |                                                             CSS3                                                             |                                                         JavaScript(ES6)                                                         |
 
-**Back-end**
+| <img src="https://profilinator.rishav.dev/skills-assets/react-original-wordmark.svg" alt="React.js" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/bootstrap-plain.svg" alt="Bootstrap" width="50px" height="50px" /> | <img src="https://mui.com/static/logo.png" alt="Material UI" width="50px" height="50px" /> |
+| :-------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------: |
+|                                                             React.js                                                              |                                                         Bootstrap                                                          |                                        Material UI                                         |
 
-- ![Python](https://img.shields.io/badge/-Python-3776AB?&logo=python&logoColor=white&style=flat-square)
-- ![Flask](https://img.shields.io/badge/-Flask-333?&logo=flask&logoColor=white&style=flat-square) ![Socket.io](https://img.shields.io/badge/-Socket.io-010101?&logo=socket.io&logoColor=white&style=flat-square)
-- ![MySQL](https://img.shields.io/badge/-MySQL-4479A1?&logo=mysql&logoColor=white&style=flat-square) ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?&logo=mongodb&logoColor=white&style=flat-square)
+### **Back-end**
 
-**Data Analysis**
+| <img src="https://profilinator.rishav.dev/skills-assets/python-original.svg" alt="Python" width="50px" height="50px" /> |
+| :---------------------------------------------------------------------------------------------------------------------: |
+|                                                         Python                                                          |
 
-- ![Pandas](https://img.shields.io/badge/-Pandas-150458?&logo=pandas&logoColor=white&style=flat-square) ![scikit-learn](https://img.shields.io/badge/-scikit_learn-F7931E?&logo=scikit-learn&logoColor=white&style=flat-square) ![Neo4j](https://img.shields.io/badge/-Neo4j-008CC1?&logo=neo4j&logoColor=white&style=flat-square) ![D3.js](https://img.shields.io/badge/-D3.js-F9A03C?&logo=d3.js&logoColor=white&style=flat-square) ![Folium](https://img.shields.io/badge/-Folium-77B829?&logo=folium&logoColor=white&style=flat-square)
+| <img src="https://profilinator.rishav.dev/skills-assets/django-original.svg" alt="Django" width="50px" height="50px" /> | <img src="https://cdn.worldvectorlogo.com/logos/socket-io-1.svg" alt="socket io" width="50px" height="50px" /> |
+| :---------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
+|                                                          Flask                                                          |                                                   socket.io                                                    |
 
-**DevOps**
+| <img src="https://profilinator.rishav.dev/skills-assets/mysql-original-wordmark.svg" alt="MySQL" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/mongodb-original-wordmark.svg" alt="mongoDB" width="50px" height="50px" /> |
+| :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
+|                                                             MySQL                                                              |                                                              mongoDB                                                               |
 
-- ![Git](https://img.shields.io/badge/-Git-F05032?&logo=git&logoColor=white&style=flat-square) ![GitLab](https://img.shields.io/badge/-GitLab-FCA121?&logo=gitlab&logoColor=white&style=flat-square)
-- ![Docker](https://img.shields.io/badge/-Docker-2496ED?&logo=docker&logoColor=white&style=flat-square) ![NGINX](https://img.shields.io/badge/-NGINX-009639?&logo=nginx&logoColor=white&style=flat-square) ![Azure](https://img.shields.io/badge/-Azure-0078D4?&logo=microsoftazure&logoColor=white&style=flat-square)
+### **Data Analysis**
+
+| <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="Pandas" width="50px" height="50px" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="Scikit learn" width="50px" height="50px" /> | <img src="https://cdn.freebiesupply.com/logos/large/2x/neo4j-logo-png-transparent.png" alt="Neo4j" width="50px" height="50px" /> | <img src="https://avatars1.githubusercontent.com/u/1562726?s=200&v=4" alt="D3.js" width="50px" height="50px" /> | <img src="https://python-visualization.github.io/folium/_images/folium_logo.jpg" alt="Folium" width="50px" height="50px" /> |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                       Pandas                                                                                       |                                                                Scikit learn                                                                 |                                                              Neo4j                                                               |                                                      D3.js                                                      |                                                           Folium                                                            |
+
+### **DevOps**
+
+| <img src="https://profilinator.rishav.dev/skills-assets/docker-original-wordmark.svg" alt="Docker" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/nginx-original.svg" alt="NGiNX" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/microsoft_azure-icon.svg" alt="Azure" width="50px" height="50px" /> |
+| :------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------: |
+|                                                              Docker                                                              |                                                         NGiNX                                                         |                                                            Azure                                                            |
+
+### **Version Control**
+
+| <img src="https://profilinator.rishav.dev/skills-assets/git-scm-icon.svg" alt="Git" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/gitlab.svg" alt="GitLab" width="50px" height="50px" /> |
+| :---------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
+|                                                        Git                                                        |                                                     GitLab                                                     |
 
 <br />
 
