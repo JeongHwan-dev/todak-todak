@@ -112,9 +112,9 @@
 | :---------------------------------------------------------------------------------------------------------------------: |
 |                                                         Python                                                          |
 
-| <img src="https://profilinator.rishav.dev/skills-assets/django-original.svg" alt="Django" width="50px" height="50px" /> | <img src="https://cdn.worldvectorlogo.com/logos/socket-io-1.svg" alt="socket io" width="50px" height="50px" /> |
-| :---------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
-|                                                          Flask                                                          |                                                   socket.io                                                    |
+| <img src="https://profilinator.rishav.dev/skills-assets/flask.png" alt="Flask" width="50px" height="50px" /> | <img src="https://cdn.worldvectorlogo.com/logos/socket-io-1.svg" alt="socket io" width="50px" height="50px" /> |
+| :----------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: |
+|                                                    Flask                                                     |                                                   socket.io                                                    |
 
 | <img src="https://profilinator.rishav.dev/skills-assets/mysql-original-wordmark.svg" alt="MySQL" width="50px" height="50px" /> | <img src="https://profilinator.rishav.dev/skills-assets/mongodb-original-wordmark.svg" alt="mongoDB" width="50px" height="50px" /> |
 | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------: |
